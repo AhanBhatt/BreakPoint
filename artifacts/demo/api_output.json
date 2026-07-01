@@ -1,0 +1,13 @@
+{
+  "GET /health": {
+    "status": "ok",
+    "service": "BreakPoint",
+    "mode": "deterministic-local"
+  },
+  "POST /compile": {
+    "dataset_id": "breakpoint-3c7caa567536",
+    "accepted_items": 72,
+    "total_eval_cases": 360,
+    "preview_category": "hallucination"
+  }
+}

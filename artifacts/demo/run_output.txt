@@ -1,0 +1,6 @@
+dataset_id=breakpoint-3c7caa567536
+accepted_items=72
+adversarial_variants=288
+total_eval_cases=360
+rejected_candidates=18
+acceptance_rate=0.8

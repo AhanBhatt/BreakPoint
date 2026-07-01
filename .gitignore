@@ -1,0 +1,39 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_tmp/
+.mypy_cache/
+.ruff_cache/
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Node / Next.js
+node_modules/
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+*.tsbuildinfo
+
+# Generated datasets and stores
+artifacts/demo/*.duckdb
+artifacts/demo/*.duckdb.wal
+artifacts/demo/*.sqlite
+artifacts/demo/*.log
+
+# LaTeX build products and generated PDFs
+docs/latex/build/
+docs/latex/*.aux
+docs/latex/*.log
+docs/latex/*.out
+docs/latex/*.toc
+output/pdf/*.pdf
+tmp/pdfs/
+
+# Local environment
+.env
+.env.*
+!.env.example
