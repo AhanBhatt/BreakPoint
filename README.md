@@ -2,6 +2,8 @@
 
 BreakPoint is an eval data compiler for LLM behavior. It generates targeted cases from real failure modes, adds hidden traps and rubrics, mutates prompts into adversarial variants, validates candidates with multiple judges, and exports high-quality datasets for evaluation runners.
 
+The v0.2 direction is now implemented locally: BreakPoint can ingest failure traces, draft BreakPointSpec YAML, compile cases and variants, create product-layer suites/runs/checks, route human review, produce compiler-native metrics, generate CI regression reports, and package BreakPoint-FailureGym tracks.
+
 ![BreakPoint architecture](artifacts/images/architecture.png)
 
 ## What It Builds
@@ -9,7 +11,11 @@ BreakPoint is an eval data compiler for LLM behavior. It generates targeted case
 - Failure categories for hallucination, instruction conflict, multi-hop reasoning, tool misuse, long-context retrieval, refusal boundaries, format violations, RAG contradictions, and prompt injection.
 - Generated tasks with expected answers, hidden traps, grading rubrics, and adversarial variants.
 - Validation gates for ambiguity, answerability, trap coverage, schema compliance, and judge agreement.
-- Exports to JSONL, Hugging Face `Dataset`, DuckDB, FastAPI, and a Next.js dashboard.
+- Product-layer objects for projects, dataset versions, eval suites, eval cases, checks, runs, model outputs, judgments, human reviews, failure clusters, and regression gates.
+- BreakPointSpec YAML for declarative failure-family compilation.
+- Trace2Eval ingestion for RAG logs, tool traces, user feedback, support tickets, red-team transcripts, and incident reports.
+- Tool, retrieval, and agent simulators for controlled stale, malformed, contradictory, injected, missing-evidence, and invalid-trace conditions.
+- Exports to JSONL, Hugging Face rows, DuckDB, OpenAI Evals-style YAML, lm-eval task YAML, CI reports, FailureGym tracks, FastAPI, and a Next.js dashboard.
 - A LaTeX-generated system design PDF at `output/pdf/breakpoint_system_design.pdf` after running the build script. The generated PDF path is ignored by Git.
 
 ## Quickstart
@@ -25,6 +31,16 @@ Generate a dataset directly:
 
 ```powershell
 .\.venv\Scripts\python -m breakpoint_eval.cli compile --items-per-category 8 --variants-per-item 4 --hf-preview
+```
+
+Run the v0.2 failure-to-eval workflows:
+
+```powershell
+.\.venv\Scripts\python -m breakpoint_eval.cli compile-spec
+.\.venv\Scripts\python -m breakpoint_eval.cli trace2eval
+.\.venv\Scripts\python -m breakpoint_eval.cli product-demo
+.\.venv\Scripts\python -m breakpoint_eval.cli ci-report
+.\.venv\Scripts\python -m breakpoint_eval.cli failuregym
 ```
 
 Run the API:
@@ -50,10 +66,18 @@ npm run dev
 The demo artifact run writes:
 
 - `artifacts/demo/breakpoint_eval.jsonl`
+- `artifacts/demo/cases.jsonl`
+- `artifacts/demo/product.json`
+- `artifacts/demo/ci_report.json`
+- `artifacts/demo/openai_evals.yaml`
+- `artifacts/demo/lm_eval_task.yaml`
 - `artifacts/demo/metrics.json`
 - `artifacts/demo/preview.json`
 - `artifacts/demo/api_output.json`
 - `artifacts/demo/run_output.txt`
+- `artifacts/specs/rag_freshness_contradiction.yaml`
+- `artifacts/trace2eval/results.json`
+- `artifacts/failuregym/manifest.json`
 
 Example run output:
 
@@ -107,7 +131,8 @@ Example API output:
 3. Mutate each candidate with irrelevant context, reordered facts, renamed entities, paraphrased instructions, or conflicting evidence.
 4. Validate candidates with multiple judge adapters.
 5. Filter ambiguous or low-quality items.
-6. Export accepted rows to JSONL, Hugging Face Datasets, DuckDB, API responses, and dashboard artifacts.
+6. Wrap accepted items as product-layer eval cases, checks, suites, runs, reviews, clusters, and gates.
+7. Export accepted rows to JSONL, Hugging Face Datasets, DuckDB, OpenAI Evals, lm-eval, CI reports, FailureGym, API responses, and dashboard artifacts.
 
 The local demo uses deterministic surrogate judges so tests are repeatable without API keys. The `breakpoint_eval.orchestration` module includes a LangGraph-compatible entry point, and the validation interface is ready for DSPy/LangChain model calls.
 
@@ -125,6 +150,7 @@ The local demo uses deterministic surrogate judges so tests are repeatable witho
 | MinIO/S3 | Artifact storage interface documented for deployment |
 | FastAPI | `breakpoint_eval.api:app` |
 | Next.js | `dashboard/` |
+| OpenAI/Anthropic/Gemini/vLLM | Judge adapter classes, enabled when credentials/endpoints are configured |
 
 ## LaTeX PDF
 

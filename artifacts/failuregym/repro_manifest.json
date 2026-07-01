@@ -1,0 +1,3606 @@
+{
+  "suite": {
+    "id": "suite-15a545af29d6",
+    "project_id": "project-breakpoint-demo",
+    "name": "Generated Failure Regression Suite",
+    "description": "Compiled suite with base cases and adversarial variants.",
+    "dataset_version_id": "dataset-version-3f9de0a24a00",
+    "case_ids": [
+      "case-b099f24934ba",
+      "case-b95c76991169",
+      "case-76241d4bc3ce",
+      "case-49c6a7500bdd",
+      "case-07edeaa833f7",
+      "case-5dd1cd979031",
+      "case-48d22781d531",
+      "case-bd07167bcce6",
+      "case-d1e386786f48",
+      "case-9f75c25430be",
+      "case-66b835dde5ad",
+      "case-790783e79841",
+      "case-a66f757d6b4d",
+      "case-5d020b7bc255",
+      "case-a7174ddf3ab0",
+      "case-7150d389e3b5",
+      "case-66332332778a",
+      "case-262bb0db18df",
+      "case-a136eccd8896",
+      "case-f99e758681e7",
+      "case-f92fe542854b",
+      "case-a01bfd48045e",
+      "case-80f89c47a8e1",
+      "case-271a9be3cc23",
+      "case-681b4f243a6a",
+      "case-7cf7978ff4f3",
+      "case-aec3c97c074d",
+      "case-6890aeba468b",
+      "case-c1fbabfec3c3",
+      "case-84ba59cec764",
+      "case-6e803650f0d8",
+      "case-e89e6cab470a",
+      "case-6de06c684899",
+      "case-266e6303dbc5",
+      "case-0a40b37bd3e1",
+      "case-bec85ccce061",
+      "case-2fd40ae5cbf0",
+      "case-8b73498bc7ff",
+      "case-442318ca0cc4",
+      "case-062d2a3f0d6c",
+      "case-f2f06aff66ad",
+      "case-341ba3fb27b1",
+      "case-2baff46e69c5",
+      "case-bd6ba717d724",
+      "case-c5ff206aa620",
+      "case-2ae3ba0e7c04",
+      "case-0a4169496c52",
+      "case-a6b0ca2b9bb8",
+      "case-e6a8f9f78ec9",
+      "case-a93065269a66",
+      "case-7e4f89bfa92b",
+      "case-0873161ba375",
+      "case-9b588ea912ef",
+      "case-61f30a0f53d3",
+      "case-3c88a856bb23",
+      "case-587606b7d756",
+      "case-dad5c6428f29",
+      "case-f82d7ce6c5cd",
+      "case-7c1cc9764bd8",
+      "case-f2fdd7a3434f",
+      "case-147cdbee6c09",
+      "case-7f7b359b8a22",
+      "case-99bcd0472bcb",
+      "case-da35129c4aed",
+      "case-b1982fab87cc",
+      "case-c0026642dd4f",
+      "case-c50548dd51e0",
+      "case-da2e1a39f505",
+      "case-007a5adb5fce",
+      "case-b0a6a6e9f5c1",
+      "case-36b0f6ba266a",
+      "case-eae8d8e0128e",
+      "case-71df4c9bf40a",
+      "case-807e1b24665c",
+      "case-cf45410cb861",
+      "case-b91ce03db14e",
+      "case-cc5ca10e797b",
+      "case-709405f73160",
+      "case-594d5f572419",
+      "case-f3cd00dc7ef9",
+      "case-27cad9f1fbe0",
+      "case-ed3460f502f9",
+      "case-9d6905d50fb1",
+      "case-3b36e3c6c214",
+      "case-e22a0c63fcbd",
+      "case-5bd8eebad50d",
+      "case-7fa9a827d0fa",
+      "case-48541f1cee48",
+      "case-f17de5d3097b",
+      "case-4611b90e13a7",
+      "case-2d7c896e00e3",
+      "case-c9b377b743a9",
+      "case-1fb7d16e7c61",
+      "case-0d62c81417b2",
+      "case-1f8cb1c4db42",
+      "case-78dddd193fbb",
+      "case-47943a4a67b9",
+      "case-1efff70812da",
+      "case-482fdbe4f113",
+      "case-949b66b212bc",
+      "case-44391f402702",
+      "case-1350aa9b650c",
+      "case-9fe997715f29",
+      "case-c1eb23cbd86b",
+      "case-5ef78a195148",
+      "case-b8f139bd29be",
+      "case-5bbef5717b87",
+      "case-9c284ab99818",
+      "case-df294ba4cdfa",
+      "case-bfe835912cfc",
+      "case-2d034ffb6438",
+      "case-c28fb91b9a3f",
+      "case-777a2877c891",
+      "case-73ae4ac261fc",
+      "case-be0b0ed82582",
+      "case-4e9f0a32ae93",
+      "case-fc246012dea8",
+      "case-abe30fe84968",
+      "case-8c4c28a9d46d",
+      "case-18a20a2ed418",
+      "case-0af8da819915",
+      "case-58e1099206fd",
+      "case-1dbd41b9f990",
+      "case-1a04799f4b14",
+      "case-ad7aaa711950",
+      "case-c63d8b498bba",
+      "case-40f6aecac1b5",
+      "case-5d462ad71197",
+      "case-80bf2d37d20d",
+      "case-2b2e27c47fdb",
+      "case-901a5a33e0f8",
+      "case-adf31a5e45c0",
+      "case-00b6a08f044a",
+      "case-2be111f786fa",
+      "case-b0e842c54429",
+      "case-daf6cef5867b",
+      "case-25ad3a123547",
+      "case-cc46b7fff800",
+      "case-0e70d2d8c87f",
+      "case-1c214e77488f",
+      "case-eaf16dd287ce",
+      "case-c6e6a99fcbad",
+      "case-50c0d87a476e",
+      "case-adfe87440777",
+      "case-fad00b40eb85",
+      "case-48cf06ce6cd9",
+      "case-4f394a25d9c7",
+      "case-8dfcdd118994",
+      "case-e33b901c6805",
+      "case-944e774494c9",
+      "case-467cd3b7ad0d",
+      "case-b0c4be04ca62",
+      "case-3e1585033198",
+      "case-6e86e51546d0",
+      "case-666f10b8ffd6",
+      "case-9e067315cea9",
+      "case-b3c6a6ceb4bf",
+      "case-262cc96fa62b",
+      "case-3e15525c2ad5",
+      "case-192ae88cac75",
+      "case-c66d080dfe7c",
+      "case-d96300d752d6",
+      "case-e3420714a350",
+      "case-8f9f66b74653",
+      "case-fcd58e5ca5b2",
+      "case-99a04e57b8a1",
+      "case-e2012a3843ac",
+      "case-a8356283be00",
+      "case-ed4b02ce2a33",
+      "case-c5af50c98c77",
+      "case-fe6b470dcd4a",
+      "case-82e791fc4af4",
+      "case-88f563237dc8",
+      "case-d853ca9eae00",
+      "case-186c71e93f35",
+      "case-6eb6d0cc5ee2",
+      "case-56cae2dcc8a4",
+      "case-288ee80a4430",
+      "case-9a13c1ecbf3e",
+      "case-1dc465773900",
+      "case-af2dded17f73",
+      "case-7c4f70fc14ac",
+      "case-2f88b5fcd08d",
+      "case-29632e3c4a43",
+      "case-f6340172fed0",
+      "case-3f9439488798",
+      "case-10eb23451c8f",
+      "case-a2a8be7ac65c",
+      "case-1fb11cf7a898",
+      "case-8f698036fdcb",
+      "case-654f58518f16",
+      "case-3737eaec3552",
+      "case-23a888daad31",
+      "case-68c072812ef5",
+      "case-e14641148b28",
+      "case-8ca4aeb32f13",
+      "case-d95a9387c87b",
+      "case-f03b06e65efa",
+      "case-d6ce42981dc1",
+      "case-0450050260ca",
+      "case-b581de54493d",
+      "case-fa0fc3b71d2e",
+      "case-179a6ad0c04b",
+      "case-3c9c73dc6354",
+      "case-6bfc153f09e5",
+      "case-c0d492e895a5",
+      "case-58cb94a983d4",
+      "case-b6a324f833b0",
+      "case-bfc18834938e",
+      "case-fab5a43791d6",
+      "case-a06843842cec",
+      "case-b11ce4ebf296",
+      "case-ad9137e81269",
+      "case-d3ced08ca7a2",
+      "case-5c0147a2fab2",
+      "case-f6d90c7daf8c",
+      "case-668826b3b61f",
+      "case-2e28aa700e57",
+      "case-1190739b3a56",
+      "case-b45bf5eab1b5",
+      "case-80ea388e7b03",
+      "case-aa26f28c6d8c",
+      "case-dac6b335a5ef",
+      "case-7ca2d2905cce",
+      "case-4024e8ef4b4e",
+      "case-eda83295468e",
+      "case-e044e4762b44",
+      "case-a0894658f737",
+      "case-21a708d8c3a7",
+      "case-0a49c62160d1",
+      "case-416ecf931054",
+      "case-2d2b856f1707",
+      "case-3b05d9de92f2",
+      "case-b1f4db5edf90",
+      "case-c956152bb76a",
+      "case-d34cc9dd19d6",
+      "case-a79381d199e1",
+      "case-fe76f3c67a66",
+      "case-e68300dfcb3a",
+      "case-2cee4897bc4c",
+      "case-d0fedd1b2e7e",
+      "case-b81d2df9400f",
+      "case-f8b3b001264f",
+      "case-ae20266eb950",
+      "case-69c730628499",
+      "case-4b37d34d863f",
+      "case-0035d51f34bf",
+      "case-4d491658f67b",
+      "case-b9850e39f52e",
+      "case-4b949ef4576c",
+      "case-8b215e786770",
+      "case-931011ddfc91",
+      "case-09fd69cfabd5",
+      "case-7005ceb2fd89",
+      "case-13fe064ec1c5",
+      "case-ac55287fcd3b",
+      "case-81a0380d8439",
+      "case-1ab2f1402c45",
+      "case-66e6c2975d6f",
+      "case-0ea2402d0302",
+      "case-9b3c61748018",
+      "case-ef27ad4c07a5",
+      "case-2461e18a408e",
+      "case-29e1fe16d718",
+      "case-141c9b0d2e56",
+      "case-4a7f2f30bdd4",
+      "case-8dd500395232",
+      "case-62533f9d0b95",
+      "case-a72d6c140428",
+      "case-6516fa92997f",
+      "case-7a2a7869c6bb",
+      "case-53b14c4bdca4",
+      "case-a561e6177fd0",
+      "case-40ab4faf32b7",
+      "case-7a1e313befce",
+      "case-dfbe47a26057",
+      "case-454fdae1861e",
+      "case-0dc363a8969d",
+      "case-fde9bb893d5b",
+      "case-cbdff8c6a943",
+      "case-c854e6ecffc8",
+      "case-f9f281ef5ba4",
+      "case-2d3088f5bc28",
+      "case-061383e6718c",
+      "case-b7e9b5a84ef3",
+      "case-ad890afcfc49",
+      "case-bb4f0745110d",
+      "case-fec58ad700c1",
+      "case-f53723f2b6ae",
+      "case-e271f351d3f3",
+      "case-33d0f6f24d96",
+      "case-35e826ed9422",
+      "case-12404c6100b8",
+      "case-42a104fe0540",
+      "case-37cb3789f096",
+      "case-6616e7d62180",
+      "case-0fd973d62791",
+      "case-e29442a8d81a",
+      "case-1e42c1862f23",
+      "case-f08819f1b1c0",
+      "case-5ad66785f5f8",
+      "case-fce64231bfd1",
+      "case-a11d466fc610",
+      "case-21c6411f2410",
+      "case-b2bc20839c80",
+      "case-f3f118682a99",
+      "case-fc41868ed0f5",
+      "case-c2cc23fa4148",
+      "case-775f3c37a581",
+      "case-b5f21420e4cf",
+      "case-cb9ca46e67c8",
+      "case-4aea0938402d",
+      "case-8c324100604c",
+      "case-2d9fedcc157d",
+      "case-2efa25fb1ed8",
+      "case-62096a693fd0",
+      "case-196d6c178f28",
+      "case-2ecd971c32d0",
+      "case-e6dbede731fa",
+      "case-a0ab234395dd",
+      "case-7b727ed7ef03",
+      "case-c9fb7bd72b2b",
+      "case-7e77ff8d1ab2",
+      "case-016128f4dfa2",
+      "case-696638d7ccd6",
+      "case-ae094a4febf8",
+      "case-7227eb77e50a",
+      "case-e089824a107b",
+      "case-f87af6994f73",
+      "case-e8f9abe799cd",
+      "case-df27bd9ee4ee",
+      "case-07b7413a7748",
+      "case-be6551462b7d",
+      "case-ae0b94dfe9f8",
+      "case-51f9cc1d4c84",
+      "case-928686fab5ea",
+      "case-6d3c19d9be2c",
+      "case-0df57d561e71",
+      "case-0e39bd13be9f",
+      "case-43aa80a43854",
+      "case-7eb5e39b777b",
+      "case-240408f9b74b",
+      "case-365c4ddb4310",
+      "case-fd8d87268690",
+      "case-9c01d85ccffc",
+      "case-1a6ca85be4a6",
+      "case-6decad61b232",
+      "case-53d3e643ceb8",
+      "case-e8f0411a954a",
+      "case-65771f84f1fa",
+      "case-7be1363977d2",
+      "case-d61f32eb4e4b",
+      "case-a619b2407a1d",
+      "case-88e0131e4d99",
+      "case-7f27c23ff938",
+      "case-77da13fb377a",
+      "case-7972d7f3c02b",
+      "case-b64bb1dbe03f",
+      "case-da58b55695e1",
+      "case-3d4cad241998"
+    ],
+    "checks": [
+      {
+        "id": "check-bf6d0b5a81ee",
+        "suite_id": "suite-15a545af29d6",
+        "name": "Expected answer match",
+        "check_type": "contains",
+        "config": {
+          "source": "expected_answer.must_include"
+        },
+        "severity": "blocking",
+        "enabled": true
+      },
+      {
+        "id": "check-df8f3a1ecfb4",
+        "suite_id": "suite-15a545af29d6",
+        "name": "Hidden trap handled",
+        "check_type": "llm_judge",
+        "config": {
+          "source": "hidden_traps.expected_behavior"
+        },
+        "severity": "blocking",
+        "enabled": true
+      },
+      {
+        "id": "check-156238ef88ab",
+        "suite_id": "suite-15a545af29d6",
+        "name": "Trace causality",
+        "check_type": "trace",
+        "config": {
+          "require_correct_evidence_path": true
+        },
+        "severity": "warning",
+        "enabled": true
+      }
+    ],
+    "failure_families": [
+      "format_violation",
+      "hallucination",
+      "instruction_conflict",
+      "long_context_retrieval",
+      "multi_hop_reasoning",
+      "prompt_injection",
+      "rag_contradiction",
+      "refusal_boundary",
+      "tool_misuse"
+    ],
+    "created_at": "2026-07-01T06:33:36.582505Z",
+    "metadata": {
+      "base_items": 72,
+      "cases_with_variants": 360
+    }
+  },
+  "case_count": 360,
+  "families": [
+    "format_violation",
+    "hallucination",
+    "instruction_conflict",
+    "long_context_retrieval",
+    "multi_hop_reasoning",
+    "prompt_injection",
+    "rag_contradiction",
+    "refusal_boundary",
+    "tool_misuse"
+  ],
+  "base_cases": 72,
+  "variant_cases": 288,
+  "lineage": [
+    {
+      "case_id": "case-b099f24934ba",
+      "seed_id": "bp-hallucination-42-0001-4582",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-b95c76991169",
+      "seed_id": "bp-hallucination-42-0001-4582",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-76241d4bc3ce",
+      "seed_id": "bp-hallucination-42-0001-4582",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-49c6a7500bdd",
+      "seed_id": "bp-hallucination-42-0001-4582",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-07edeaa833f7",
+      "seed_id": "bp-hallucination-42-0001-4582",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-5dd1cd979031",
+      "seed_id": "bp-hallucination-42-0002-7924",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-48d22781d531",
+      "seed_id": "bp-hallucination-42-0002-7924",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-bd07167bcce6",
+      "seed_id": "bp-hallucination-42-0002-7924",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-d1e386786f48",
+      "seed_id": "bp-hallucination-42-0002-7924",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-9f75c25430be",
+      "seed_id": "bp-hallucination-42-0002-7924",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-66b835dde5ad",
+      "seed_id": "bp-hallucination-42-0003-6635",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-790783e79841",
+      "seed_id": "bp-hallucination-42-0003-6635",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-a66f757d6b4d",
+      "seed_id": "bp-hallucination-42-0003-6635",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-5d020b7bc255",
+      "seed_id": "bp-hallucination-42-0003-6635",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-a7174ddf3ab0",
+      "seed_id": "bp-hallucination-42-0003-6635",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-7150d389e3b5",
+      "seed_id": "bp-hallucination-42-0004-6925",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-66332332778a",
+      "seed_id": "bp-hallucination-42-0004-6925",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-262bb0db18df",
+      "seed_id": "bp-hallucination-42-0004-6925",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-a136eccd8896",
+      "seed_id": "bp-hallucination-42-0004-6925",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f99e758681e7",
+      "seed_id": "bp-hallucination-42-0004-6925",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-f92fe542854b",
+      "seed_id": "bp-hallucination-42-0005-5554",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-a01bfd48045e",
+      "seed_id": "bp-hallucination-42-0005-5554",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-80f89c47a8e1",
+      "seed_id": "bp-hallucination-42-0005-5554",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-271a9be3cc23",
+      "seed_id": "bp-hallucination-42-0005-5554",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-681b4f243a6a",
+      "seed_id": "bp-hallucination-42-0005-5554",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-7cf7978ff4f3",
+      "seed_id": "bp-hallucination-42-0006-3677",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-aec3c97c074d",
+      "seed_id": "bp-hallucination-42-0006-3677",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-6890aeba468b",
+      "seed_id": "bp-hallucination-42-0006-3677",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-c1fbabfec3c3",
+      "seed_id": "bp-hallucination-42-0006-3677",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-84ba59cec764",
+      "seed_id": "bp-hallucination-42-0006-3677",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-6e803650f0d8",
+      "seed_id": "bp-hallucination-42-0008-3287",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-e89e6cab470a",
+      "seed_id": "bp-hallucination-42-0008-3287",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-6de06c684899",
+      "seed_id": "bp-hallucination-42-0008-3287",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-266e6303dbc5",
+      "seed_id": "bp-hallucination-42-0008-3287",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-0a40b37bd3e1",
+      "seed_id": "bp-hallucination-42-0008-3287",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-bec85ccce061",
+      "seed_id": "bp-hallucination-42-0009-2489",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-2fd40ae5cbf0",
+      "seed_id": "bp-hallucination-42-0009-2489",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-8b73498bc7ff",
+      "seed_id": "bp-hallucination-42-0009-2489",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-442318ca0cc4",
+      "seed_id": "bp-hallucination-42-0009-2489",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-062d2a3f0d6c",
+      "seed_id": "bp-hallucination-42-0009-2489",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f2f06aff66ad",
+      "seed_id": "bp-instruction_conflict-42-0001-2827",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-341ba3fb27b1",
+      "seed_id": "bp-instruction_conflict-42-0001-2827",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-2baff46e69c5",
+      "seed_id": "bp-instruction_conflict-42-0001-2827",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-bd6ba717d724",
+      "seed_id": "bp-instruction_conflict-42-0001-2827",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-c5ff206aa620",
+      "seed_id": "bp-instruction_conflict-42-0001-2827",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-2ae3ba0e7c04",
+      "seed_id": "bp-instruction_conflict-42-0002-5889",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-0a4169496c52",
+      "seed_id": "bp-instruction_conflict-42-0002-5889",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-a6b0ca2b9bb8",
+      "seed_id": "bp-instruction_conflict-42-0002-5889",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-e6a8f9f78ec9",
+      "seed_id": "bp-instruction_conflict-42-0002-5889",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-a93065269a66",
+      "seed_id": "bp-instruction_conflict-42-0002-5889",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-7e4f89bfa92b",
+      "seed_id": "bp-instruction_conflict-42-0003-6947",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-0873161ba375",
+      "seed_id": "bp-instruction_conflict-42-0003-6947",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-9b588ea912ef",
+      "seed_id": "bp-instruction_conflict-42-0003-6947",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-61f30a0f53d3",
+      "seed_id": "bp-instruction_conflict-42-0003-6947",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-3c88a856bb23",
+      "seed_id": "bp-instruction_conflict-42-0003-6947",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-587606b7d756",
+      "seed_id": "bp-instruction_conflict-42-0004-3060",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-dad5c6428f29",
+      "seed_id": "bp-instruction_conflict-42-0004-3060",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-f82d7ce6c5cd",
+      "seed_id": "bp-instruction_conflict-42-0004-3060",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-7c1cc9764bd8",
+      "seed_id": "bp-instruction_conflict-42-0004-3060",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f2fdd7a3434f",
+      "seed_id": "bp-instruction_conflict-42-0004-3060",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-147cdbee6c09",
+      "seed_id": "bp-instruction_conflict-42-0005-7537",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-7f7b359b8a22",
+      "seed_id": "bp-instruction_conflict-42-0005-7537",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-99bcd0472bcb",
+      "seed_id": "bp-instruction_conflict-42-0005-7537",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-da35129c4aed",
+      "seed_id": "bp-instruction_conflict-42-0005-7537",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-b1982fab87cc",
+      "seed_id": "bp-instruction_conflict-42-0005-7537",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-c0026642dd4f",
+      "seed_id": "bp-instruction_conflict-42-0006-4770",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-c50548dd51e0",
+      "seed_id": "bp-instruction_conflict-42-0006-4770",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-da2e1a39f505",
+      "seed_id": "bp-instruction_conflict-42-0006-4770",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-007a5adb5fce",
+      "seed_id": "bp-instruction_conflict-42-0006-4770",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-b0a6a6e9f5c1",
+      "seed_id": "bp-instruction_conflict-42-0006-4770",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-36b0f6ba266a",
+      "seed_id": "bp-instruction_conflict-42-0008-7669",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-eae8d8e0128e",
+      "seed_id": "bp-instruction_conflict-42-0008-7669",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-71df4c9bf40a",
+      "seed_id": "bp-instruction_conflict-42-0008-7669",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-807e1b24665c",
+      "seed_id": "bp-instruction_conflict-42-0008-7669",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-cf45410cb861",
+      "seed_id": "bp-instruction_conflict-42-0008-7669",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-b91ce03db14e",
+      "seed_id": "bp-instruction_conflict-42-0009-1993",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-cc5ca10e797b",
+      "seed_id": "bp-instruction_conflict-42-0009-1993",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-709405f73160",
+      "seed_id": "bp-instruction_conflict-42-0009-1993",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-594d5f572419",
+      "seed_id": "bp-instruction_conflict-42-0009-1993",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-f3cd00dc7ef9",
+      "seed_id": "bp-instruction_conflict-42-0009-1993",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-27cad9f1fbe0",
+      "seed_id": "bp-multi_hop_reasoning-42-0001-1241",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-ed3460f502f9",
+      "seed_id": "bp-multi_hop_reasoning-42-0001-1241",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-9d6905d50fb1",
+      "seed_id": "bp-multi_hop_reasoning-42-0001-1241",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-3b36e3c6c214",
+      "seed_id": "bp-multi_hop_reasoning-42-0001-1241",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-e22a0c63fcbd",
+      "seed_id": "bp-multi_hop_reasoning-42-0001-1241",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-5bd8eebad50d",
+      "seed_id": "bp-multi_hop_reasoning-42-0002-1035",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-7fa9a827d0fa",
+      "seed_id": "bp-multi_hop_reasoning-42-0002-1035",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-48541f1cee48",
+      "seed_id": "bp-multi_hop_reasoning-42-0002-1035",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f17de5d3097b",
+      "seed_id": "bp-multi_hop_reasoning-42-0002-1035",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-4611b90e13a7",
+      "seed_id": "bp-multi_hop_reasoning-42-0002-1035",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-2d7c896e00e3",
+      "seed_id": "bp-multi_hop_reasoning-42-0003-4566",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-c9b377b743a9",
+      "seed_id": "bp-multi_hop_reasoning-42-0003-4566",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-1fb7d16e7c61",
+      "seed_id": "bp-multi_hop_reasoning-42-0003-4566",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-0d62c81417b2",
+      "seed_id": "bp-multi_hop_reasoning-42-0003-4566",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-1f8cb1c4db42",
+      "seed_id": "bp-multi_hop_reasoning-42-0003-4566",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-78dddd193fbb",
+      "seed_id": "bp-multi_hop_reasoning-42-0004-2312",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-47943a4a67b9",
+      "seed_id": "bp-multi_hop_reasoning-42-0004-2312",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-1efff70812da",
+      "seed_id": "bp-multi_hop_reasoning-42-0004-2312",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-482fdbe4f113",
+      "seed_id": "bp-multi_hop_reasoning-42-0004-2312",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-949b66b212bc",
+      "seed_id": "bp-multi_hop_reasoning-42-0004-2312",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-44391f402702",
+      "seed_id": "bp-multi_hop_reasoning-42-0005-1651",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-1350aa9b650c",
+      "seed_id": "bp-multi_hop_reasoning-42-0005-1651",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-9fe997715f29",
+      "seed_id": "bp-multi_hop_reasoning-42-0005-1651",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-c1eb23cbd86b",
+      "seed_id": "bp-multi_hop_reasoning-42-0005-1651",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-5ef78a195148",
+      "seed_id": "bp-multi_hop_reasoning-42-0005-1651",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-b8f139bd29be",
+      "seed_id": "bp-multi_hop_reasoning-42-0006-5915",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-5bbef5717b87",
+      "seed_id": "bp-multi_hop_reasoning-42-0006-5915",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-9c284ab99818",
+      "seed_id": "bp-multi_hop_reasoning-42-0006-5915",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-df294ba4cdfa",
+      "seed_id": "bp-multi_hop_reasoning-42-0006-5915",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-bfe835912cfc",
+      "seed_id": "bp-multi_hop_reasoning-42-0006-5915",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-2d034ffb6438",
+      "seed_id": "bp-multi_hop_reasoning-42-0008-5956",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-c28fb91b9a3f",
+      "seed_id": "bp-multi_hop_reasoning-42-0008-5956",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-777a2877c891",
+      "seed_id": "bp-multi_hop_reasoning-42-0008-5956",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-73ae4ac261fc",
+      "seed_id": "bp-multi_hop_reasoning-42-0008-5956",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-be0b0ed82582",
+      "seed_id": "bp-multi_hop_reasoning-42-0008-5956",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-4e9f0a32ae93",
+      "seed_id": "bp-multi_hop_reasoning-42-0009-3546",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-fc246012dea8",
+      "seed_id": "bp-multi_hop_reasoning-42-0009-3546",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-abe30fe84968",
+      "seed_id": "bp-multi_hop_reasoning-42-0009-3546",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-8c4c28a9d46d",
+      "seed_id": "bp-multi_hop_reasoning-42-0009-3546",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-18a20a2ed418",
+      "seed_id": "bp-multi_hop_reasoning-42-0009-3546",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-0af8da819915",
+      "seed_id": "bp-tool_misuse-42-0001-3647",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-58e1099206fd",
+      "seed_id": "bp-tool_misuse-42-0001-3647",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-1dbd41b9f990",
+      "seed_id": "bp-tool_misuse-42-0001-3647",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-1a04799f4b14",
+      "seed_id": "bp-tool_misuse-42-0001-3647",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-ad7aaa711950",
+      "seed_id": "bp-tool_misuse-42-0001-3647",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-c63d8b498bba",
+      "seed_id": "bp-tool_misuse-42-0002-7049",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-40f6aecac1b5",
+      "seed_id": "bp-tool_misuse-42-0002-7049",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-5d462ad71197",
+      "seed_id": "bp-tool_misuse-42-0002-7049",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-80bf2d37d20d",
+      "seed_id": "bp-tool_misuse-42-0002-7049",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-2b2e27c47fdb",
+      "seed_id": "bp-tool_misuse-42-0002-7049",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-901a5a33e0f8",
+      "seed_id": "bp-tool_misuse-42-0003-5088",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-adf31a5e45c0",
+      "seed_id": "bp-tool_misuse-42-0003-5088",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-00b6a08f044a",
+      "seed_id": "bp-tool_misuse-42-0003-5088",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-2be111f786fa",
+      "seed_id": "bp-tool_misuse-42-0003-5088",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-b0e842c54429",
+      "seed_id": "bp-tool_misuse-42-0003-5088",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-daf6cef5867b",
+      "seed_id": "bp-tool_misuse-42-0004-3938",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-25ad3a123547",
+      "seed_id": "bp-tool_misuse-42-0004-3938",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-cc46b7fff800",
+      "seed_id": "bp-tool_misuse-42-0004-3938",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-0e70d2d8c87f",
+      "seed_id": "bp-tool_misuse-42-0004-3938",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-1c214e77488f",
+      "seed_id": "bp-tool_misuse-42-0004-3938",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-eaf16dd287ce",
+      "seed_id": "bp-tool_misuse-42-0005-8711",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-c6e6a99fcbad",
+      "seed_id": "bp-tool_misuse-42-0005-8711",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-50c0d87a476e",
+      "seed_id": "bp-tool_misuse-42-0005-8711",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-adfe87440777",
+      "seed_id": "bp-tool_misuse-42-0005-8711",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-fad00b40eb85",
+      "seed_id": "bp-tool_misuse-42-0005-8711",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-48cf06ce6cd9",
+      "seed_id": "bp-tool_misuse-42-0006-5564",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-4f394a25d9c7",
+      "seed_id": "bp-tool_misuse-42-0006-5564",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-8dfcdd118994",
+      "seed_id": "bp-tool_misuse-42-0006-5564",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-e33b901c6805",
+      "seed_id": "bp-tool_misuse-42-0006-5564",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-944e774494c9",
+      "seed_id": "bp-tool_misuse-42-0006-5564",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-467cd3b7ad0d",
+      "seed_id": "bp-tool_misuse-42-0008-4114",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-b0c4be04ca62",
+      "seed_id": "bp-tool_misuse-42-0008-4114",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-3e1585033198",
+      "seed_id": "bp-tool_misuse-42-0008-4114",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-6e86e51546d0",
+      "seed_id": "bp-tool_misuse-42-0008-4114",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-666f10b8ffd6",
+      "seed_id": "bp-tool_misuse-42-0008-4114",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-9e067315cea9",
+      "seed_id": "bp-tool_misuse-42-0009-6409",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-b3c6a6ceb4bf",
+      "seed_id": "bp-tool_misuse-42-0009-6409",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-262cc96fa62b",
+      "seed_id": "bp-tool_misuse-42-0009-6409",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-3e15525c2ad5",
+      "seed_id": "bp-tool_misuse-42-0009-6409",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-192ae88cac75",
+      "seed_id": "bp-tool_misuse-42-0009-6409",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-c66d080dfe7c",
+      "seed_id": "bp-long_context_retrieval-42-0001-2389",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-d96300d752d6",
+      "seed_id": "bp-long_context_retrieval-42-0001-2389",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-e3420714a350",
+      "seed_id": "bp-long_context_retrieval-42-0001-2389",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-8f9f66b74653",
+      "seed_id": "bp-long_context_retrieval-42-0001-2389",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-fcd58e5ca5b2",
+      "seed_id": "bp-long_context_retrieval-42-0001-2389",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-99a04e57b8a1",
+      "seed_id": "bp-long_context_retrieval-42-0002-1090",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-e2012a3843ac",
+      "seed_id": "bp-long_context_retrieval-42-0002-1090",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-a8356283be00",
+      "seed_id": "bp-long_context_retrieval-42-0002-1090",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-ed4b02ce2a33",
+      "seed_id": "bp-long_context_retrieval-42-0002-1090",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-c5af50c98c77",
+      "seed_id": "bp-long_context_retrieval-42-0002-1090",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-fe6b470dcd4a",
+      "seed_id": "bp-long_context_retrieval-42-0003-9540",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-82e791fc4af4",
+      "seed_id": "bp-long_context_retrieval-42-0003-9540",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-88f563237dc8",
+      "seed_id": "bp-long_context_retrieval-42-0003-9540",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-d853ca9eae00",
+      "seed_id": "bp-long_context_retrieval-42-0003-9540",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-186c71e93f35",
+      "seed_id": "bp-long_context_retrieval-42-0003-9540",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-6eb6d0cc5ee2",
+      "seed_id": "bp-long_context_retrieval-42-0004-8633",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-56cae2dcc8a4",
+      "seed_id": "bp-long_context_retrieval-42-0004-8633",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-288ee80a4430",
+      "seed_id": "bp-long_context_retrieval-42-0004-8633",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-9a13c1ecbf3e",
+      "seed_id": "bp-long_context_retrieval-42-0004-8633",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-1dc465773900",
+      "seed_id": "bp-long_context_retrieval-42-0004-8633",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-af2dded17f73",
+      "seed_id": "bp-long_context_retrieval-42-0005-7371",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-7c4f70fc14ac",
+      "seed_id": "bp-long_context_retrieval-42-0005-7371",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-2f88b5fcd08d",
+      "seed_id": "bp-long_context_retrieval-42-0005-7371",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-29632e3c4a43",
+      "seed_id": "bp-long_context_retrieval-42-0005-7371",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-f6340172fed0",
+      "seed_id": "bp-long_context_retrieval-42-0005-7371",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-3f9439488798",
+      "seed_id": "bp-long_context_retrieval-42-0006-7906",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-10eb23451c8f",
+      "seed_id": "bp-long_context_retrieval-42-0006-7906",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-a2a8be7ac65c",
+      "seed_id": "bp-long_context_retrieval-42-0006-7906",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-1fb11cf7a898",
+      "seed_id": "bp-long_context_retrieval-42-0006-7906",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-8f698036fdcb",
+      "seed_id": "bp-long_context_retrieval-42-0006-7906",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-654f58518f16",
+      "seed_id": "bp-long_context_retrieval-42-0008-2129",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-3737eaec3552",
+      "seed_id": "bp-long_context_retrieval-42-0008-2129",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-23a888daad31",
+      "seed_id": "bp-long_context_retrieval-42-0008-2129",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-68c072812ef5",
+      "seed_id": "bp-long_context_retrieval-42-0008-2129",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-e14641148b28",
+      "seed_id": "bp-long_context_retrieval-42-0008-2129",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-8ca4aeb32f13",
+      "seed_id": "bp-long_context_retrieval-42-0009-4995",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-d95a9387c87b",
+      "seed_id": "bp-long_context_retrieval-42-0009-4995",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f03b06e65efa",
+      "seed_id": "bp-long_context_retrieval-42-0009-4995",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-d6ce42981dc1",
+      "seed_id": "bp-long_context_retrieval-42-0009-4995",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-0450050260ca",
+      "seed_id": "bp-long_context_retrieval-42-0009-4995",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-b581de54493d",
+      "seed_id": "bp-refusal_boundary-42-0001-6016",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-fa0fc3b71d2e",
+      "seed_id": "bp-refusal_boundary-42-0001-6016",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-179a6ad0c04b",
+      "seed_id": "bp-refusal_boundary-42-0001-6016",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-3c9c73dc6354",
+      "seed_id": "bp-refusal_boundary-42-0001-6016",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-6bfc153f09e5",
+      "seed_id": "bp-refusal_boundary-42-0001-6016",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-c0d492e895a5",
+      "seed_id": "bp-refusal_boundary-42-0002-5438",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-58cb94a983d4",
+      "seed_id": "bp-refusal_boundary-42-0002-5438",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-b6a324f833b0",
+      "seed_id": "bp-refusal_boundary-42-0002-5438",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-bfc18834938e",
+      "seed_id": "bp-refusal_boundary-42-0002-5438",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-fab5a43791d6",
+      "seed_id": "bp-refusal_boundary-42-0002-5438",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-a06843842cec",
+      "seed_id": "bp-refusal_boundary-42-0003-4033",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-b11ce4ebf296",
+      "seed_id": "bp-refusal_boundary-42-0003-4033",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-ad9137e81269",
+      "seed_id": "bp-refusal_boundary-42-0003-4033",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-d3ced08ca7a2",
+      "seed_id": "bp-refusal_boundary-42-0003-4033",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-5c0147a2fab2",
+      "seed_id": "bp-refusal_boundary-42-0003-4033",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-f6d90c7daf8c",
+      "seed_id": "bp-refusal_boundary-42-0004-5853",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-668826b3b61f",
+      "seed_id": "bp-refusal_boundary-42-0004-5853",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-2e28aa700e57",
+      "seed_id": "bp-refusal_boundary-42-0004-5853",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-1190739b3a56",
+      "seed_id": "bp-refusal_boundary-42-0004-5853",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-b45bf5eab1b5",
+      "seed_id": "bp-refusal_boundary-42-0004-5853",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-80ea388e7b03",
+      "seed_id": "bp-refusal_boundary-42-0005-1893",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-aa26f28c6d8c",
+      "seed_id": "bp-refusal_boundary-42-0005-1893",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-dac6b335a5ef",
+      "seed_id": "bp-refusal_boundary-42-0005-1893",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-7ca2d2905cce",
+      "seed_id": "bp-refusal_boundary-42-0005-1893",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-4024e8ef4b4e",
+      "seed_id": "bp-refusal_boundary-42-0005-1893",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-eda83295468e",
+      "seed_id": "bp-refusal_boundary-42-0006-8690",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-e044e4762b44",
+      "seed_id": "bp-refusal_boundary-42-0006-8690",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-a0894658f737",
+      "seed_id": "bp-refusal_boundary-42-0006-8690",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-21a708d8c3a7",
+      "seed_id": "bp-refusal_boundary-42-0006-8690",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-0a49c62160d1",
+      "seed_id": "bp-refusal_boundary-42-0006-8690",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-416ecf931054",
+      "seed_id": "bp-refusal_boundary-42-0008-2940",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-2d2b856f1707",
+      "seed_id": "bp-refusal_boundary-42-0008-2940",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-3b05d9de92f2",
+      "seed_id": "bp-refusal_boundary-42-0008-2940",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-b1f4db5edf90",
+      "seed_id": "bp-refusal_boundary-42-0008-2940",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-c956152bb76a",
+      "seed_id": "bp-refusal_boundary-42-0008-2940",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-d34cc9dd19d6",
+      "seed_id": "bp-refusal_boundary-42-0009-8025",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-a79381d199e1",
+      "seed_id": "bp-refusal_boundary-42-0009-8025",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-fe76f3c67a66",
+      "seed_id": "bp-refusal_boundary-42-0009-8025",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-e68300dfcb3a",
+      "seed_id": "bp-refusal_boundary-42-0009-8025",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-2cee4897bc4c",
+      "seed_id": "bp-refusal_boundary-42-0009-8025",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-d0fedd1b2e7e",
+      "seed_id": "bp-format_violation-42-0001-8699",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-b81d2df9400f",
+      "seed_id": "bp-format_violation-42-0001-8699",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f8b3b001264f",
+      "seed_id": "bp-format_violation-42-0001-8699",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-ae20266eb950",
+      "seed_id": "bp-format_violation-42-0001-8699",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-69c730628499",
+      "seed_id": "bp-format_violation-42-0001-8699",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-4b37d34d863f",
+      "seed_id": "bp-format_violation-42-0002-5334",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-0035d51f34bf",
+      "seed_id": "bp-format_violation-42-0002-5334",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-4d491658f67b",
+      "seed_id": "bp-format_violation-42-0002-5334",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-b9850e39f52e",
+      "seed_id": "bp-format_violation-42-0002-5334",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-4b949ef4576c",
+      "seed_id": "bp-format_violation-42-0002-5334",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-8b215e786770",
+      "seed_id": "bp-format_violation-42-0003-1977",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-931011ddfc91",
+      "seed_id": "bp-format_violation-42-0003-1977",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-09fd69cfabd5",
+      "seed_id": "bp-format_violation-42-0003-1977",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-7005ceb2fd89",
+      "seed_id": "bp-format_violation-42-0003-1977",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-13fe064ec1c5",
+      "seed_id": "bp-format_violation-42-0003-1977",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-ac55287fcd3b",
+      "seed_id": "bp-format_violation-42-0004-5460",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-81a0380d8439",
+      "seed_id": "bp-format_violation-42-0004-5460",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-1ab2f1402c45",
+      "seed_id": "bp-format_violation-42-0004-5460",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-66e6c2975d6f",
+      "seed_id": "bp-format_violation-42-0004-5460",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-0ea2402d0302",
+      "seed_id": "bp-format_violation-42-0004-5460",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-9b3c61748018",
+      "seed_id": "bp-format_violation-42-0005-1423",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-ef27ad4c07a5",
+      "seed_id": "bp-format_violation-42-0005-1423",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-2461e18a408e",
+      "seed_id": "bp-format_violation-42-0005-1423",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-29e1fe16d718",
+      "seed_id": "bp-format_violation-42-0005-1423",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-141c9b0d2e56",
+      "seed_id": "bp-format_violation-42-0005-1423",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-4a7f2f30bdd4",
+      "seed_id": "bp-format_violation-42-0006-9502",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-8dd500395232",
+      "seed_id": "bp-format_violation-42-0006-9502",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-62533f9d0b95",
+      "seed_id": "bp-format_violation-42-0006-9502",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-a72d6c140428",
+      "seed_id": "bp-format_violation-42-0006-9502",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-6516fa92997f",
+      "seed_id": "bp-format_violation-42-0006-9502",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-7a2a7869c6bb",
+      "seed_id": "bp-format_violation-42-0008-8451",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-53b14c4bdca4",
+      "seed_id": "bp-format_violation-42-0008-8451",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-a561e6177fd0",
+      "seed_id": "bp-format_violation-42-0008-8451",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-40ab4faf32b7",
+      "seed_id": "bp-format_violation-42-0008-8451",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-7a1e313befce",
+      "seed_id": "bp-format_violation-42-0008-8451",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-dfbe47a26057",
+      "seed_id": "bp-format_violation-42-0009-4073",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-454fdae1861e",
+      "seed_id": "bp-format_violation-42-0009-4073",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-0dc363a8969d",
+      "seed_id": "bp-format_violation-42-0009-4073",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-fde9bb893d5b",
+      "seed_id": "bp-format_violation-42-0009-4073",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-cbdff8c6a943",
+      "seed_id": "bp-format_violation-42-0009-4073",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-c854e6ecffc8",
+      "seed_id": "bp-rag_contradiction-42-0001-1224",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-f9f281ef5ba4",
+      "seed_id": "bp-rag_contradiction-42-0001-1224",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-2d3088f5bc28",
+      "seed_id": "bp-rag_contradiction-42-0001-1224",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-061383e6718c",
+      "seed_id": "bp-rag_contradiction-42-0001-1224",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-b7e9b5a84ef3",
+      "seed_id": "bp-rag_contradiction-42-0001-1224",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-ad890afcfc49",
+      "seed_id": "bp-rag_contradiction-42-0002-9337",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-bb4f0745110d",
+      "seed_id": "bp-rag_contradiction-42-0002-9337",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-fec58ad700c1",
+      "seed_id": "bp-rag_contradiction-42-0002-9337",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-f53723f2b6ae",
+      "seed_id": "bp-rag_contradiction-42-0002-9337",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-e271f351d3f3",
+      "seed_id": "bp-rag_contradiction-42-0002-9337",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-33d0f6f24d96",
+      "seed_id": "bp-rag_contradiction-42-0003-9327",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-35e826ed9422",
+      "seed_id": "bp-rag_contradiction-42-0003-9327",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-12404c6100b8",
+      "seed_id": "bp-rag_contradiction-42-0003-9327",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-42a104fe0540",
+      "seed_id": "bp-rag_contradiction-42-0003-9327",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-37cb3789f096",
+      "seed_id": "bp-rag_contradiction-42-0003-9327",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-6616e7d62180",
+      "seed_id": "bp-rag_contradiction-42-0004-9022",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-0fd973d62791",
+      "seed_id": "bp-rag_contradiction-42-0004-9022",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-e29442a8d81a",
+      "seed_id": "bp-rag_contradiction-42-0004-9022",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-1e42c1862f23",
+      "seed_id": "bp-rag_contradiction-42-0004-9022",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-f08819f1b1c0",
+      "seed_id": "bp-rag_contradiction-42-0004-9022",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-5ad66785f5f8",
+      "seed_id": "bp-rag_contradiction-42-0005-4090",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-fce64231bfd1",
+      "seed_id": "bp-rag_contradiction-42-0005-4090",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-a11d466fc610",
+      "seed_id": "bp-rag_contradiction-42-0005-4090",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-21c6411f2410",
+      "seed_id": "bp-rag_contradiction-42-0005-4090",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-b2bc20839c80",
+      "seed_id": "bp-rag_contradiction-42-0005-4090",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-f3f118682a99",
+      "seed_id": "bp-rag_contradiction-42-0006-9115",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-fc41868ed0f5",
+      "seed_id": "bp-rag_contradiction-42-0006-9115",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-c2cc23fa4148",
+      "seed_id": "bp-rag_contradiction-42-0006-9115",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-775f3c37a581",
+      "seed_id": "bp-rag_contradiction-42-0006-9115",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-b5f21420e4cf",
+      "seed_id": "bp-rag_contradiction-42-0006-9115",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-cb9ca46e67c8",
+      "seed_id": "bp-rag_contradiction-42-0008-7226",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-4aea0938402d",
+      "seed_id": "bp-rag_contradiction-42-0008-7226",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-8c324100604c",
+      "seed_id": "bp-rag_contradiction-42-0008-7226",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-2d9fedcc157d",
+      "seed_id": "bp-rag_contradiction-42-0008-7226",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-2efa25fb1ed8",
+      "seed_id": "bp-rag_contradiction-42-0008-7226",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-62096a693fd0",
+      "seed_id": "bp-rag_contradiction-42-0009-8110",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-196d6c178f28",
+      "seed_id": "bp-rag_contradiction-42-0009-8110",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-2ecd971c32d0",
+      "seed_id": "bp-rag_contradiction-42-0009-8110",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-e6dbede731fa",
+      "seed_id": "bp-rag_contradiction-42-0009-8110",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-a0ab234395dd",
+      "seed_id": "bp-rag_contradiction-42-0009-8110",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-7b727ed7ef03",
+      "seed_id": "bp-prompt_injection-42-0001-2293",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-c9fb7bd72b2b",
+      "seed_id": "bp-prompt_injection-42-0001-2293",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-7e77ff8d1ab2",
+      "seed_id": "bp-prompt_injection-42-0001-2293",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-016128f4dfa2",
+      "seed_id": "bp-prompt_injection-42-0001-2293",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-696638d7ccd6",
+      "seed_id": "bp-prompt_injection-42-0001-2293",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-ae094a4febf8",
+      "seed_id": "bp-prompt_injection-42-0002-8529",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-7227eb77e50a",
+      "seed_id": "bp-prompt_injection-42-0002-8529",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-e089824a107b",
+      "seed_id": "bp-prompt_injection-42-0002-8529",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-f87af6994f73",
+      "seed_id": "bp-prompt_injection-42-0002-8529",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-e8f9abe799cd",
+      "seed_id": "bp-prompt_injection-42-0002-8529",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-df27bd9ee4ee",
+      "seed_id": "bp-prompt_injection-42-0003-5901",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-07b7413a7748",
+      "seed_id": "bp-prompt_injection-42-0003-5901",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-be6551462b7d",
+      "seed_id": "bp-prompt_injection-42-0003-5901",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-ae0b94dfe9f8",
+      "seed_id": "bp-prompt_injection-42-0003-5901",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-51f9cc1d4c84",
+      "seed_id": "bp-prompt_injection-42-0003-5901",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-928686fab5ea",
+      "seed_id": "bp-prompt_injection-42-0004-6881",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-6d3c19d9be2c",
+      "seed_id": "bp-prompt_injection-42-0004-6881",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-0df57d561e71",
+      "seed_id": "bp-prompt_injection-42-0004-6881",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-0e39bd13be9f",
+      "seed_id": "bp-prompt_injection-42-0004-6881",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-43aa80a43854",
+      "seed_id": "bp-prompt_injection-42-0004-6881",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-7eb5e39b777b",
+      "seed_id": "bp-prompt_injection-42-0005-9138",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-240408f9b74b",
+      "seed_id": "bp-prompt_injection-42-0005-9138",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-365c4ddb4310",
+      "seed_id": "bp-prompt_injection-42-0005-9138",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-fd8d87268690",
+      "seed_id": "bp-prompt_injection-42-0005-9138",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-9c01d85ccffc",
+      "seed_id": "bp-prompt_injection-42-0005-9138",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-1a6ca85be4a6",
+      "seed_id": "bp-prompt_injection-42-0006-2591",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-6decad61b232",
+      "seed_id": "bp-prompt_injection-42-0006-2591",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-53d3e643ceb8",
+      "seed_id": "bp-prompt_injection-42-0006-2591",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-e8f0411a954a",
+      "seed_id": "bp-prompt_injection-42-0006-2591",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-65771f84f1fa",
+      "seed_id": "bp-prompt_injection-42-0006-2591",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-7be1363977d2",
+      "seed_id": "bp-prompt_injection-42-0008-6549",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-d61f32eb4e4b",
+      "seed_id": "bp-prompt_injection-42-0008-6549",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-a619b2407a1d",
+      "seed_id": "bp-prompt_injection-42-0008-6549",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-88e0131e4d99",
+      "seed_id": "bp-prompt_injection-42-0008-6549",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    },
+    {
+      "case_id": "case-7f27c23ff938",
+      "seed_id": "bp-prompt_injection-42-0008-6549",
+      "mutator": "paraphrased_instruction",
+      "path": [
+        "base",
+        "paraphrased_instruction"
+      ]
+    },
+    {
+      "case_id": "case-77da13fb377a",
+      "seed_id": "bp-prompt_injection-42-0009-2479",
+      "mutator": "base",
+      "path": [
+        "base"
+      ]
+    },
+    {
+      "case_id": "case-7972d7f3c02b",
+      "seed_id": "bp-prompt_injection-42-0009-2479",
+      "mutator": "renamed_entities",
+      "path": [
+        "base",
+        "renamed_entities"
+      ]
+    },
+    {
+      "case_id": "case-b64bb1dbe03f",
+      "seed_id": "bp-prompt_injection-42-0009-2479",
+      "mutator": "irrelevant_context",
+      "path": [
+        "base",
+        "irrelevant_context"
+      ]
+    },
+    {
+      "case_id": "case-da58b55695e1",
+      "seed_id": "bp-prompt_injection-42-0009-2479",
+      "mutator": "reordered_facts",
+      "path": [
+        "base",
+        "reordered_facts"
+      ]
+    },
+    {
+      "case_id": "case-3d4cad241998",
+      "seed_id": "bp-prompt_injection-42-0009-2479",
+      "mutator": "conflicting_evidence",
+      "path": [
+        "base",
+        "conflicting_evidence"
+      ]
+    }
+  ]
+}

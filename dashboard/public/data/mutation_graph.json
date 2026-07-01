@@ -1,0 +1,642 @@
+[
+  {
+    "id": "case-b099f24934ba",
+    "parent": null,
+    "seed": "bp-hallucination-42-0001-4582",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Aster release claim"
+  },
+  {
+    "id": "case-b95c76991169",
+    "parent": "case-b099f24934ba",
+    "seed": "bp-hallucination-42-0001-4582",
+    "mutator": "reordered_facts",
+    "family": "hallucination",
+    "title": "Ground Aster release claim [reordered_facts]"
+  },
+  {
+    "id": "case-76241d4bc3ce",
+    "parent": "case-b099f24934ba",
+    "seed": "bp-hallucination-42-0001-4582",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Aster release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-49c6a7500bdd",
+    "parent": "case-b099f24934ba",
+    "seed": "bp-hallucination-42-0001-4582",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Aster release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-07edeaa833f7",
+    "parent": "case-b099f24934ba",
+    "seed": "bp-hallucination-42-0001-4582",
+    "mutator": "renamed_entities",
+    "family": "hallucination",
+    "title": "Ground Aster release claim [renamed_entities]"
+  },
+  {
+    "id": "case-5dd1cd979031",
+    "parent": null,
+    "seed": "bp-hallucination-42-0002-7924",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Helio release claim"
+  },
+  {
+    "id": "case-48d22781d531",
+    "parent": "case-5dd1cd979031",
+    "seed": "bp-hallucination-42-0002-7924",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-bd07167bcce6",
+    "parent": "case-5dd1cd979031",
+    "seed": "bp-hallucination-42-0002-7924",
+    "mutator": "conflicting_evidence",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [conflicting_evidence]"
+  },
+  {
+    "id": "case-d1e386786f48",
+    "parent": "case-5dd1cd979031",
+    "seed": "bp-hallucination-42-0002-7924",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-9f75c25430be",
+    "parent": "case-5dd1cd979031",
+    "seed": "bp-hallucination-42-0002-7924",
+    "mutator": "renamed_entities",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [renamed_entities]"
+  },
+  {
+    "id": "case-66b835dde5ad",
+    "parent": null,
+    "seed": "bp-hallucination-42-0003-6635",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Lumen release claim"
+  },
+  {
+    "id": "case-790783e79841",
+    "parent": "case-66b835dde5ad",
+    "seed": "bp-hallucination-42-0003-6635",
+    "mutator": "conflicting_evidence",
+    "family": "hallucination",
+    "title": "Ground Lumen release claim [conflicting_evidence]"
+  },
+  {
+    "id": "case-a66f757d6b4d",
+    "parent": "case-66b835dde5ad",
+    "seed": "bp-hallucination-42-0003-6635",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Lumen release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-5d020b7bc255",
+    "parent": "case-66b835dde5ad",
+    "seed": "bp-hallucination-42-0003-6635",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Lumen release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-a7174ddf3ab0",
+    "parent": "case-66b835dde5ad",
+    "seed": "bp-hallucination-42-0003-6635",
+    "mutator": "reordered_facts",
+    "family": "hallucination",
+    "title": "Ground Lumen release claim [reordered_facts]"
+  },
+  {
+    "id": "case-7150d389e3b5",
+    "parent": null,
+    "seed": "bp-hallucination-42-0004-6925",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Helio release claim"
+  },
+  {
+    "id": "case-66332332778a",
+    "parent": "case-7150d389e3b5",
+    "seed": "bp-hallucination-42-0004-6925",
+    "mutator": "conflicting_evidence",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [conflicting_evidence]"
+  },
+  {
+    "id": "case-262bb0db18df",
+    "parent": "case-7150d389e3b5",
+    "seed": "bp-hallucination-42-0004-6925",
+    "mutator": "reordered_facts",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [reordered_facts]"
+  },
+  {
+    "id": "case-a136eccd8896",
+    "parent": "case-7150d389e3b5",
+    "seed": "bp-hallucination-42-0004-6925",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-f99e758681e7",
+    "parent": "case-7150d389e3b5",
+    "seed": "bp-hallucination-42-0004-6925",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Helio release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-f92fe542854b",
+    "parent": null,
+    "seed": "bp-hallucination-42-0005-5554",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Delta release claim"
+  },
+  {
+    "id": "case-a01bfd48045e",
+    "parent": "case-f92fe542854b",
+    "seed": "bp-hallucination-42-0005-5554",
+    "mutator": "renamed_entities",
+    "family": "hallucination",
+    "title": "Ground Delta release claim [renamed_entities]"
+  },
+  {
+    "id": "case-80f89c47a8e1",
+    "parent": "case-f92fe542854b",
+    "seed": "bp-hallucination-42-0005-5554",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Delta release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-271a9be3cc23",
+    "parent": "case-f92fe542854b",
+    "seed": "bp-hallucination-42-0005-5554",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Delta release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-681b4f243a6a",
+    "parent": "case-f92fe542854b",
+    "seed": "bp-hallucination-42-0005-5554",
+    "mutator": "reordered_facts",
+    "family": "hallucination",
+    "title": "Ground Delta release claim [reordered_facts]"
+  },
+  {
+    "id": "case-7cf7978ff4f3",
+    "parent": null,
+    "seed": "bp-hallucination-42-0006-3677",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim"
+  },
+  {
+    "id": "case-aec3c97c074d",
+    "parent": "case-7cf7978ff4f3",
+    "seed": "bp-hallucination-42-0006-3677",
+    "mutator": "renamed_entities",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [renamed_entities]"
+  },
+  {
+    "id": "case-6890aeba468b",
+    "parent": "case-7cf7978ff4f3",
+    "seed": "bp-hallucination-42-0006-3677",
+    "mutator": "conflicting_evidence",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [conflicting_evidence]"
+  },
+  {
+    "id": "case-c1fbabfec3c3",
+    "parent": "case-7cf7978ff4f3",
+    "seed": "bp-hallucination-42-0006-3677",
+    "mutator": "reordered_facts",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [reordered_facts]"
+  },
+  {
+    "id": "case-84ba59cec764",
+    "parent": "case-7cf7978ff4f3",
+    "seed": "bp-hallucination-42-0006-3677",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-6e803650f0d8",
+    "parent": null,
+    "seed": "bp-hallucination-42-0008-3287",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Orchid release claim"
+  },
+  {
+    "id": "case-e89e6cab470a",
+    "parent": "case-6e803650f0d8",
+    "seed": "bp-hallucination-42-0008-3287",
+    "mutator": "reordered_facts",
+    "family": "hallucination",
+    "title": "Ground Orchid release claim [reordered_facts]"
+  },
+  {
+    "id": "case-6de06c684899",
+    "parent": "case-6e803650f0d8",
+    "seed": "bp-hallucination-42-0008-3287",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Orchid release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-266e6303dbc5",
+    "parent": "case-6e803650f0d8",
+    "seed": "bp-hallucination-42-0008-3287",
+    "mutator": "renamed_entities",
+    "family": "hallucination",
+    "title": "Ground Orchid release claim [renamed_entities]"
+  },
+  {
+    "id": "case-0a40b37bd3e1",
+    "parent": "case-6e803650f0d8",
+    "seed": "bp-hallucination-42-0008-3287",
+    "mutator": "conflicting_evidence",
+    "family": "hallucination",
+    "title": "Ground Orchid release claim [conflicting_evidence]"
+  },
+  {
+    "id": "case-bec85ccce061",
+    "parent": null,
+    "seed": "bp-hallucination-42-0009-2489",
+    "mutator": "base",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim"
+  },
+  {
+    "id": "case-2fd40ae5cbf0",
+    "parent": "case-bec85ccce061",
+    "seed": "bp-hallucination-42-0009-2489",
+    "mutator": "irrelevant_context",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [irrelevant_context]"
+  },
+  {
+    "id": "case-8b73498bc7ff",
+    "parent": "case-bec85ccce061",
+    "seed": "bp-hallucination-42-0009-2489",
+    "mutator": "conflicting_evidence",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [conflicting_evidence]"
+  },
+  {
+    "id": "case-442318ca0cc4",
+    "parent": "case-bec85ccce061",
+    "seed": "bp-hallucination-42-0009-2489",
+    "mutator": "renamed_entities",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [renamed_entities]"
+  },
+  {
+    "id": "case-062d2a3f0d6c",
+    "parent": "case-bec85ccce061",
+    "seed": "bp-hallucination-42-0009-2489",
+    "mutator": "paraphrased_instruction",
+    "family": "hallucination",
+    "title": "Ground Cobalt release claim [paraphrased_instruction]"
+  },
+  {
+    "id": "case-f2f06aff66ad",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0001-2827",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Helio instruction priority"
+  },
+  {
+    "id": "case-341ba3fb27b1",
+    "parent": "case-f2f06aff66ad",
+    "seed": "bp-instruction_conflict-42-0001-2827",
+    "mutator": "paraphrased_instruction",
+    "family": "instruction_conflict",
+    "title": "Resolve Helio instruction priority [paraphrased_instruction]"
+  },
+  {
+    "id": "case-2baff46e69c5",
+    "parent": "case-f2f06aff66ad",
+    "seed": "bp-instruction_conflict-42-0001-2827",
+    "mutator": "renamed_entities",
+    "family": "instruction_conflict",
+    "title": "Resolve Helio instruction priority [renamed_entities]"
+  },
+  {
+    "id": "case-bd6ba717d724",
+    "parent": "case-f2f06aff66ad",
+    "seed": "bp-instruction_conflict-42-0001-2827",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Helio instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-c5ff206aa620",
+    "parent": "case-f2f06aff66ad",
+    "seed": "bp-instruction_conflict-42-0001-2827",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Helio instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-2ae3ba0e7c04",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0002-5889",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Cobalt instruction priority"
+  },
+  {
+    "id": "case-0a4169496c52",
+    "parent": "case-2ae3ba0e7c04",
+    "seed": "bp-instruction_conflict-42-0002-5889",
+    "mutator": "conflicting_evidence",
+    "family": "instruction_conflict",
+    "title": "Resolve Cobalt instruction priority [conflicting_evidence]"
+  },
+  {
+    "id": "case-a6b0ca2b9bb8",
+    "parent": "case-2ae3ba0e7c04",
+    "seed": "bp-instruction_conflict-42-0002-5889",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Cobalt instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-e6a8f9f78ec9",
+    "parent": "case-2ae3ba0e7c04",
+    "seed": "bp-instruction_conflict-42-0002-5889",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Cobalt instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-a93065269a66",
+    "parent": "case-2ae3ba0e7c04",
+    "seed": "bp-instruction_conflict-42-0002-5889",
+    "mutator": "renamed_entities",
+    "family": "instruction_conflict",
+    "title": "Resolve Cobalt instruction priority [renamed_entities]"
+  },
+  {
+    "id": "case-7e4f89bfa92b",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0003-6947",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority"
+  },
+  {
+    "id": "case-0873161ba375",
+    "parent": "case-7e4f89bfa92b",
+    "seed": "bp-instruction_conflict-42-0003-6947",
+    "mutator": "paraphrased_instruction",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [paraphrased_instruction]"
+  },
+  {
+    "id": "case-9b588ea912ef",
+    "parent": "case-7e4f89bfa92b",
+    "seed": "bp-instruction_conflict-42-0003-6947",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-61f30a0f53d3",
+    "parent": "case-7e4f89bfa92b",
+    "seed": "bp-instruction_conflict-42-0003-6947",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-3c88a856bb23",
+    "parent": "case-7e4f89bfa92b",
+    "seed": "bp-instruction_conflict-42-0003-6947",
+    "mutator": "conflicting_evidence",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [conflicting_evidence]"
+  },
+  {
+    "id": "case-587606b7d756",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0004-3060",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority"
+  },
+  {
+    "id": "case-dad5c6428f29",
+    "parent": "case-587606b7d756",
+    "seed": "bp-instruction_conflict-42-0004-3060",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-f82d7ce6c5cd",
+    "parent": "case-587606b7d756",
+    "seed": "bp-instruction_conflict-42-0004-3060",
+    "mutator": "renamed_entities",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [renamed_entities]"
+  },
+  {
+    "id": "case-7c1cc9764bd8",
+    "parent": "case-587606b7d756",
+    "seed": "bp-instruction_conflict-42-0004-3060",
+    "mutator": "paraphrased_instruction",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [paraphrased_instruction]"
+  },
+  {
+    "id": "case-f2fdd7a3434f",
+    "parent": "case-587606b7d756",
+    "seed": "bp-instruction_conflict-42-0004-3060",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-147cdbee6c09",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0005-7537",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Delta instruction priority"
+  },
+  {
+    "id": "case-7f7b359b8a22",
+    "parent": "case-147cdbee6c09",
+    "seed": "bp-instruction_conflict-42-0005-7537",
+    "mutator": "paraphrased_instruction",
+    "family": "instruction_conflict",
+    "title": "Resolve Delta instruction priority [paraphrased_instruction]"
+  },
+  {
+    "id": "case-99bcd0472bcb",
+    "parent": "case-147cdbee6c09",
+    "seed": "bp-instruction_conflict-42-0005-7537",
+    "mutator": "renamed_entities",
+    "family": "instruction_conflict",
+    "title": "Resolve Delta instruction priority [renamed_entities]"
+  },
+  {
+    "id": "case-da35129c4aed",
+    "parent": "case-147cdbee6c09",
+    "seed": "bp-instruction_conflict-42-0005-7537",
+    "mutator": "conflicting_evidence",
+    "family": "instruction_conflict",
+    "title": "Resolve Delta instruction priority [conflicting_evidence]"
+  },
+  {
+    "id": "case-b1982fab87cc",
+    "parent": "case-147cdbee6c09",
+    "seed": "bp-instruction_conflict-42-0005-7537",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Delta instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-c0026642dd4f",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0006-4770",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Kite instruction priority"
+  },
+  {
+    "id": "case-c50548dd51e0",
+    "parent": "case-c0026642dd4f",
+    "seed": "bp-instruction_conflict-42-0006-4770",
+    "mutator": "conflicting_evidence",
+    "family": "instruction_conflict",
+    "title": "Resolve Kite instruction priority [conflicting_evidence]"
+  },
+  {
+    "id": "case-da2e1a39f505",
+    "parent": "case-c0026642dd4f",
+    "seed": "bp-instruction_conflict-42-0006-4770",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Kite instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-007a5adb5fce",
+    "parent": "case-c0026642dd4f",
+    "seed": "bp-instruction_conflict-42-0006-4770",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Kite instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-b0a6a6e9f5c1",
+    "parent": "case-c0026642dd4f",
+    "seed": "bp-instruction_conflict-42-0006-4770",
+    "mutator": "paraphrased_instruction",
+    "family": "instruction_conflict",
+    "title": "Resolve Kite instruction priority [paraphrased_instruction]"
+  },
+  {
+    "id": "case-36b0f6ba266a",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0008-7669",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority"
+  },
+  {
+    "id": "case-eae8d8e0128e",
+    "parent": "case-36b0f6ba266a",
+    "seed": "bp-instruction_conflict-42-0008-7669",
+    "mutator": "reordered_facts",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [reordered_facts]"
+  },
+  {
+    "id": "case-71df4c9bf40a",
+    "parent": "case-36b0f6ba266a",
+    "seed": "bp-instruction_conflict-42-0008-7669",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-807e1b24665c",
+    "parent": "case-36b0f6ba266a",
+    "seed": "bp-instruction_conflict-42-0008-7669",
+    "mutator": "renamed_entities",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [renamed_entities]"
+  },
+  {
+    "id": "case-cf45410cb861",
+    "parent": "case-36b0f6ba266a",
+    "seed": "bp-instruction_conflict-42-0008-7669",
+    "mutator": "conflicting_evidence",
+    "family": "instruction_conflict",
+    "title": "Resolve Orchid instruction priority [conflicting_evidence]"
+  },
+  {
+    "id": "case-b91ce03db14e",
+    "parent": null,
+    "seed": "bp-instruction_conflict-42-0009-1993",
+    "mutator": "base",
+    "family": "instruction_conflict",
+    "title": "Resolve Aster instruction priority"
+  },
+  {
+    "id": "case-cc5ca10e797b",
+    "parent": "case-b91ce03db14e",
+    "seed": "bp-instruction_conflict-42-0009-1993",
+    "mutator": "renamed_entities",
+    "family": "instruction_conflict",
+    "title": "Resolve Aster instruction priority [renamed_entities]"
+  },
+  {
+    "id": "case-709405f73160",
+    "parent": "case-b91ce03db14e",
+    "seed": "bp-instruction_conflict-42-0009-1993",
+    "mutator": "paraphrased_instruction",
+    "family": "instruction_conflict",
+    "title": "Resolve Aster instruction priority [paraphrased_instruction]"
+  },
+  {
+    "id": "case-594d5f572419",
+    "parent": "case-b91ce03db14e",
+    "seed": "bp-instruction_conflict-42-0009-1993",
+    "mutator": "irrelevant_context",
+    "family": "instruction_conflict",
+    "title": "Resolve Aster instruction priority [irrelevant_context]"
+  },
+  {
+    "id": "case-f3cd00dc7ef9",
+    "parent": "case-b91ce03db14e",
+    "seed": "bp-instruction_conflict-42-0009-1993",
+    "mutator": "conflicting_evidence",
+    "family": "instruction_conflict",
+    "title": "Resolve Aster instruction priority [conflicting_evidence]"
+  }
+]

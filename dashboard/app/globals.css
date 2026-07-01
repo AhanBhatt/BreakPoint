@@ -193,6 +193,13 @@ h1 {
   gap: 12px;
 }
 
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
 .quality {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -247,6 +254,76 @@ h1 {
   font-size: 13px;
   line-height: 1.45;
   margin: 0;
+}
+
+.panel-copy {
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.code-box {
+  min-height: 210px;
+  max-height: 270px;
+  overflow: hidden;
+  white-space: pre-wrap;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #1f2937;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.node-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.node {
+  min-height: 70px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--blue);
+  border-radius: 8px;
+  padding: 10px;
+  background: #ffffff;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+}
+
+.node.gen-1 {
+  border-left-color: var(--teal);
+  background: #f0fdfa;
+}
+
+.node strong {
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.node span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.gate-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  color: #166534;
+  background: #f0fdf4;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
 }
 
 .artifact-row {

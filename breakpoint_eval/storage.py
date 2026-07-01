@@ -4,7 +4,18 @@ import json
 import math
 from pathlib import Path
 
-from breakpoint_eval.models import DatasetBundle, EvalItem
+from breakpoint_eval.models import (
+    DatasetBundle,
+    DatasetVersion,
+    EvalCase,
+    EvalItem,
+    EvalSuite,
+    FailureCluster,
+    HumanReview,
+    Project,
+    RegressionGate,
+    Run,
+)
 
 
 class DuckDBStore:
@@ -47,6 +58,83 @@ class DuckDBStore:
             )
             """
         )
+        self.connection.execute(
+            """
+            create table if not exists projects (
+                project_id varchar primary key,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists dataset_versions (
+                version_id varchar primary key,
+                project_id varchar,
+                dataset_id varchar,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists eval_suites (
+                suite_id varchar primary key,
+                project_id varchar,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists eval_cases (
+                case_id varchar primary key,
+                suite_id varchar,
+                family varchar,
+                review_status varchar,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists runs (
+                run_id varchar primary key,
+                suite_id varchar,
+                status varchar,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists human_reviews (
+                review_id varchar primary key,
+                case_id varchar,
+                status varchar,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists failure_clusters (
+                cluster_id varchar primary key,
+                project_id varchar,
+                family varchar,
+                payload json
+            )
+            """
+        )
+        self.connection.execute(
+            """
+            create table if not exists regression_gates (
+                gate_id varchar primary key,
+                suite_id varchar,
+                payload json
+            )
+            """
+        )
 
     def save_bundle(self, bundle: DatasetBundle) -> None:
         self.initialize()
@@ -79,6 +167,80 @@ class DuckDBStore:
     def latest_metrics(self) -> dict[str, object] | None:
         row = self.connection.execute(
             "select payload from dataset_metrics order by dataset_id desc limit 1"
+        ).fetchone()
+        return json.loads(row[0]) if row else None
+
+    def save_product_layer(
+        self,
+        project: Project,
+        dataset_version: DatasetVersion,
+        suite: EvalSuite,
+        cases: list[EvalCase],
+        *,
+        run: Run | None = None,
+        reviews: list[HumanReview] | None = None,
+        clusters: list[FailureCluster] | None = None,
+        gates: list[RegressionGate] | None = None,
+    ) -> None:
+        self.initialize()
+        self.connection.execute("insert or replace into projects values (?, ?)", [
+            project.id,
+            json.dumps(project.model_dump(mode="json")),
+        ])
+        self.connection.execute("insert or replace into dataset_versions values (?, ?, ?, ?)", [
+            dataset_version.id,
+            dataset_version.project_id,
+            dataset_version.dataset_id,
+            json.dumps(dataset_version.model_dump(mode="json")),
+        ])
+        self.connection.execute("insert or replace into eval_suites values (?, ?, ?)", [
+            suite.id,
+            suite.project_id,
+            json.dumps(suite.model_dump(mode="json")),
+        ])
+        for case in cases:
+            self.connection.execute("insert or replace into eval_cases values (?, ?, ?, ?, ?)", [
+                case.id,
+                case.suite_id,
+                case.failure_family,
+                case.review_status,
+                json.dumps(case.model_dump(mode="json")),
+            ])
+        if run is not None:
+            self.connection.execute("insert or replace into runs values (?, ?, ?, ?)", [
+                run.id,
+                run.suite_id,
+                run.status,
+                json.dumps(run.model_dump(mode="json")),
+            ])
+        for review in reviews or []:
+            self.connection.execute("insert or replace into human_reviews values (?, ?, ?, ?)", [
+                review.id,
+                review.case_id,
+                review.status,
+                json.dumps(review.model_dump(mode="json")),
+            ])
+        for cluster in clusters or []:
+            self.connection.execute("insert or replace into failure_clusters values (?, ?, ?, ?)", [
+                cluster.id,
+                cluster.project_id,
+                cluster.family,
+                json.dumps(cluster.model_dump(mode="json")),
+            ])
+        for gate in gates or []:
+            self.connection.execute("insert or replace into regression_gates values (?, ?, ?)", [
+                gate.id,
+                gate.suite_id,
+                json.dumps(gate.model_dump(mode="json")),
+            ])
+
+    def latest_suite_summary(self) -> dict[str, object] | None:
+        row = self.connection.execute(
+            """
+            select payload from eval_suites
+            order by json_extract(payload, '$.created_at') desc
+            limit 1
+            """
         ).fetchone()
         return json.loads(row[0]) if row else None
 

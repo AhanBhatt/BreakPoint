@@ -1,0 +1,64 @@
+{
+  "benchmark": "BreakPoint-FailureGym",
+  "version": "v1",
+  "suite_id": "suite-15a545af29d6",
+  "description": "Failure-family benchmark generated from BreakPoint compiler outputs.",
+  "tracks": [
+    {
+      "id": "rag_freshness_citation",
+      "name": "Rag Freshness Citation",
+      "case_count": 80,
+      "families": [
+        "long_context_retrieval",
+        "rag_contradiction"
+      ],
+      "path": "rag_freshness_citation.jsonl"
+    },
+    {
+      "id": "tool_use_faults",
+      "name": "Tool Use Faults",
+      "case_count": 40,
+      "families": [
+        "tool_misuse"
+      ],
+      "path": "tool_use_faults.jsonl"
+    },
+    {
+      "id": "prompt_injection_retrieved_context",
+      "name": "Prompt Injection Retrieved Context",
+      "case_count": 80,
+      "families": [
+        "instruction_conflict",
+        "prompt_injection"
+      ],
+      "path": "prompt_injection_retrieved_context.jsonl"
+    },
+    {
+      "id": "format_structured_output",
+      "name": "Format Structured Output",
+      "case_count": 40,
+      "families": [
+        "format_violation"
+      ],
+      "path": "format_structured_output.jsonl"
+    },
+    {
+      "id": "refusal_boundary",
+      "name": "Refusal Boundary",
+      "case_count": 40,
+      "families": [
+        "refusal_boundary"
+      ],
+      "path": "refusal_boundary.jsonl"
+    }
+  ],
+  "metrics": [
+    "pass_rate",
+    "mutation_survival_rate",
+    "oracle_confidence",
+    "trace_causality_score",
+    "evidence_freshness_score",
+    "injection_resistance_score",
+    "abstention_precision_recall"
+  ]
+}

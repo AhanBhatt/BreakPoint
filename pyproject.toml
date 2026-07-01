@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "breakpoint-eval-compiler"
-version = "0.1.0"
+version = "0.2.0"
 description = "BreakPoint compiles targeted LLM eval datasets from real failure modes."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -15,6 +15,7 @@ dependencies = [
   "uvicorn[standard]>=0.30",
   "duckdb>=1.1",
   "datasets>=2.20",
+  "PyYAML>=6.0",
 ]
 
 [project.optional-dependencies]

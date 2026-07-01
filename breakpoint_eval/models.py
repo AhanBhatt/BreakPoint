@@ -125,3 +125,170 @@ class DatasetBundle(BaseModel):
 
     def rows(self) -> list[dict[str, Any]]:
         return [item.to_dataset_row() for item in self.items]
+
+
+ReviewStatus = Literal["pending", "approved", "rejected", "needs_changes"]
+RunStatus = Literal["queued", "running", "passed", "failed", "needs_review"]
+CheckType = Literal["exact", "contains", "json_schema", "llm_judge", "trace", "human"]
+GateSeverity = Literal["info", "warning", "blocking"]
+
+
+class Project(BaseModel):
+    id: str
+    name: str
+    description: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class DatasetVersion(BaseModel):
+    id: str
+    project_id: str
+    dataset_id: str
+    version: str
+    item_ids: list[str]
+    parent_version: str | None = None
+    lineage_notes: list[str] = Field(default_factory=list)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class OracleSpec(BaseModel):
+    type: str = "expected_answer"
+    required_claims: list[str] = Field(default_factory=list)
+    forbidden_claims: list[str] = Field(default_factory=list)
+    evidence_rules: dict[str, Any] = Field(default_factory=dict)
+    confidence: float = Field(default=0.8, ge=0, le=1)
+
+
+class MutationLineage(BaseModel):
+    seed_id: str
+    parent_case_id: str | None = None
+    mutator: str = "base"
+    generation: int = 0
+    path: list[str] = Field(default_factory=list)
+
+
+class EvalCase(BaseModel):
+    id: str
+    suite_id: str
+    eval_item: EvalItem
+    original_failure_seed: str | None = None
+    oracle: OracleSpec = Field(default_factory=OracleSpec)
+    mutation_lineage: MutationLineage
+    validation_report: ValidationReport | None = None
+    failure_family: str
+    review_status: ReviewStatus = "pending"
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    def to_dataset_row(self) -> dict[str, Any]:
+        row = self.eval_item.to_dataset_row()
+        row.update(
+            {
+                "case_id": self.id,
+                "suite_id": self.suite_id,
+                "original_failure_seed": self.original_failure_seed,
+                "failure_family": self.failure_family,
+                "review_status": self.review_status,
+                "mutation_lineage": self.mutation_lineage.model_dump(mode="json"),
+                "oracle": self.oracle.model_dump(mode="json"),
+            }
+        )
+        return row
+
+
+class Check(BaseModel):
+    id: str
+    suite_id: str
+    name: str
+    check_type: CheckType
+    config: dict[str, Any] = Field(default_factory=dict)
+    severity: GateSeverity = "blocking"
+    enabled: bool = True
+
+
+class EvalSuite(BaseModel):
+    id: str
+    project_id: str
+    name: str
+    description: str
+    dataset_version_id: str
+    case_ids: list[str]
+    checks: list[Check] = Field(default_factory=list)
+    failure_families: list[str] = Field(default_factory=list)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class ModelOutput(BaseModel):
+    id: str
+    run_id: str
+    case_id: str
+    model_name: str
+    output: str
+    latency_ms: float = Field(default=0, ge=0)
+    cost_usd: float = Field(default=0, ge=0)
+    trace: dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class Judgment(BaseModel):
+    id: str
+    run_id: str
+    case_id: str
+    check_id: str
+    passed: bool
+    score: float = Field(ge=0, le=1)
+    confidence: float = Field(ge=0, le=1)
+    rationale: str
+    judge_name: str = "local"
+    needs_human_review: bool = False
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class HumanReview(BaseModel):
+    id: str
+    case_id: str
+    reviewer: str
+    status: ReviewStatus
+    notes: str = ""
+    rubric_edits: dict[str, Any] = Field(default_factory=dict)
+    ambiguity_flag: bool = False
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class FailureCluster(BaseModel):
+    id: str
+    project_id: str
+    family: str
+    title: str
+    seed_ids: list[str]
+    case_ids: list[str]
+    centroid_terms: list[str] = Field(default_factory=list)
+    severity: Literal["low", "medium", "high", "critical"] = "medium"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class RegressionGate(BaseModel):
+    id: str
+    suite_id: str
+    name: str
+    min_pass_rate: float = Field(default=0.9, ge=0, le=1)
+    min_mutation_survival_rate: float = Field(default=0.8, ge=0, le=1)
+    max_needs_review: int = Field(default=0, ge=0)
+    blocking_families: list[str] = Field(default_factory=list)
+    severity: GateSeverity = "blocking"
+
+
+class Run(BaseModel):
+    id: str
+    suite_id: str
+    model_names: list[str]
+    status: RunStatus = "queued"
+    model_outputs: list[ModelOutput] = Field(default_factory=list)
+    judgments: list[Judgment] = Field(default_factory=list)
+    metrics: dict[str, Any] = Field(default_factory=dict)
+    gate_results: dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    completed_at: datetime | None = None

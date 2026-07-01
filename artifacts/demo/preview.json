@@ -100,7 +100,7 @@
     "metadata": {
       "domain": "medical intake"
     },
-    "created_at": "2026-07-01T05:27:25.510931Z",
+    "created_at": "2026-07-01T06:33:36.016326Z",
     "prompt": "Using only the context, state the confirmed patch shipment fact in one sentence.\n\nContext:\nRelease memo: Aster completed threat-model review for medical intake.\n\nAudit line: Aster shipped the red-team patch on 2026-04-11.\n\nAdjacent note: Aster was rumored to support biometric export, but no approved memo confirms that claim.",
     "expected": "Aster shipped the red-team patch on 2026-04-11.",
     "variant_count": 4
@@ -206,7 +206,7 @@
     "metadata": {
       "domain": "municipal bonds"
     },
-    "created_at": "2026-07-01T05:27:25.511021Z",
+    "created_at": "2026-07-01T06:33:36.016405Z",
     "prompt": "Using only the context, state the confirmed patch shipment fact in one sentence.\n\nContext:\nRelease memo: Helio completed threat-model review for municipal bonds.\n\nAudit line: Helio shipped the red-team patch on 2026-04-12.\n\nAdjacent note: Helio was rumored to support biometric export, but no approved memo confirms that claim.",
     "expected": "Helio shipped the red-team patch on 2026-04-12.",
     "variant_count": 4
@@ -312,7 +312,7 @@
     "metadata": {
       "domain": "clinical trial summaries"
     },
-    "created_at": "2026-07-01T05:27:25.511075Z",
+    "created_at": "2026-07-01T06:33:36.016838Z",
     "prompt": "Using only the context, state the confirmed patch shipment fact in one sentence.\n\nContext:\nRelease memo: Lumen completed threat-model review for clinical trial summaries.\n\nAudit line: Lumen shipped the red-team patch on 2026-04-13.\n\nAdjacent note: Lumen was rumored to support biometric export, but no approved memo confirms that claim.",
     "expected": "Lumen shipped the red-team patch on 2026-04-13.",
     "variant_count": 4
@@ -418,7 +418,7 @@
     "metadata": {
       "domain": "vendor risk"
     },
-    "created_at": "2026-07-01T05:27:25.511131Z",
+    "created_at": "2026-07-01T06:33:36.016974Z",
     "prompt": "Using only the context, state the confirmed patch shipment fact in one sentence.\n\nContext:\nRelease memo: Helio completed threat-model review for vendor risk.\n\nAudit line: Helio shipped the red-team patch on 2026-04-14.\n\nAdjacent note: Helio was rumored to support biometric export, but no approved memo confirms that claim.",
     "expected": "Helio shipped the red-team patch on 2026-04-14.",
     "variant_count": 4
@@ -524,7 +524,7 @@
     "metadata": {
       "domain": "support tickets"
     },
-    "created_at": "2026-07-01T05:27:25.511177Z",
+    "created_at": "2026-07-01T06:33:36.017036Z",
     "prompt": "Using only the context, state the confirmed patch shipment fact in one sentence.\n\nContext:\nRelease memo: Delta completed threat-model review for support tickets.\n\nAudit line: Delta shipped the red-team patch on 2026-04-15.\n\nAdjacent note: Delta was rumored to support biometric export, but no approved memo confirms that claim.",
     "expected": "Delta shipped the red-team patch on 2026-04-15.",
     "variant_count": 4

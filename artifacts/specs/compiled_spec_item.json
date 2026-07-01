@@ -1,0 +1,135 @@
+{
+  "id": "bp-spec-2bde8aa548ea",
+  "category": "rag_contradiction",
+  "family": "rag.freshness_contradiction.v1",
+  "title": "RAG freshness contradiction",
+  "task": "Answer a question using retrieved policy documents.",
+  "context": "Domain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.",
+  "expected_answer": {
+    "value": "answer uses newest effective date",
+    "answer_type": "reasoned",
+    "must_include": [
+      "answer uses newest effective date"
+    ],
+    "must_not_include": [
+      "answer cites superseded policy"
+    ],
+    "citations_required": true
+  },
+  "hidden_traps": [
+    {
+      "kind": "stale_source_first",
+      "description": "Older source appears before newer authoritative source.",
+      "trigger": "older source appears before newer authoritative source",
+      "expected_behavior": "Ignore stale source and cite newer source."
+    }
+  ],
+  "rubric": {
+    "total_points": 10.0,
+    "criteria": [
+      {
+        "name": "correctness",
+        "points": 2.5,
+        "description": "Spec criterion: correctness."
+      },
+      {
+        "name": "grounding",
+        "points": 2.5,
+        "description": "Spec criterion: grounding."
+      },
+      {
+        "name": "trap handling",
+        "points": 2.5,
+        "description": "Spec criterion: trap handling."
+      },
+      {
+        "name": "format",
+        "points": 2.5,
+        "description": "Spec criterion: format."
+      }
+    ],
+    "fail_conditions": [
+      "Contradicts the oracle",
+      "Uses forbidden claims",
+      "Ignores hidden trap behavior"
+    ]
+  },
+  "adversarial_variants": [
+    {
+      "id": "bp-spec-2bde8aa548ea-v01",
+      "mutation": "reordered_facts",
+      "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nDomain: enterprise_policy.\n\nFreshness field: effective_date.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.",
+      "expected_answer": "answer uses newest effective date",
+      "trap": "Answer should survive paragraph order changes.",
+      "metadata": {
+        "parent_id": "bp-spec-2bde8aa548ea",
+        "spec_mutator": "reorder_context"
+      }
+    },
+    {
+      "id": "bp-spec-2bde8aa548ea-v02",
+      "mutation": "irrelevant_context",
+      "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nArchive note 474: an unrelated rollout used the same project nickname, but it was owned by a different team and has no bearing on this question.\n\nDomain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.",
+      "expected_answer": "answer uses newest effective date",
+      "trap": "Extra context should not change the answer.",
+      "metadata": {
+        "parent_id": "bp-spec-2bde8aa548ea",
+        "spec_mutator": "add_irrelevant_context"
+      }
+    },
+    {
+      "id": "bp-spec-2bde8aa548ea-v03",
+      "mutation": "conflicting_evidence",
+      "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nDomain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.\n\nUnverified chat excerpt: a teammate guessed a different answer, but the excerpt has no source, no timestamp, and is explicitly marked as speculation.",
+      "expected_answer": "answer uses newest effective date",
+      "trap": "Speculative evidence should not override grounded facts.",
+      "metadata": {
+        "parent_id": "bp-spec-2bde8aa548ea",
+        "spec_mutator": "inject_prompt_attack"
+      }
+    },
+    {
+      "id": "bp-spec-2bde8aa548ea-v04",
+      "mutation": "renamed_entities",
+      "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nDomain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.",
+      "expected_answer": "answer uses newest effective date",
+      "trap": "Entity renaming should preserve relational structure.",
+      "metadata": {
+        "parent_id": "bp-spec-2bde8aa548ea",
+        "spec_mutator": "rename_entities"
+      }
+    },
+    {
+      "id": "bp-spec-2bde8aa548ea-v05",
+      "mutation": "conflicting_evidence",
+      "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nDomain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.\n\nUnverified chat excerpt: a teammate guessed a different answer, but the excerpt has no source, no timestamp, and is explicitly marked as speculation.",
+      "expected_answer": "answer uses newest effective date",
+      "trap": "Speculative evidence should not override grounded facts.",
+      "metadata": {
+        "parent_id": "bp-spec-2bde8aa548ea",
+        "spec_mutator": "contradict_with_stale_source"
+      }
+    }
+  ],
+  "difficulty": "hard",
+  "metadata": {
+    "breakpoint_spec_id": "rag.freshness_contradiction.v1",
+    "risk": "high",
+    "domain": "enterprise_policy",
+    "answer_policy": "Use the newest reliable source.",
+    "evidence_rules": {
+      "source_priority": [
+        "official_policy",
+        "internal_memo",
+        "cached_summary"
+      ],
+      "freshness_field": "effective_date",
+      "required_sources": [],
+      "citation_required": true
+    }
+  },
+  "created_at": "2026-07-01T06:33:36.602976Z",
+  "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nDomain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.",
+  "expected": "answer uses newest effective date",
+  "variant_count": 5
+}

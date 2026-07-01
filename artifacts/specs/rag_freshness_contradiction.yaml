@@ -1,0 +1,52 @@
+id: rag.freshness_contradiction.v1
+name: RAG freshness contradiction
+risk: high
+contract:
+  answer_policy: Use the newest reliable source.
+  require_citations: true
+  abstain_when_evidence_missing: true
+  output_format: text
+seed:
+  user_task: Answer a question using retrieved policy documents.
+  domain: enterprise_policy
+  context: ''
+  expected_answer: ''
+evidence_rules:
+  source_priority:
+  - official_policy
+  - internal_memo
+  - cached_summary
+  freshness_field: effective_date
+  required_sources: []
+  citation_required: true
+traps:
+- id: stale_source_first
+  description: Older source appears before newer authoritative source.
+  expected_behavior: Ignore stale source and cite newer source.
+  trigger: older source appears before newer authoritative source
+mutators:
+- type: reorder_context
+  config: {}
+- type: add_irrelevant_context
+  config: {}
+- type: inject_prompt_attack
+  config: {}
+- type: rename_entities
+  config: {}
+- type: contradict_with_stale_source
+  config: {}
+oracle:
+  type: evidence_grounded_answer
+  required_claims:
+  - answer uses newest effective date
+  forbidden_claims:
+  - answer cites superseded policy
+  executable_check: null
+rubric:
+  criteria:
+  - correctness
+  - grounding
+  - trap handling
+  - format
+  fail_conditions: []
+metadata: {}

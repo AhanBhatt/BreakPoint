@@ -48,7 +48,9 @@
 
 BreakPoint turns known model failure modes into targeted evaluation datasets. Instead of hand-writing a small benchmark, the system compiles task families from a taxonomy, creates expected answers and grading rubrics, mutates each task into adversarial variants, validates candidates with multiple judges, and exports only high-confidence items.
 
-The current implementation is designed to run locally without paid model credentials. It uses deterministic surrogate judges for repeatable tests, while keeping adapter seams for DSPy, LangChain/LangGraph orchestration, Hugging Face Datasets export, DuckDB storage, vector retrieval, FastAPI serving, and a Next.js dashboard.
+The v0.2 implementation adds the failure-to-eval loop: trace ingestion, BreakPointSpec YAML, product-layer suites and runs, review queues, simulator-generated counterfactuals, compiler-native metrics, CI regression packs, and BreakPoint-FailureGym packaging.
+
+It is designed to run locally without paid model credentials. Guarded integration points cover OpenAI, Anthropic, Gemini, vLLM, DSPy, LangChain, LangGraph, Hugging Face Datasets, DuckDB, vector retrieval, FastAPI, and the Next.js dashboard.
 
 \section{Why This Exists}
 
@@ -58,15 +60,71 @@ Manual eval writing does not scale with the space of ways a model can fail. A si
 
 \includegraphics[width=\textwidth]{../../artifacts/images/architecture.png}
 
-The compiler pipeline has five stages:
+The compiler pipeline has seven stages:
 
 \begin{enumerate}
-  \item Failure taxonomy: categories describe real-world failure patterns and risk level.
-  \item Generators: category templates produce prompts, context, expected answers, hidden traps, and rubrics.
-  \item Mutators: each accepted base task gets adversarial variants such as irrelevant context, renamed entities, reordered facts, paraphrased instructions, or conflicting evidence.
-  \item Validators: model-judge interfaces score ambiguity, answerability, trap coverage, format compliance, and judge agreement.
-  \item Exports: accepted items are written to JSONL, DuckDB, FastAPI responses, and Hugging Face Dataset objects.
+  \item Failure sources: traces, tickets, feedback, red-team transcripts, and incident reports become normalized failure seeds.
+  \item Failure specification: BreakPointSpec YAML records the behavioral contract, evidence rules, traps, mutators, oracle, and rubric.
+  \item Generators: category templates or trace-derived specs produce prompts, context, expected answers, hidden traps, and rubrics.
+  \item Mutators: each accepted base task gets adversarial variants such as irrelevant context, renamed entities, reordered facts, paraphrased instructions, prompt injection, or conflicting evidence.
+  \item Validators: local and external judge adapters score ambiguity, answerability, trap coverage, format compliance, and judge agreement.
+  \item Product layer: accepted items become suites, cases, checks, runs, judgments, reviews, clusters, and regression gates.
+  \item Exports: accepted items are written to JSONL, DuckDB, OpenAI Evals-style YAML, lm-eval tasks, CI reports, FailureGym packages, FastAPI responses, and dashboard data.
 \end{enumerate}
+
+\section{v0.2 Failure-to-Eval Loop}
+
+BreakPoint v0.2 is built around one workflow:
+
+\begin{verbatim}
+raw failure trace
+  -> redact PII and secrets
+  -> extract task, context, tools, retrieved documents, and model output
+  -> classify failure family
+  -> draft BreakPointSpec YAML
+  -> compile base case and adversarial variants
+  -> validate with judges
+  -> route uncertain cases to human review
+  -> add accepted cases to a regression suite
+  -> export and enforce in CI
+\end{verbatim}
+
+The product layer keeps the familiar evaluation-platform mental model while preserving compiler lineage:
+
+\begin{verbatim}
+EvalSuite
+  -> EvalCase
+       -> original_failure_seed
+       -> prompt, context, files, tools
+       -> expected_answer, hidden_traps, rubric, oracle
+       -> mutation_lineage
+       -> validation_report
+       -> failure_family
+\end{verbatim}
+
+\section{BreakPointSpec}
+
+BreakPointSpec is the failure-family DSL. It makes eval datasets reproducible and reviewable in source control. A spec declares the category, risk, answer policy, source priority, freshness rules, hidden traps, mutators, oracle claims, forbidden claims, and rubric criteria. The local compiler can write an example RAG freshness spec, load YAML from disk, compile it into an eval item, and attach adversarial variants.
+
+\begin{verbatim}
+id: rag.freshness_contradiction.v1
+contract:
+  answer_policy: Use the newest reliable source.
+  require_citations: true
+traps:
+  - id: stale_source_first
+mutators:
+  - type: reorder_context
+  - type: inject_prompt_attack
+oracle:
+  type: evidence_grounded_answer
+\end{verbatim}
+
+\section{Trace2Eval}
+
+Trace2Eval converts failure records into eval seeds. The implemented local path accepts normalized trace records with user task, context, model output, retrieved documents, tool calls, user feedback, and incident notes. It redacts common secrets and PII, detects failure signals such as stale evidence, prompt injection, tool faults, refusal boundaries, and format drift, then drafts a BreakPointSpec and compiles a regression case.
+
+The sample traces exercise stale RAG evidence, stale tool outputs, and prompt injection embedded in retrieved context. These are intentionally small, but the pipeline is the same one needed for production adapters.
 
 \section{Failure Families}
 
@@ -101,9 +159,23 @@ Each item has:
 
 \section{Validation Strategy}
 
-The local demo uses three deterministic surrogate judges named after common model-review roles: strict correctness, skeptical ambiguity review, and format compliance. In production, the same interface can call multiple real models through DSPy or LangChain adapters. A candidate is accepted only when the majority passes and all quality dimensions clear thresholds.
+The local demo uses deterministic surrogate judges named after common model-review roles: strict correctness, skeptical ambiguity review, and format compliance. In production, the same interface can call multiple real models through OpenAI, Anthropic, Gemini, vLLM, DSPy, or LangChain adapters. A candidate is accepted only when the majority passes and all quality dimensions clear thresholds.
+
+Judge calibration adds a reliability layer: gold examples, human labels, inter-judge agreement, pass-rate deltas, disagreement counts, unreliable family detection, and uncertainty routing. Cases with low confidence or judge disagreement are sent to human review instead of silently entering a regression pack.
 
 \includegraphics[width=0.92\textwidth]{../../artifacts/images/quality_gates.png}
+
+\section{Simulators and Metrics}
+
+BreakPoint includes controlled simulators for the failure environments most likely to break agentic and RAG systems:
+
+\begin{itemize}
+  \item Tool simulator: stale result, malformed response, partial result, permission denied, contradictory result, timeout, wrong schema, and cached/live conflict.
+  \item Retrieval simulator: stale source first, unreliable source ranked high, prompt injection in a retrieved document, split evidence, wrong citation chunk, and missing evidence that requires abstention.
+  \item Agent simulator: wrong tool selected, right tool with wrong arguments, unnecessary tool call, no retry after tool error, and final answer correct but execution trace invalid.
+\end{itemize}
+
+The dashboard and CI report use compiler-native metrics: mutation survival, failure-neighborhood coverage, oracle confidence, regression fragility, trace causality, evidence freshness, injection resistance, and abstention precision/recall.
 
 \section{Demo Results}
 
@@ -113,11 +185,39 @@ The checked-in artifact script generated a balanced demo dataset across all cate
 
 \includegraphics[width=0.82\textwidth]{../../artifacts/images/comparison_results.png}
 
-\section{API and Dashboard}
+\section{API, Dashboard, and CI}
 
-The FastAPI service exposes \texttt{/health}, \texttt{/categories}, \texttt{/compile}, and \texttt{/metrics}. The Next.js dashboard reads generated metrics and preview cases from \texttt{dashboard/public/data}. It is designed for quick inspection of coverage, validation gates, and sample eval cases.
+The FastAPI service exposes:
+
+\begin{verbatim}
+/health
+/categories
+/compile
+/metrics
+/specs/compile
+/traces/compile
+/product/demo
+\end{verbatim}
+
+The Next.js dashboard reads generated metrics and product artifacts from \path{dashboard/public/data}. It now shows Failure Inbox, Spec Review, Case Review, Mutation Graph, Run Comparison, Regression Gate, Judge Reliability, Simulators, and FailureGym.
 
 \includegraphics[width=\textwidth]{../../artifacts/images/dashboard_screenshot.png}
+
+The CI path builds regression packs for smoke tests, recent failures, mutation variants, and safety cases. The generated report explains pass rate, mutation survival, evidence freshness, prompt-injection resistance, human-review queue size, and gate failures.
+
+\section{BreakPoint-FailureGym}
+
+BreakPoint-FailureGym v1 is the public benchmark shape produced by the compiler. It is organized around failure families rather than industries:
+
+\begin{itemize}
+  \item RAG Freshness and Citation
+  \item Tool-Use Faults
+  \item Prompt-Injection in Retrieved Context
+  \item Format and Structured Output Robustness
+  \item Refusal Boundary
+\end{itemize}
+
+Each track includes cases, export manifests, reproducibility metadata, mutation lineage, judge confidence, and failure-family breakdowns.
 
 \section{Operational Notes}
 
@@ -130,6 +230,7 @@ BreakPoint can be run as a deterministic local compiler for CI, then upgraded wi
   \item DuckDB for local analytics, PostgreSQL for shared state.
   \item FAISS or Qdrant for retrieval over failures, prompts, and variants.
   \item MinIO or S3 for artifact storage.
+  \item OpenAI, Anthropic, Gemini, and vLLM judge adapters for calibrated live judging.
   \item FastAPI and Next.js for the service and review UI.
 \end{itemize}
 
@@ -144,6 +245,8 @@ python -m venv .venv
 .\.venv\Scripts\python -m breakpoint_eval.cli compile ^
   --items-per-category 8 ^
   --variants-per-item 4
+.\.venv\Scripts\python -m breakpoint_eval.cli trace2eval
+.\.venv\Scripts\python -m breakpoint_eval.cli failuregym
 .\.venv\Scripts\python scripts/create_demo_artifacts.py
 .\scripts\build_pdf.ps1
 \end{verbatim}
