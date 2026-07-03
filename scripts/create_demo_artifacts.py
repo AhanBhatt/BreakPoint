@@ -154,61 +154,105 @@ def main() -> None:
 
 
 def draw_architecture(path: Path) -> None:
-    fig, ax = plt.subplots(figsize=(14, 8), dpi=160)
+    fig, ax = plt.subplots(figsize=(16, 9), dpi=160)
     fig.patch.set_facecolor("#f8fafc")
     ax.set_facecolor("#f8fafc")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
     ax.axis("off")
     stages = [
-        ("Failure\nSources", "traces, tickets,\nfeedback, incidents"),
-        ("BreakPoint\nSpec", "contracts, traps,\noracles, rubrics"),
-        ("Generators", "tasks, answers,\ncontext, tools"),
-        ("Mutators", "paraphrase, reorder,\nconflict, inject"),
-        ("Validators", "judges, calibration,\nhuman routing"),
-        ("Product\nLayer", "suites, checks,\nruns, gates"),
-        ("Exports", "JSONL, HF, CI,\nFailureGym, API"),
+        ("01", "Failure\nTraces", "RAG logs\nsupport tickets\ntool calls"),
+        ("02", "BreakPoint\nSpec", "contract\noracle\nhidden traps"),
+        ("03", "Case\nCompiler", "task\ncontext\nexpected answer"),
+        ("04", "Mutation\nEngine", "paraphrase\nreorder\ninject conflict"),
+        ("05", "Judge\nValidation", "live judges\nlocal checks\ncalibration"),
+        ("06", "Regression\nPacks", "JSONL / HF\nOpenAI evals\nCI gates"),
     ]
-    colors = ["#1d4ed8", "#0f766e", "#7c3aed", "#be123c", "#b45309", "#0369a1", "#4d7c0f"]
-    positions = [(0.08 + idx * 0.14, 0.54) for idx in range(len(stages))]
-    box_w = 0.105
-    box_h = 0.26
-    for idx, ((title, subtitle), color, (x, y)) in enumerate(zip(stages, colors, positions, strict=True)):
+    colors = ["#2563eb", "#0f766e", "#7c3aed", "#be123c", "#b45309", "#0369a1"]
+    centers = [0.08, 0.248, 0.416, 0.584, 0.752, 0.92]
+    y = 0.52
+    box_w = 0.115
+    box_h = 0.28
+    for idx, ((number, title, subtitle), color, x) in enumerate(zip(stages, colors, centers, strict=True)):
         box = FancyBboxPatch(
             (x - box_w / 2, y - box_h / 2),
             box_w,
             box_h,
-            boxstyle="round,pad=0.018,rounding_size=0.018",
-            linewidth=1.4,
+            boxstyle="round,pad=0.012,rounding_size=0.014",
+            linewidth=1.6,
             edgecolor=color,
             facecolor="#ffffff",
         )
         ax.add_patch(box)
-        ax.text(x, y + 0.035, title, ha="center", va="center", color="#0f172a", fontsize=12.5, weight="bold")
-        ax.text(x, y - 0.062, subtitle, ha="center", va="center", color="#475569", fontsize=9.5)
+        ax.text(x - box_w / 2 + 0.012, y + box_h / 2 - 0.033, number, ha="left", va="center", color=color, fontsize=10.2, weight="bold")
+        ax.text(x, y + 0.045, title, ha="center", va="center", color="#0f172a", fontsize=13.2, weight="bold", linespacing=1.08)
+        ax.text(x, y - 0.068, subtitle, ha="center", va="center", color="#475569", fontsize=9.7, linespacing=1.2)
         if idx < len(stages) - 1:
-            next_x, next_y = positions[idx + 1]
-            start = (x + box_w / 2 + 0.008, y)
-            end = (next_x - box_w / 2 - 0.008, next_y)
+            next_x = centers[idx + 1]
+            start = (x + box_w / 2 + 0.012, y)
+            end = (next_x - box_w / 2 - 0.012, y)
             ax.add_patch(
                 FancyArrowPatch(
                     start,
                     end,
                     arrowstyle="-|>",
                     connectionstyle="arc3,rad=0.0",
-                    mutation_scale=16,
-                    linewidth=1.5,
+                    mutation_scale=18,
+                    linewidth=1.8,
                     color="#334155",
+                    shrinkA=0,
+                    shrinkB=0,
                 )
             )
-    ax.text(0.5, 0.88, "BreakPoint Eval Data Compiler", ha="center", fontsize=23, weight="bold", color="#111827")
+
+    ax.text(0.5, 0.905, "BreakPoint Eval Data Compiler", ha="center", fontsize=29, weight="bold", color="#111827")
     ax.text(
         0.5,
-        0.12,
-        "Failure-to-eval loop: every accepted case keeps seed lineage, expected answer, hidden traps, rubric, variants, judge reports, review state, and CI gate metadata.",
+        0.848,
+        "Turn one real LLM failure into a versioned, adversarial regression suite.",
         ha="center",
-        fontsize=11.5,
+        fontsize=14,
+        color="#475569",
+    )
+
+    chips = [
+        ("seed lineage", "#dbeafe", "#1d4ed8"),
+        ("expected answer", "#dcfce7", "#166534"),
+        ("hidden traps", "#ede9fe", "#6d28d9"),
+        ("rubric", "#ffe4e6", "#be123c"),
+        ("judge report", "#ffedd5", "#c2410c"),
+        ("review state", "#e0f2fe", "#0369a1"),
+        ("CI metadata", "#ecfccb", "#4d7c0f"),
+    ]
+    chip_y = 0.225
+    chip_w = 0.115
+    chip_h = 0.052
+    chip_gap = 0.012
+    total_w = len(chips) * chip_w + (len(chips) - 1) * chip_gap
+    start_x = 0.5 - total_w / 2 + chip_w / 2
+    for idx, (label, fill, stroke) in enumerate(chips):
+        chip_x = start_x + idx * (chip_w + chip_gap)
+        chip = FancyBboxPatch(
+            (chip_x - chip_w / 2, chip_y - chip_h / 2),
+            chip_w,
+            chip_h,
+            boxstyle="round,pad=0.01,rounding_size=0.018",
+            linewidth=1.0,
+            edgecolor=stroke,
+            facecolor=fill,
+        )
+        ax.add_patch(chip)
+        ax.text(chip_x, chip_y, label, ha="center", va="center", fontsize=9.8, color="#0f172a", weight="bold")
+
+    ax.text(
+        0.5,
+        0.145,
+        "Every accepted case carries the data needed to reproduce, mutate, validate, export, and gate the failure neighborhood.",
+        ha="center",
+        fontsize=12.5,
         color="#334155",
     )
-    fig.savefig(path, bbox_inches="tight", pad_inches=0.15)
+    fig.savefig(path, bbox_inches="tight", pad_inches=0.32, facecolor=fig.get_facecolor())
     plt.close(fig)
 
 

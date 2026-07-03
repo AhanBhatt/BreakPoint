@@ -1,0 +1,706 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{listings}
+
+\definecolor{bpnavy}{HTML}{111827}
+\definecolor{bpslate}{HTML}{475569}
+\definecolor{bpblue}{HTML}{2563EB}
+\definecolor{bpgreen}{HTML}{16A34A}
+\definecolor{bporange}{HTML}{F97316}
+\definecolor{bppurple}{HTML}{7C3AED}
+\definecolor{bpred}{HTML}{BE123C}
+\definecolor{bplight}{HTML}{F8FAFC}
+\definecolor{bpline}{HTML}{CBD5E1}
+\definecolor{bpcode}{HTML}{F1F5F9}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=bpblue,
+  urlcolor=bpblue,
+  citecolor=bpblue,
+  pdftitle={BreakPoint Eval Data Compiler},
+  pdfauthor={BreakPoint}
+}
+
+\pagestyle{fancy}
+\setlength{\headheight}{24pt}
+\fancyhf{}
+\lhead{\textcolor{bpslate}{BreakPoint}}
+\rhead{\textcolor{bpslate}{Failure-to-Eval Compiler}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{bpline}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\Large\bfseries\color{bpnavy}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{bpnavy}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{bpnavy}}{\thesubsubsection}{0.7em}{}
+
+\setlist[itemize]{leftmargin=1.3em, topsep=3pt, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.4em, topsep=3pt, itemsep=2pt}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\emergencystretch=3em
+\sloppy
+\setcounter{tocdepth}{1}
+
+\lstdefinestyle{bpcode}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{bpcode},
+  frame=single,
+  rulecolor=\color{bpline},
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2,
+  xleftmargin=0.8em,
+  xrightmargin=0.8em,
+  framexleftmargin=0.6em,
+  framexrightmargin=0.6em
+}
+\lstset{style=bpcode}
+
+\newcommand{\metric}[2]{\textbf{#1} & #2\\}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\filepath}[1]{{\footnotesize\path{#1}}}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+
+\begin{titlepage}
+  \centering
+  \vspace*{0.45in}
+  {\Huge\bfseries\color{bpnavy} BreakPoint Eval Data Compiler\par}
+  \vspace{0.18in}
+  {\Large\color{bpslate} Turning real LLM failures into versioned adversarial regression suites\par}
+  \vspace{0.35in}
+  \includegraphics[width=0.94\textwidth]{artifacts/images/architecture.png}
+  \vfill
+  \begin{tabular}{ll}
+    \toprule
+    Document scope & Architecture, SDK/CLI, live judges, validation, results, and roadmap\\
+    Current build & BreakPoint v0.3.0\\
+    Generated from & Local repository artifacts under \code{artifacts/}\\
+    Latest validation & 12 sourced traces, 48 eval cases, live judges enabled\\
+    \bottomrule
+  \end{tabular}
+  \vfill
+  {\color{bpslate}\today\par}
+\end{titlepage}
+
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\section{Executive Summary}
+
+BreakPoint is an eval data compiler for LLM systems. Its purpose is not to publish another broad leaderboard or hand-write a static set of benchmark prompts. Its purpose is to take real observed failures and compile them into durable, versioned regression data that can be replayed against future prompts, models, RAG pipelines, and agent tool policies.
+
+The core thesis is simple:
+
+\begin{quote}
+\textbf{Give BreakPoint one real LLM failure trace, and it creates a failure neighborhood: a base eval case, expected answer, hidden traps, grading rubric, adversarial variants, validation reports, and export artifacts.}
+\end{quote}
+
+This makes BreakPoint closer to a compiler or fuzzing system than a normal benchmark. The input is a failure trace or declarative failure specification. The output is a validated regression suite with lineage and export formats.
+
+\subsection{Current Validated State}
+
+\begin{table}[H]
+\centering
+\caption{Current actual-data validation run}
+\begin{tabular}{lr}
+\toprule
+Metric & Value\\
+\midrule
+\metric{Sourced public failure traces}{12}
+\metric{Accepted base eval items}{12}
+\metric{Adversarial variants}{36}
+\metric{Total eval cases}{48}
+\metric{Base validations passed}{12/12}
+\metric{Live judge surfaces}{OpenAI, Anthropic, Gemini, local vLLM}
+\metric{Estimated live judge cost}{\$0.1026}
+\bottomrule
+\end{tabular}
+\end{table}
+
+The current system includes:
+
+\begin{itemize}
+  \item A Pydantic data model for eval items, expected answers, traps, rubrics, variants, votes, validation reports, suites, runs, reviews, clusters, and gates.
+  \item A failure taxonomy covering hallucination, instruction conflict, multi-hop reasoning, tool misuse, long-context retrieval, refusal boundary, format violation, RAG contradiction, and prompt injection.
+  \item A BreakPointSpec YAML DSL for declaring failure families as versioned source.
+  \item Trace2Eval ingestion and compilation from normalized production failure traces.
+  \item Mutators that add irrelevant context, reorder facts, rename entities, paraphrase instructions, inject prompt attacks, and add stale contradictory evidence.
+  \item Live judge adapters for OpenAI, Anthropic, Gemini, and an OpenAI-compatible vLLM endpoint.
+  \item Judge calibration reports, model-under-test comparisons, and CI regression-pack selection.
+  \item Exports for JSONL, Hugging Face style rows, DuckDB, OpenAI Evals style YAML, lm-eval YAML/JSONL, CI JSON/Markdown, and FastAPI.
+\end{itemize}
+
+\section{Why BreakPoint Exists}
+
+LLM applications fail in ways that are more specific than broad academic benchmark scores can describe. A production RAG system might cite an outdated cached summary instead of a fresh policy. A tool-using agent might trust stale tool output over a live API. A support bot might follow a prompt injection hidden in retrieved context. A safety layer might refuse an allowed educational question or answer a high-stakes individualized one.
+
+Traditional eval creation often starts with humans writing prompts by hand. That does not scale well across real incidents, evolving product behavior, and adversarial variants. BreakPoint instead treats failures as source material. It compiles a failure into many related tests that preserve the original causal structure.
+
+\subsection{The Product Surface}
+
+BreakPoint still exposes familiar evaluation primitives:
+
+\begin{itemize}
+  \item projects and dataset versions;
+  \item eval suites, cases, checks, and runs;
+  \item model outputs and judgments;
+  \item human review records;
+  \item failure clusters and regression gates;
+  \item import, export, CLI, and SDK workflows.
+\end{itemize}
+
+The difference is the core. BreakPoint is not primarily a leaderboard. It is a failure-to-eval compiler.
+
+\section{Architecture}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{artifacts/images/architecture.png}
+\caption{BreakPoint turns failure traces into specs, cases, mutations, validation reports, and regression packs.}
+\end{figure}
+
+The architecture has six main stages.
+
+\begin{enumerate}
+  \item \textbf{Failure traces.} Inputs come from production logs, RAG traces, tool-call traces, support tickets, feedback, red-team transcripts, and incident reports.
+  \item \textbf{BreakPointSpec.} The compiler turns traces into declarative failure specs containing contracts, evidence rules, traps, mutators, oracles, and rubrics.
+  \item \textbf{Case compiler.} Each spec becomes a concrete eval item with task, context, expected answer, hidden traps, rubric, and metadata.
+  \item \textbf{Mutation engine.} Mutators create adversarial variants around the base failure by changing ordering, names, irrelevant context, phrasing, and contradictory evidence.
+  \item \textbf{Judge validation.} Local checks and live judges verify that generated cases are clear, answerable, trapped, and formatted correctly.
+  \item \textbf{Regression packs.} Accepted cases are exported into JSONL, OpenAI Evals, lm-eval, DuckDB, CI reports, and risk-focused regression packs.
+\end{enumerate}
+
+\section{Core Data Model}
+
+BreakPoint keeps compiler metadata attached to every accepted case. This is important because a regression test is more useful when it explains where it came from and how it should fail.
+
+\begin{lstlisting}[language=Python,caption={Simplified eval case shape}]
+EvalSuite
+  EvalCase
+    original_failure_seed
+    prompt / context / files / tools
+    expected_answer
+    hidden_traps
+    rubric
+    oracle
+    mutation_lineage
+    validation_report
+    failure_family
+\end{lstlisting}
+
+Important objects include:
+
+\begin{itemize}
+  \item \textbf{RawFailureTrace:} normalized source record with task, model output, expected behavior, retrieved documents, tool calls, feedback, severity, and metadata.
+  \item \textbf{FailureSeed:} classified failure family plus the generated BreakPointSpec draft.
+  \item \textbf{EvalItem:} task, prompt, context, expected answer, hidden traps, rubric, difficulty, variants, and metadata.
+  \item \textbf{EvalCase:} product-layer wrapper around an eval item with lineage and validation state.
+  \item \textbf{ValidationReport:} judge votes plus deterministic scores for ambiguity, answerability, trap coverage, and format.
+  \item \textbf{RegressionPack:} selected set of case IDs for smoke tests, recent failures, mutations, safety tests, or changed-file focus.
+\end{itemize}
+
+\section{Failure Taxonomy}
+
+The compiler currently supports nine failure categories.
+
+\begin{longtable}{p{0.24\textwidth}p{0.66\textwidth}}
+\caption{Failure families}\\
+\toprule
+Family & What it targets\\
+\midrule
+\endfirsthead
+\toprule
+Family & What it targets\\
+\midrule
+\endhead
+\code{hallucination} & Unsupported claims, invented facts, missing grounding, and fake citations.\\
+\code{instruction\_conflict} & Conflicting user, system, retrieved, or tool instructions.\\
+\code{multi\_hop\_reasoning} & Cases that require combining separate facts instead of matching one span.\\
+\code{tool\_misuse} & Wrong tool choice, stale results, bad args, schema mismatch, timeouts, and permission failures.\\
+\code{long\_context} retrieval & Needle-in-haystack retrieval and evidence split across distant sections.\\
+\code{refusal\_boundary} & Over-refusal and under-refusal around legal, medical, finance, safety, and educational boundaries.\\
+\code{format\_violation} & JSON-only, schema, citation, and structured-output robustness.\\
+\code{rag\_contradiction} & Stale vs fresh evidence, low-reliability vs authoritative evidence, citation mismatch, and missing evidence.\\
+\code{prompt\_injection} & Malicious or irrelevant instructions embedded in retrieved content.\\
+\bottomrule
+\end{longtable}
+
+\section{BreakPointSpec DSL}
+
+BreakPointSpec is the declarative source form for a failure family. It is intentionally close to infrastructure-as-code: versioned, reviewable, reproducible, and suitable for pull requests.
+
+\begin{lstlisting}[caption={Example BreakPointSpec fragment}]
+id: rag.freshness_contradiction.v1
+name: RAG freshness contradiction
+risk: high
+
+contract:
+  answer_policy: Use the newest reliable source.
+  require_citations: true
+  abstain_when_evidence_missing: true
+
+evidence_rules:
+  source_priority:
+    - official_policy
+    - internal_memo
+    - cached_summary
+  freshness_field: effective_date
+
+traps:
+  - id: stale_source_first
+    description: Older source appears before newer authoritative source.
+    expected_behavior: Ignore stale source and cite newer source.
+
+mutators:
+  - type: reorder_context
+  - type: add_irrelevant_context
+  - type: inject_prompt_attack
+  - type: rename_entities
+  - type: contradict_with_stale_source
+
+oracle:
+  type: trace_grounded_answer
+  required_claims:
+    - answer uses newest effective date
+  forbidden_claims:
+    - answer cites superseded policy
+\end{lstlisting}
+
+The compiler uses this specification to create the task, context, expected answer, hidden traps, rubric, and variants. The same spec can be regenerated after changing mutator count, judge policy, or export target.
+
+\section{Trace2Eval}
+
+Trace2Eval is the path from raw production failure to eval seed.
+
+\begin{enumerate}
+  \item Load normalized failure traces or ingest source-specific payloads.
+  \item Redact secrets and basic PII patterns.
+  \item Classify the failure family using trace text, retrieved evidence, tool calls, feedback, and severity.
+  \item Generate a BreakPointSpec draft.
+  \item Compile the spec into an eval item.
+  \item Validate the item with local and optional live judges.
+  \item Wrap accepted items into product-layer cases and regression packs.
+\end{enumerate}
+
+Supported ingestion adapters include:
+
+\begin{itemize}
+  \item OpenTelemetry spans;
+  \item OpenInference spans;
+  \item LangSmith traces;
+  \item LiteLLM logs;
+  \item retrieval logs;
+  \item support tickets;
+  \item user feedback and thumbs-down records;
+  \item red-team transcripts;
+  \item incident reports.
+\end{itemize}
+
+\section{Mutation Engine}
+
+The mutation engine creates a failure neighborhood around each seed. This matters because fixing one exact prompt is not the same as fixing the underlying behavior.
+
+Examples:
+
+\begin{itemize}
+  \item \textbf{Reorder context:} move misleading evidence before authoritative evidence.
+  \item \textbf{Add irrelevant context:} test whether the model stays focused.
+  \item \textbf{Rename entities:} check whether the behavior generalizes beyond exact names.
+  \item \textbf{Paraphrase instructions:} avoid overfitting to one phrasing.
+  \item \textbf{Inject prompt attack:} place malicious instructions inside retrieved text.
+  \item \textbf{Contradict with stale source:} introduce plausible but superseded evidence.
+\end{itemize}
+
+In the latest actual run, 12 seed traces produced 36 adversarial variants and 48 total eval cases.
+
+\section{How Live Judges Work}
+
+A live judge is an actual model endpoint used as an eval-data validator. It is not the model being benchmarked. Its job is to judge whether a generated eval case is clear, answerable, grounded, trapped correctly, and formatted well enough to keep.
+
+Current live judge adapters:
+
+\begin{itemize}
+  \item \textbf{OpenAI:} Responses API with model \code{gpt-5.4-mini}.
+  \item \textbf{Anthropic:} Messages API with model \code{claude-sonnet-5}.
+  \item \textbf{Gemini:} \code{generateContent} with model \code{gemini-2.5-flash}.
+  \item \textbf{Local vLLM:} OpenAI-compatible chat-completions endpoint with model \code{breakpoint-local-judge}.
+\end{itemize}
+
+Each judge receives a compact grading prompt:
+
+\begin{lstlisting}[caption={Conceptual judge input}]
+You are grading a generated LLM evaluation item.
+Return compact valid JSON only with keys: passed, confidence, rationale.
+
+Task: ...
+Context: ...
+Expected: ...
+Hidden traps: ...
+\end{lstlisting}
+
+Each judge must return:
+
+\begin{lstlisting}[caption={Judge output contract}]
+{
+  "passed": true,
+  "confidence": 0.94,
+  "rationale": "Clear task, answerable context, expected answer, and trap are present."
+}
+\end{lstlisting}
+
+BreakPoint parses this into a \code{ModelVote}. The \code{ValidationReport} stores all votes plus deterministic scores.
+
+\subsection{Validation Gate}
+
+A generated case passes validation when:
+
+\begin{itemize}
+  \item at least two judges pass it;
+  \item ambiguity score is at most 0.32;
+  \item answerability score is at least 0.72;
+  \item trap coverage score is at least 0.65;
+  \item format score is at least 0.80.
+\end{itemize}
+
+The deterministic scores make judge behavior less arbitrary. Live judges provide model-based scrutiny; local checks enforce structural quality.
+
+\section{Judge Calibration}
+
+Judge calibration compares judge votes against gold labels. The current labels are seeded from accepted Trace2Eval validations, so they are useful for system verification but should be replaced with real human reviewer labels before blocking production releases.
+
+\begin{table}[H]
+\centering
+\caption{Current judge calibration summary}
+\begin{tabular}{lrr}
+\toprule
+Judge & Accuracy & Average confidence\\
+\midrule
+OpenAI \code{gpt-5.4-mini} & 1.000 & 0.942\\
+Local vLLM judge & 1.000 & 0.900\\
+Local strict & 1.000 & 0.910\\
+Local skeptic & 1.000 & 0.910\\
+Local format & 1.000 & 0.910\\
+Gemini \code{gemini-2.5-flash} & 0.917 & 0.583\\
+Anthropic \code{claude-sonnet-5} & 0.833 & 0.752\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Calibration outputs include:
+
+\begin{itemize}
+  \item overall judge accuracy and confidence;
+  \item judge/family accuracy;
+  \item false positive and false negative rates;
+  \item inter-judge agreement;
+  \item answer-order bias;
+  \item verbosity bias;
+  \item rubric sensitivity;
+  \item promoted judge/family pairs;
+  \item cases needing human review.
+\end{itemize}
+
+The latest calibration used 12 examples across four observed families and promoted 26 judge/family pairs.
+
+\section{Live Judge Results}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{artifacts/reports/judge_scoreboard.png}
+\caption{Reliability score, pass rate, and confidence for each live judge.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{artifacts/reports/judge_confidence_matrix.png}
+\caption{Judge confidence by public failure trace. Failed or rejected judgments are marked with an x.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{artifacts/reports/failure_index_by_trace.png}
+\caption{BreakPoint failure index by incident, severity, and family.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{artifacts/reports/cost_reliability_pareto.png}
+\caption{Estimated cost per judged case versus reliability. The vLLM point is local endpoint cost estimate.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{BreakPoint compiler-native indices}
+\begin{tabular}{lr}
+\toprule
+Index & Score\\
+\midrule
+\metric{Failure Neighborhood Index}{82.9}
+\metric{Evidence Conflict Index}{85.4}
+\metric{Boundary Precision Index}{78.5}
+\metric{Instruction Attack Index}{89.1}
+\metric{Judge Consensus Index}{93.8}
+\metric{Source Tension Index}{66.3}
+\bottomrule
+\end{tabular}
+\end{table}
+
+These are not broad benchmark indices. They are compiler-native quality and stress indicators:
+
+\begin{itemize}
+  \item \textbf{Failure Neighborhood Index:} aggregate strength of the generated failure neighborhood.
+  \item \textbf{Evidence Conflict Index:} strength of stale/fresh and reliable/unreliable evidence conflicts.
+  \item \textbf{Boundary Precision Index:} refusal-boundary quality for over-refusal and under-refusal cases.
+  \item \textbf{Instruction Attack Index:} prompt-injection stress coverage.
+  \item \textbf{Judge Consensus Index:} agreement among live judges.
+  \item \textbf{Source Tension Index:} spread between source reliability signals.
+\end{itemize}
+
+\section{Model-Under-Test Runs}
+
+Live judges validate generated eval data. Model-under-test runs evaluate candidate model behavior against compiled cases. These are separate layers.
+
+The current model-run module contains simulated profiles that make failures visible without requiring external app endpoints. This is a staging point for real model/app adapters.
+
+\begin{table}[H]
+\centering
+\caption{Current 48-case model-under-test comparison}
+\begin{tabular}{lrrrr}
+\toprule
+Profile & Pass rate & Avg score & Cost & Cost per reliable pass\\
+\midrule
+\code{breakpoint-reference} & 100.0\% & 1.000 & \$0.0048 & \$0.000100\\
+\code{stale-rag-baseline} & 41.7\% & 0.504 & \$0.0038 & \$0.000192\\
+\code{over-refusal-baseline} & 0.0\% & 0.350 & \$0.0024 & \$0.002400\\
+\code{injection-prone-agent} & 91.7\% & 0.933 & \$0.0058 & \$0.000131\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{artifacts/model_runs/model_pass_rates.png}
+\caption{Overall pass rate by model-under-test profile.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{artifacts/model_runs/family_model_matrix.png}
+\caption{Pass rate by failure family and model profile.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{artifacts/model_runs/cost_latency_tradeoff.png}
+\caption{Cost, latency, and reliability tradeoff for model-under-test profiles.}
+\end{figure}
+
+\subsection{Current Scoring Logic}
+
+Current model-output scoring is deterministic:
+
+\begin{itemize}
+  \item fail if the output repeats forbidden stale or false claims;
+  \item fail if the model refuses an answerable case;
+  \item score based on required claim coverage;
+  \item pass when required coverage is high enough and no forbidden claim appears.
+\end{itemize}
+
+The next step is to add real model/app adapters and optionally route candidate outputs to calibrated live judges using each case rubric.
+
+\section{Production Regression Packs}
+
+BreakPoint can compile production-style regression packs from normalized or ingested traces.
+
+\begin{table}[H]
+\centering
+\caption{Validated production-pack run}
+\begin{tabular}{lr}
+\toprule
+Metric & Value\\
+\midrule
+\metric{Ingested traces}{12}
+\metric{Compiled production-pack traces}{10}
+\metric{Accepted base items}{10}
+\metric{Adversarial variants}{30}
+\metric{Total eval cases}{40}
+\metric{Regression packs}{5}
+\metric{Base validation passed}{10/10}
+\metric{Estimated live judge cost}{\$0.0855}
+\bottomrule
+\end{tabular}
+\end{table}
+
+The pack selector creates:
+
+\begin{itemize}
+  \item a smoke pack for fast pull-request checks;
+  \item a recent failure pack;
+  \item a mutation pack;
+  \item a safety pack for injection, refusal, citation, and schema traps;
+  \item a changed-files focus pack inferred from paths such as RAG, tool, prompt, policy, or memory code.
+\end{itemize}
+
+\section{SDK and CLI}
+
+BreakPoint is currently SDK/CLI first.
+
+\subsection{Python SDK}
+
+\begin{lstlisting}[language=Python,caption={SDK example}]
+from breakpoint_eval import BreakPoint, TraceBuilder
+
+trace = TraceBuilder.rag_failure(
+    id="prod-rag-001",
+    question="Which policy is current?",
+    bad_answer="The cached summary says the limit is 7 days.",
+    expected_behavior="Use the newer official policy and answer 30 days.",
+    retrieved_docs=[
+        {
+            "id": "cache",
+            "content": "The limit is 7 days.",
+            "effective_date": "2025-02-01",
+            "reliability": 0.35,
+        },
+        {
+            "id": "policy",
+            "content": "The limit is 30 days.",
+            "effective_date": "2026-07-01",
+            "reliability": 0.95,
+        },
+    ],
+)
+
+bp = BreakPoint(include_external_judges=False, variants_per_item=3)
+build = bp.build_pack([trace], output_dir="artifacts/sdk_pack")
+print(build.total_cases, build.artifact_paths)
+\end{lstlisting}
+
+\subsection{CLI Commands}
+
+\begin{lstlisting}[caption={Common CLI workflow}]
+python -m breakpoint_eval.cli categories
+python -m breakpoint_eval.cli compile-spec
+python -m breakpoint_eval.cli trace2eval --traces path/to/traces.json
+python -m breakpoint_eval.cli actual-data --external-judges --max-live-cost-usd 2
+python -m breakpoint_eval.cli judge-report
+python -m breakpoint_eval.cli ingest-traces --input path/to/logs.json --source support_ticket
+python -m breakpoint_eval.cli production-pack --input artifacts/ingestion/traces.json
+python -m breakpoint_eval.cli calibrate-judges
+python -m breakpoint_eval.cli model-runs
+python -m breakpoint_eval.cli ci-packs --changed-files "app/rag/retriever.py"
+python -m breakpoint_eval.cli vllm-judge-server --port 8001
+\end{lstlisting}
+
+\section{Artifact Map}
+
+\begin{longtable}{p{0.35\textwidth}p{0.55\textwidth}}
+\caption{Generated artifacts}\\
+\toprule
+Path & Purpose\\
+\midrule
+\endfirsthead
+\toprule
+Path & Purpose\\
+\midrule
+\endhead
+\filepath{artifacts/actual/source_traces.json} & Normalized actual public failure traces.\\
+\filepath{artifacts/actual/trace2eval_results.json} & Seeds, generated eval items, validation reports, and review status.\\
+\filepath{artifacts/actual/product.json} & Product-layer project, dataset version, suite, cases, run, reviews, clusters, and gate.\\
+\filepath{artifacts/actual/cases.jsonl} & Exportable case rows.\\
+\filepath{artifacts/actual/openai_evals.yaml} & OpenAI Evals style export.\\
+\filepath{artifacts/actual/lm_eval_task.yaml} & lm-eval task definition.\\
+\filepath{artifacts/reports/live_judge_report.json} & Live judge summaries and BreakPoint indices.\\
+\filepath{artifacts/reports/*.png} & Live judge charts.\\
+\filepath{artifacts/calibration/judge_calibration_report.json} & Judge/family calibration report.\\
+\filepath{artifacts/model_runs/model_run_comparison.json} & Model-under-test comparison result.\\
+\filepath{artifacts/model_runs/*.png} & Model-under-test charts.\\
+\filepath{artifacts/production_pack/manifest.json} & Production-pack build manifest.\\
+\filepath{artifacts/ci/packs.json} & CI regression-pack selections.\\
+\bottomrule
+\end{longtable}
+
+\section{Security, Cost, and Operational Notes}
+
+\subsection{Credentials}
+
+API keys live in \code{.env}, which is ignored by Git. The source repository includes \code{.env.example} only. Live judging is opt-in through CLI flags, SDK options, or \code{BREAKPOINT\_EXTERNAL\_JUDGES=1}.
+
+\subsection{Cost Guard}
+
+Live judge runs estimate cost before execution. The actual-data command accepts \code{--max-live-cost-usd}. If the estimate exceeds the guard, the command fails before making paid calls.
+
+\subsection{Redaction}
+
+The trace layer performs basic redaction for API-key-like strings, token/secret assignments, emails, and SSN-like patterns. Production deployments should add source-specific allow lists, block lists, and retention policies.
+
+\section{Limitations}
+
+The current system is a strong SDK/CLI implementation, but several items remain before it should be used as a fully automated production gate:
+
+\begin{itemize}
+  \item Current calibration labels are seeded from accepted validation rather than independent human labels.
+  \item Model-under-test runs are currently simulated profiles; real app/model endpoint adapters are the next major step.
+  \item Live judges validate eval item quality; they are not yet the primary oracle for scoring arbitrary candidate model outputs.
+  \item Source-specific ingestion has adapters, but real private connectors need deployment-specific authentication, retention, and schema mapping.
+  \item CI pack selection exists, but a repository-specific GitHub Action comment bot and historical baseline store should be added.
+\end{itemize}
+
+\section{Roadmap}
+
+The next high-value work is:
+
+\begin{enumerate}
+  \item Replace provisional gold labels with human reviewer labels and reviewer agreement metrics.
+  \item Connect ingestion adapters to real private production systems.
+  \item Add real model-under-test adapters for app endpoints, model APIs, and agent traces.
+  \item Harden CI/CD with a PR comment bot and last-passing-main baselines.
+  \item Package and publish the SDK with polished API docs and compatibility tests for Python 3.11 through 3.13.
+\end{enumerate}
+
+\section{Source Incidents}
+
+The current public actual corpus includes incidents from Air Canada, NYC MyCity, Mata v. Avianca, DPD, a Chevrolet dealership chatbot, CNET, NEDA Tessa, Microsoft Tay, Pak'nSave Savey Mealbot, Google Bard, Michael Cohen legal citations, and McDonald's AI drive-thru tests. Source URLs are stored in \code{artifacts/actual/manifest.json}; examples include:
+
+\begin{itemize}
+  \item \href{https://arstechnica.com/tech-policy/2024/02/air-canada-must-honor-refund-policy-invented-by-airlines-chatbot/}{Ars Technica: Air Canada chatbot refund policy}
+  \item \href{https://themarkup.org/artificial-intelligence/2024/03/29/nycs-ai-chatbot-tells-businesses-to-break-the-law}{The Markup: NYC chatbot legal and compliance advice}
+  \item \href{https://law.justia.com/cases/federal/district-courts/new-york/nysdce/1%3A2022cv01461/575368/54/}{Justia: Mata v. Avianca sanctions order}
+  \item \href{https://www.theguardian.com/world/2023/aug/10/pak-n-save-savey-meal-bot-ai-app-malfunction-recipes}{The Guardian: Pak'nSave Savey Mealbot incident}
+  \item \href{https://www.theverge.com/2023/2/8/23590864/google-ai-chatbot-bard-mistake-error-exoplanet-demo}{The Verge: Google Bard JWST demo error}
+  \item \href{https://www.pbs.org/newshour/nation/michael-cohen-says-he-unwittingly-sent-ai-generated-fake-legal-cases-to-his-attorney}{PBS: Michael Cohen AI-generated fake legal cases}
+  \item \href{https://restaurantbusinessonline.com/technology/mcdonalds-ending-its-drive-thru-ai-test}{Restaurant Business: McDonald's drive-thru AI test}
+\end{itemize}
+
+\section{Conclusion}
+
+BreakPoint is now a working failure-to-eval compiler with trace ingestion, specs, mutations, live judges, exports, and regression packs. The next milestone is private trace connectivity, real model-under-test endpoints, and calibrated human-reviewed CI gates.
+
+\end{document}
