@@ -128,7 +128,7 @@
       "citation_required": true
     }
   },
-  "created_at": "2026-07-01T06:33:36.602976Z",
+  "created_at": "2026-07-02T22:20:12.221249Z",
   "prompt": "Answer a question using retrieved policy documents.\n\nContext:\nDomain: enterprise_policy.\n\nAnswer policy: Use the newest reliable source.\n\nSource priority: official_policy, internal_memo, cached_summary.\n\nFreshness field: effective_date.\n\nTrap stale_source_first: Older source appears before newer authoritative source. Trigger: older source appears before newer authoritative source.\n\nGround truth claims: answer uses newest effective date.\n\nForbidden claims: answer cites superseded policy.",
   "expected": "answer uses newest effective date",
   "variant_count": 5

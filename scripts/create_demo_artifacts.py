@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import json
-import shutil
 import sys
-import textwrap
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -15,8 +13,9 @@ sys.path.insert(0, str(ROOT))
 from breakpoint_eval.benchmark import build_failuregym_manifest
 from breakpoint_eval.ci import build_ci_report, build_regression_packs, default_regression_gate, write_ci_report
 from breakpoint_eval.compiler import BreakPointCompiler, write_jsonl, write_metrics
+from breakpoint_eval.env import env_flag, load_env
 from breakpoint_eval.exporters import export_cases_jsonl, export_lm_eval_task, export_openai_evals
-from breakpoint_eval.judges import CalibrationExample, LocalHeuristicJudge, calibrate_judges, default_judge_adapters
+from breakpoint_eval.judges import CalibrationExample, calibrate_judges, default_judge_adapters, available_validation_suite
 from breakpoint_eval.metrics import compiler_native_metrics
 from breakpoint_eval.platform import (
     build_failure_clusters,
@@ -34,16 +33,16 @@ from breakpoint_eval.traces import compile_traces, sample_failure_traces
 ARTIFACTS = ROOT / "artifacts"
 DEMO = ARTIFACTS / "demo"
 IMAGES = ARTIFACTS / "images"
-DASH_PUBLIC = ROOT / "dashboard" / "public"
 
 
 def main() -> None:
+    load_env()
     DEMO.mkdir(parents=True, exist_ok=True)
     IMAGES.mkdir(parents=True, exist_ok=True)
-    (DASH_PUBLIC / "data").mkdir(parents=True, exist_ok=True)
-    (DASH_PUBLIC / "images").mkdir(parents=True, exist_ok=True)
 
-    compiler = BreakPointCompiler(seed=42)
+    include_external_judges = env_flag("BREAKPOINT_EXTERNAL_JUDGES", False)
+    validator = available_validation_suite(include_external=include_external_judges)
+    compiler = BreakPointCompiler(seed=42, validator=validator)
     bundle = compiler.compile_dataset(items_per_category=8, variants_per_item=4)
     write_jsonl(bundle.items, DEMO / "breakpoint_eval.jsonl")
     write_metrics(bundle.metrics, DEMO / "metrics.json")
@@ -78,12 +77,6 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    (DASH_PUBLIC / "data" / "metrics.json").write_text(json.dumps(bundle.metrics, indent=2), encoding="utf-8")
-    (DASH_PUBLIC / "data" / "sample_items.json").write_text(
-        json.dumps([item.to_dataset_row() for item in bundle.items[:8]], indent=2),
-        encoding="utf-8",
-    )
-
     project, version, suite, cases = bundle_to_product_layer(bundle)
     run = run_local_suite(suite, cases)
     reviews = seed_human_reviews(cases, limit=12)
@@ -96,13 +89,13 @@ def main() -> None:
     packs = build_regression_packs(suite, cases)
     spec = example_rag_freshness_spec()
     spec_item = compile_spec(spec)
-    trace_results = compile_traces(sample_failure_traces())
+    trace_results = compile_traces(sample_failure_traces(), validator=validator)
     simulated = generate_simulated_environments()
     calibration_examples = [
         CalibrationExample(item=case.eval_item, human_passed=True, family=case.failure_family)
         for case in cases[:12]
     ]
-    calibration = calibrate_judges(default_judge_adapters(include_external=False), calibration_examples)
+    calibration = calibrate_judges(default_judge_adapters(include_external=include_external_judges), calibration_examples)
 
     store.save_product_layer(
         project,
@@ -157,72 +150,7 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    failure_inbox = [
-        {
-            "id": result.seed.trace_id,
-            "family": result.seed.family,
-            "summary": result.seed.summary,
-            "confidence": result.seed.confidence,
-            "signals": result.seed.signals,
-            "review_status": result.review_status,
-        }
-        for result in trace_results
-    ]
-    mutation_graph = [
-        {
-            "id": case.id,
-            "parent": case.mutation_lineage.parent_case_id,
-            "seed": case.mutation_lineage.seed_id,
-            "mutator": case.mutation_lineage.mutator,
-            "family": case.failure_family,
-            "title": case.eval_item.title,
-        }
-        for case in cases[:80]
-    ]
-    dashboard_data = {
-        "product_summary.json": {
-            "project": project.model_dump(mode="json"),
-            "suite": suite.model_dump(mode="json"),
-            "case_count": len(cases),
-            "run_metrics": run.metrics,
-            "native_metrics": native_metrics,
-            "clusters": [cluster.model_dump(mode="json") for cluster in clusters],
-        },
-        "failure_inbox.json": failure_inbox,
-        "spec_review.json": {
-            "spec_yaml": spec.to_yaml(),
-            "compiled_item": spec_item.to_dataset_row(),
-            "trace_specs": [result.seed.spec.model_dump(mode="json") for result in trace_results],
-        },
-        "case_review.json": {
-            "cases": [case.model_dump(mode="json") for case in cases[:24]],
-            "reviews": [review.model_dump(mode="json") for review in reviews],
-        },
-        "mutation_graph.json": mutation_graph,
-        "run_comparison.json": {
-            "current": run.model_dump(mode="json"),
-            "previous": {"pass_rate": 0.91, "mutation_survival_rate": 0.82, "evidence_freshness_score": 0.86},
-            "delta": {
-                "pass_rate": round(float(run.metrics["pass_rate"]) - 0.91, 3),
-                "mutation_survival_rate": round(float(run.metrics["mutation_survival_rate"]) - 0.82, 3),
-                "evidence_freshness_score": round(float(run.metrics["evidence_freshness_score"]) - 0.86, 3),
-            },
-        },
-        "regression_gate.json": {"gate": gate.model_dump(mode="json"), "result": gate_result, "ci_report": ci_report},
-        "judge_reliability.json": [report.model_dump(mode="json") for report in calibration],
-        "simulators.json": [env.model_dump(mode="json") for env in simulated],
-        "failuregym.json": failuregym_manifest,
-    }
-    for filename, payload in dashboard_data.items():
-        (DASH_PUBLIC / "data" / filename).write_text(json.dumps(payload, indent=2), encoding="utf-8")
-
     draw_architecture(IMAGES / "architecture.png")
-    draw_quality_gates(bundle.metrics, IMAGES / "quality_gates.png")
-    draw_category_mix(bundle.metrics, IMAGES / "category_mix.png")
-    draw_comparison(bundle.metrics, IMAGES / "comparison_results.png")
-
-    for image in IMAGES.glob("*.png"):
-        shutil.copy2(image, DASH_PUBLIC / "images" / image.name)
 
 
 def draw_architecture(path: Path) -> None:
@@ -281,84 +209,6 @@ def draw_architecture(path: Path) -> None:
         color="#334155",
     )
     fig.savefig(path, bbox_inches="tight", pad_inches=0.15)
-    plt.close(fig)
-
-
-def draw_quality_gates(metrics: dict[str, object], path: Path) -> None:
-    scores = metrics["quality_scores"]
-    labels = ["Answerable", "Trap coverage", "Format", "Judge agreement", "Low ambiguity"]
-    values = [
-        scores["answerability_score"],
-        scores["trap_coverage_score"],
-        scores["format_score"],
-        scores["judge_agreement"],
-        1 - scores["ambiguity_score"],
-    ]
-    fig, ax = plt.subplots(figsize=(10.5, 5.8), dpi=160)
-    fig.patch.set_facecolor("#ffffff")
-    bars = ax.bar(labels, values, color=["#2563eb", "#0f766e", "#7c3aed", "#be123c", "#b45309"])
-    ax.set_ylim(0, 1.05)
-    ax.set_ylabel("Score")
-    ax.set_title("Validation Gate Scores", fontsize=16, weight="bold", pad=14)
-    ax.grid(axis="y", color="#e2e8f0")
-    ax.spines[["top", "right"]].set_visible(False)
-    for bar, value in zip(bars, values, strict=True):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 0.02, f"{value:.2f}", ha="center", fontsize=10)
-    fig.autofmt_xdate(rotation=15, ha="right")
-    fig.savefig(path, bbox_inches="tight", pad_inches=0.2)
-    plt.close(fig)
-
-
-def draw_category_mix(metrics: dict[str, object], path: Path) -> None:
-    counts = metrics["category_counts"]
-    labels = [label.replace("_", " ").title() for label in counts]
-    values = list(counts.values())
-    fig, ax = plt.subplots(figsize=(11.5, 6.4), dpi=160)
-    fig.patch.set_facecolor("#ffffff")
-    colors = ["#2563eb", "#0f766e", "#7c3aed", "#be123c", "#b45309", "#475569", "#0891b2", "#4d7c0f", "#c2410c"]
-    ax.barh(labels, values, color=colors[: len(labels)])
-    ax.set_xlabel("Accepted base items")
-    ax.set_title("Demo Dataset Coverage by Failure Category", fontsize=16, weight="bold", pad=14)
-    ax.grid(axis="x", color="#e2e8f0")
-    ax.spines[["top", "right"]].set_visible(False)
-    for idx, value in enumerate(values):
-        ax.text(value + 0.05, idx, str(value), va="center", fontsize=10)
-    fig.savefig(path, bbox_inches="tight", pad_inches=0.2)
-    plt.close(fig)
-
-
-def draw_comparison(metrics: dict[str, object], path: Path) -> None:
-    cases = metrics["total_eval_cases"]
-    manual_hours = metrics["estimated_manual_prompt_hours"]
-    compiler_hours = round(max(0.4, cases * 0.18 / 60), 1)
-    labels = ["Manual authoring", "BreakPoint compiler"]
-    values = [manual_hours, compiler_hours]
-    fig, ax = plt.subplots(figsize=(9.8, 5.8), dpi=160)
-    fig.patch.set_facecolor("#ffffff")
-    bars = ax.barh(labels, values, color=["#64748b", "#2563eb"])
-    ax.set_xlabel("Estimated hours")
-    ax.set_title("Authoring Effort Comparison", fontsize=16, weight="bold", pad=14)
-    ax.grid(axis="x", color="#e2e8f0")
-    ax.spines[["top", "right"]].set_visible(False)
-    for bar, value in zip(bars, values, strict=True):
-        ax.text(value + 0.35, bar.get_y() + bar.get_height() / 2, f"{value:.1f}h", va="center", fontsize=11)
-    ax.set_xlim(0, max(values) * 1.25)
-    ax.invert_yaxis()
-    annotation = textwrap.fill(
-        f"Demo run produced {cases} total eval cases, including adversarial variants and validation reports.",
-        width=56,
-    )
-    ax.text(
-        0.98,
-        0.16,
-        annotation,
-        transform=ax.transAxes,
-        ha="right",
-        fontsize=10.5,
-        color="#334155",
-        bbox={"boxstyle": "round,pad=0.45", "facecolor": "#f8fafc", "edgecolor": "#d8e1ec"},
-    )
-    fig.savefig(path, bbox_inches="tight", pad_inches=0.2)
     plt.close(fig)
 
 

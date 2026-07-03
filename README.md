@@ -1,175 +1,255 @@
 # BreakPoint
 
-BreakPoint is an eval data compiler for LLM behavior. It generates targeted cases from real failure modes, adds hidden traps and rubrics, mutates prompts into adversarial variants, validates candidates with multiple judges, and exports high-quality datasets for evaluation runners.
+BreakPoint is a Python SDK and CLI for turning real LLM failures into regression eval datasets. Feed it failure traces, support tickets, red-team transcripts, RAG logs, or tool-call traces; it compiles them into versioned eval cases with expected answers, hidden traps, rubrics, adversarial variants, validation reports, and exportable runner formats.
 
-The v0.2 direction is now implemented locally: BreakPoint can ingest failure traces, draft BreakPointSpec YAML, compile cases and variants, create product-layer suites/runs/checks, route human review, produce compiler-native metrics, generate CI regression reports, and package BreakPoint-FailureGym tracks.
+The core idea is failure-to-eval compilation: one observed failure becomes a small failure neighborhood that can be replayed against future prompts, models, RAG pipelines, and agent/tool policies.
 
 ![BreakPoint architecture](artifacts/images/architecture.png)
 
-## What It Builds
+## What Exists
 
-- Failure categories for hallucination, instruction conflict, multi-hop reasoning, tool misuse, long-context retrieval, refusal boundaries, format violations, RAG contradictions, and prompt injection.
-- Generated tasks with expected answers, hidden traps, grading rubrics, and adversarial variants.
-- Validation gates for ambiguity, answerability, trap coverage, schema compliance, and judge agreement.
-- Product-layer objects for projects, dataset versions, eval suites, eval cases, checks, runs, model outputs, judgments, human reviews, failure clusters, and regression gates.
-- BreakPointSpec YAML for declarative failure-family compilation.
-- Trace2Eval ingestion for RAG logs, tool traces, user feedback, support tickets, red-team transcripts, and incident reports.
-- Tool, retrieval, and agent simulators for controlled stale, malformed, contradictory, injected, missing-evidence, and invalid-trace conditions.
-- Exports to JSONL, Hugging Face rows, DuckDB, OpenAI Evals-style YAML, lm-eval task YAML, CI reports, FailureGym tracks, FastAPI, and a Next.js dashboard.
-- A LaTeX-generated system design PDF at `output/pdf/breakpoint_system_design.pdf` after running the build script. The generated PDF path is ignored by Git.
+- Typed Python schemas for eval items, expected answers, hidden traps, rubrics, adversarial variants, model votes, validation reports, dataset bundles, suites, runs, reviews, clusters, and gates.
+- Failure taxonomy for hallucination, instruction conflict, multi-hop reasoning, tool misuse, long-context retrieval, refusal boundaries, format violations, RAG contradiction, and prompt injection.
+- BreakPointSpec YAML for declarative failure-family definitions.
+- Trace2Eval ingestion for normalized failure traces, including RAG evidence, tool calls, original model output, expected behavior, provenance, and severity.
+- Production ingestion adapters for OpenTelemetry/OpenInference spans, LangSmith traces, LiteLLM logs, retrieval logs, support tickets, thumbs-down feedback, red-team transcripts, and incident reports.
+- Mutators for irrelevant context, reordered facts, renamed entities, paraphrased instructions, prompt attacks, and stale/contradictory evidence.
+- Live judge adapters for OpenAI, Anthropic, Gemini, and an OpenAI-compatible local vLLM endpoint.
+- Judge calibration, model-under-test comparison, risk-focused CI pack selection, and production regression-pack compilation.
+- Export paths for JSONL, Hugging Face rows, DuckDB, OpenAI Evals-style YAML, lm-eval YAML/JSONL, CI reports, and FastAPI.
 
 ## Quickstart
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python scripts/create_demo_artifacts.py
 .\.venv\Scripts\python -m pytest
 ```
 
-Generate a dataset directly:
+Compile demo eval data:
 
 ```powershell
-.\.venv\Scripts\python -m breakpoint_eval.cli compile --items-per-category 8 --variants-per-item 4 --hf-preview
+.\.venv\Scripts\python -m breakpoint_eval.cli compile --items-per-category 4 --variants-per-item 2
 ```
 
-Run the v0.2 failure-to-eval workflows:
+Compile sourced public failure traces:
 
 ```powershell
+.\.venv\Scripts\python -m breakpoint_eval.cli actual-data
+```
+
+Compile actual traces with live judges:
+
+```powershell
+.\.venv\Scripts\python -m breakpoint_eval.cli actual-data --external-judges --max-live-cost-usd 2
+```
+
+Generate live judge evaluation charts:
+
+```powershell
+.\.venv\Scripts\python -m breakpoint_eval.cli judge-report --results artifacts/actual/trace2eval_results.json --out-dir artifacts/reports
+```
+
+Build a production-style regression pack through the ingestion layer:
+
+```powershell
+.\.venv\Scripts\python -m breakpoint_eval.cli ingest-traces --input data/actual/failure_traces.json --source incident_report
+.\.venv\Scripts\python -m breakpoint_eval.cli production-pack --input artifacts/ingestion/traces.json --source incident_report --max-records 10 --external-judges --changed-files "app/rag/retriever.py,agents/tools/order_tool.py" --risk high
+```
+
+## Python SDK
+
+```python
+from breakpoint_eval import BreakPoint, TraceBuilder
+
+trace = TraceBuilder.rag_failure(
+    id="prod-rag-001",
+    question="Which policy is current?",
+    bad_answer="The cached summary says the limit is 7 days.",
+    expected_behavior="Use the newer official policy and answer 30 days.",
+    retrieved_docs=[
+        {"id": "cache", "content": "The limit is 7 days.", "effective_date": "2025-02-01", "reliability": 0.35},
+        {"id": "policy", "content": "The limit is 30 days.", "effective_date": "2026-07-01", "reliability": 0.95},
+    ],
+)
+
+bp = BreakPoint(include_external_judges=False, variants_per_item=3)
+build = bp.build_pack([trace], output_dir="artifacts/sdk_pack")
+
+print(build.total_cases, build.artifact_paths)
+```
+
+## Actual Failure Corpus
+
+The current actual corpus lives at `data/actual/failure_traces.json`. It contains 12 sourced public incidents converted into normalized traces:
+
+- Air Canada bereavement-fare chatbot hallucination
+- NYC MyCity legal/compliance misadvice
+- Mata v. Avianca fake legal citations
+- DPD support chatbot manipulation
+- Chevrolet dealership chatbot pricing manipulation
+- CNET finance article errors
+- NEDA Tessa harmful medical-adjacent advice
+- Microsoft Tay social manipulation
+- Pak'nSave Savey Mealbot unsafe recipe generation
+- Google Bard JWST demo error
+- Michael Cohen fake legal citations
+- McDonald's AI drive-thru order failures
+
+The latest live run produced:
+
+| Metric | Value |
+| --- | ---: |
+| Sourced traces | 12 |
+| Accepted base items | 12 |
+| Adversarial variants | 36 |
+| Total eval cases | 48 |
+| Live judge set | OpenAI, Anthropic, Gemini, local vLLM |
+| Estimated live judge cost | $0.1026 |
+| Base validation passed | 12/12 |
+
+## Live Judge Results
+
+These charts are generated from `artifacts/actual/trace2eval_results.json`, not from the synthetic category-quota demo. The data includes per-case judge pass/fail decisions, confidence values, provider disagreement, estimated cost per judgment, source reliability spread, severity, and failure-family labels.
+
+![Live judge reliability](artifacts/reports/judge_scoreboard.png)
+
+![Judge confidence matrix](artifacts/reports/judge_confidence_matrix.png)
+
+![Failure index by trace](artifacts/reports/failure_index_by_trace.png)
+
+![Cost reliability Pareto](artifacts/reports/cost_reliability_pareto.png)
+
+BreakPoint uses its own failure-oriented indices rather than broad competitor benchmark indexes:
+
+- Failure Neighborhood Index
+- Evidence Conflict Index
+- Boundary Precision Index
+- Instruction Attack Index
+- Judge Consensus Index
+- Source Tension Index
+
+Latest index values:
+
+| BreakPoint index | Score |
+| --- | ---: |
+| Failure Neighborhood Index | 82.9 |
+| Evidence Conflict Index | 85.4 |
+| Boundary Precision Index | 78.5 |
+| Instruction Attack Index | 89.1 |
+| Judge Consensus Index | 93.8 |
+| Source Tension Index | 66.3 |
+
+## Calibration and Model Runs
+
+`calibrate-judges` produced `artifacts/calibration/judge_calibration_report.json`, `gold_labels.json`, and `calibrated_gate_policy.json` from the 12 live-judged actual traces. Current promoted judge/family pairs: 26. OpenAI, the local vLLM judge, and all local deterministic judges were promoted across all observed families; Anthropic was promoted for prompt-injection and RAG contradiction; Gemini was promoted across the observed families.
+
+`model-runs` compares model-under-test profiles against the compiled cases. The current 48-case run produced:
+
+| Profile | Pass rate | Avg score | Cost per reliable pass |
+| --- | ---: | ---: | ---: |
+| breakpoint-reference | 100.0% | 1.000 | $0.000100 |
+| stale-rag-baseline | 41.7% | 0.504 | $0.000192 |
+| over-refusal-baseline | 0.0% | 0.350 | $0.002400 |
+| injection-prone-agent | 91.7% | 0.933 | $0.000131 |
+
+![Model pass rates](artifacts/model_runs/model_pass_rates.png)
+
+![Family model matrix](artifacts/model_runs/family_model_matrix.png)
+
+![Cost latency tradeoff](artifacts/model_runs/cost_latency_tradeoff.png)
+
+## Production Pack Validation
+
+The ingestion/production-pack route was validated by normalizing 12 incident-report traces and compiling the first 10 into a live-judged regression pack:
+
+| Artifact | Value |
+| --- | ---: |
+| Ingested traces | 12 |
+| Production pack traces | 10 |
+| Accepted base items | 10 |
+| Total eval cases | 40 |
+| Regression packs | 5 |
+| Estimated live judge cost | $0.0855 |
+
+## CLI Reference
+
+```powershell
+.\.venv\Scripts\python -m breakpoint_eval.cli categories
 .\.venv\Scripts\python -m breakpoint_eval.cli compile-spec
-.\.venv\Scripts\python -m breakpoint_eval.cli trace2eval
-.\.venv\Scripts\python -m breakpoint_eval.cli product-demo
-.\.venv\Scripts\python -m breakpoint_eval.cli ci-report
+.\.venv\Scripts\python -m breakpoint_eval.cli trace2eval --traces path\to\traces.json
+.\.venv\Scripts\python -m breakpoint_eval.cli actual-data --external-judges
+.\.venv\Scripts\python -m breakpoint_eval.cli judge-report
+.\.venv\Scripts\python -m breakpoint_eval.cli ingest-traces --input path\to\logs.json --source support_ticket
+.\.venv\Scripts\python -m breakpoint_eval.cli production-pack --input artifacts\ingestion\traces.json
+.\.venv\Scripts\python -m breakpoint_eval.cli calibrate-judges
+.\.venv\Scripts\python -m breakpoint_eval.cli model-runs
+.\.venv\Scripts\python -m breakpoint_eval.cli ci-packs --changed-files "app/rag/retriever.py"
 .\.venv\Scripts\python -m breakpoint_eval.cli failuregym
+.\.venv\Scripts\python -m breakpoint_eval.cli vllm-judge-server --port 8001
 ```
 
-Run the API:
+## Outputs
 
-```powershell
-.\.venv\Scripts\python -m breakpoint_eval.cli serve --port 8000
-```
+`actual-data` writes:
 
-Run the dashboard:
+- `artifacts/actual/source_traces.json`
+- `artifacts/actual/trace2eval_results.json`
+- `artifacts/actual/metrics.json`
+- `artifacts/actual/manifest.json`
+- `artifacts/actual/product.json`
+- `artifacts/actual/cases.jsonl`
+- `artifacts/actual/openai_evals.yaml`
+- `artifacts/actual/lm_eval_task.yaml`
+- `artifacts/actual/lm_eval_task.jsonl`
+- `artifacts/actual/ci_report.json`
+- `artifacts/actual/ci_report.md`
 
-```powershell
-cd dashboard
-npm install
-npm run dev
-```
+`judge-report` writes:
 
-## Dashboard Screenshot
+- `artifacts/reports/live_judge_report.json`
+- `artifacts/reports/judge_scoreboard.png`
+- `artifacts/reports/judge_confidence_matrix.png`
+- `artifacts/reports/failure_index_by_trace.png`
+- `artifacts/reports/cost_reliability_pareto.png`
 
-![BreakPoint dashboard](artifacts/images/dashboard_screenshot.png)
+`calibrate-judges`, `model-runs`, `ingest-traces`, `production-pack`, and `ci-packs` write:
 
-## Demo Outputs
+- `artifacts/calibration/judge_calibration_report.json`
+- `artifacts/calibration/calibrated_gate_policy.json`
+- `artifacts/model_runs/model_run_comparison.json`
+- `artifacts/model_runs/model_pass_rates.png`
+- `artifacts/model_runs/family_model_matrix.png`
+- `artifacts/model_runs/cost_latency_tradeoff.png`
+- `artifacts/ingestion/traces.json`
+- `artifacts/ingestion/report.json`
+- `artifacts/production_pack/manifest.json`
+- `artifacts/production_pack/cases.jsonl`
+- `artifacts/production_pack/ci_report.json`
+- `artifacts/ci/packs.json`
 
-The demo artifact run writes:
+## Integration Shape
 
-- `artifacts/demo/breakpoint_eval.jsonl`
-- `artifacts/demo/cases.jsonl`
-- `artifacts/demo/product.json`
-- `artifacts/demo/ci_report.json`
-- `artifacts/demo/openai_evals.yaml`
-- `artifacts/demo/lm_eval_task.yaml`
-- `artifacts/demo/metrics.json`
-- `artifacts/demo/preview.json`
-- `artifacts/demo/api_output.json`
-- `artifacts/demo/run_output.txt`
-- `artifacts/specs/rag_freshness_contradiction.yaml`
-- `artifacts/trace2eval/results.json`
-- `artifacts/failuregym/manifest.json`
+BreakPoint is meant to sit inside existing Python evaluation and release workflows:
 
-Example run output:
+1. Normalize real failures into `RawFailureTrace` records.
+2. Compile traces into BreakPointSpec drafts and eval cases.
+3. Generate adversarial variants around each failure.
+4. Validate with local and live judges.
+5. Export cases to your eval runner.
+6. Gate regressions in CI using recent failure packs.
 
-```text
-dataset_id=breakpoint-3c7caa567536
-accepted_items=72
-adversarial_variants=288
-total_eval_cases=360
-rejected_candidates=18
-acceptance_rate=0.8
-```
-
-Example API output:
-
-```json
-{
-  "GET /health": {
-    "status": "ok",
-    "service": "BreakPoint",
-    "mode": "deterministic-local"
-  },
-  "POST /compile": {
-    "dataset_id": "breakpoint-3c7caa567536",
-    "accepted_items": 72,
-    "total_eval_cases": 360,
-    "preview_category": "hallucination"
-  }
-}
-```
-
-## Results and Graphs
-
-![Validation gates](artifacts/images/quality_gates.png)
-
-![Category coverage](artifacts/images/category_mix.png)
-
-![Authoring comparison](artifacts/images/comparison_results.png)
-
-## Comparison
-
-| Approach | Strength | Weakness |
-| --- | --- | --- |
-| Manual prompt writing | Human judgment and domain nuance | Slow, inconsistent, hard to mutate at scale |
-| Static benchmark | Stable comparison point | Quickly goes stale and under-covers edge cases |
-| BreakPoint compiler | Scalable targeted generation with validation and mutation | Needs strong category specs and production model judges for highest assurance |
-
-## How the Compiler Works
-
-1. Load the failure taxonomy.
-2. Generate candidate eval items with task, context, answer, trap, and rubric.
-3. Mutate each candidate with irrelevant context, reordered facts, renamed entities, paraphrased instructions, or conflicting evidence.
-4. Validate candidates with multiple judge adapters.
-5. Filter ambiguous or low-quality items.
-6. Wrap accepted items as product-layer eval cases, checks, suites, runs, reviews, clusters, and gates.
-7. Export accepted rows to JSONL, Hugging Face Datasets, DuckDB, OpenAI Evals, lm-eval, CI reports, FailureGym, API responses, and dashboard artifacts.
-
-The local demo uses deterministic surrogate judges so tests are repeatable without API keys. The `breakpoint_eval.orchestration` module includes a LangGraph-compatible entry point, and the validation interface is ready for DSPy/LangChain model calls.
-
-## Stack Mapping
-
-| Stack item | Implementation |
-| --- | --- |
-| Python | Core compiler, validators, storage, CLI |
-| DSPy | Adapter seam for generator and judge optimization |
-| LangChain/LangGraph | Optional graph orchestration in `breakpoint_eval/orchestration.py` |
-| Hugging Face datasets | `to_huggingface_dataset()` export helper |
-| Pydantic | Typed eval item, rubric, trap, and validation schemas |
-| DuckDB/PostgreSQL | DuckDB implemented locally; PostgreSQL planned as shared deployment store |
-| FAISS/Qdrant | Local hash vector index implemented; FAISS/Qdrant optional dependencies |
-| MinIO/S3 | Artifact storage interface documented for deployment |
-| FastAPI | `breakpoint_eval.api:app` |
-| Next.js | `dashboard/` |
-| OpenAI/Anthropic/Gemini/vLLM | Judge adapter classes, enabled when credentials/endpoints are configured |
-
-## LaTeX PDF
-
-Build the detailed PDF:
-
-```powershell
-.\scripts\build_pdf.ps1
-```
-
-The final PDF is generated at `output/pdf/breakpoint_system_design.pdf`. It is intentionally covered by `.gitignore`; the editable source is `docs/latex/breakpoint_whitepaper.tex`.
+The repeatable local path uses deterministic judges. Live judges are opt-in through `--external-judges`, `external_judges=True`, or `BREAKPOINT_EXTERNAL_JUDGES=1`.
 
 ## Repository Layout
 
 ```text
-breakpoint_eval/          Python compiler package
-dashboard/                Next.js dashboard
-docs/latex/               LaTeX PDF source
-scripts/                  Artifact and PDF build scripts
+breakpoint_eval/          Python SDK, compiler, validators, reports, CLI
+data/actual/              Sourced public failure traces
+examples/                 SDK examples for RAG, tool, support, and red-team traces
+scripts/                  Artifact and report generation helpers
 tests/                    Unit and API tests
-artifacts/demo/           Generated dataset outputs
-artifacts/images/         Generated diagrams, graphs, and screenshots
+artifacts/actual/         Generated actual-data outputs
+artifacts/reports/        Generated live judge charts and report JSON
+artifacts/model_runs/     Generated model-under-test comparisons and charts
 ```

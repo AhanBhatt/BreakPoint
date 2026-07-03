@@ -13,23 +13,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24"
       - name: Install Python deps
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements-dev.txt
       - name: Run Python tests
         run: python -m pytest -q
-      - name: Generate BreakPoint demo artifacts
-        run: python scripts/create_demo_artifacts.py
-      - name: Dashboard audit and build
-        working-directory: dashboard
-        run: |
-          npm ci
-          npm audit --audit-level=moderate
-          npm run build
-      - name: Build PDF
-        shell: pwsh
-        run: ./scripts/build_pdf.ps1
+      - name: Compile actual trace-derived eval artifacts
+        run: python -m breakpoint_eval.cli actual-data --out-dir artifacts/actual --variants-per-item 1
+      - name: Select regression packs
+        run: python -m breakpoint_eval.cli ci-packs --product artifacts/actual/product.json --changed-files "app/rag/retriever.py,agents/tools/order_tool.py,app/prompts/system_policy.py" --risk medium --out artifacts/ci/packs.json

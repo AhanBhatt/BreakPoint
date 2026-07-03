@@ -1,0 +1,45 @@
+{
+  "accepted_items": 10,
+  "adversarial_variants": 30,
+  "total_eval_cases": 40,
+  "rejected_candidates": 0,
+  "candidate_attempts": 10,
+  "acceptance_rate": 1.0,
+  "category_counts": {
+    "prompt_injection": 1,
+    "rag_contradiction": 6,
+    "refusal_boundary": 3
+  },
+  "difficulty_counts": {
+    "hard": 8,
+    "medium": 2
+  },
+  "attempts_by_category": {
+    "prompt_injection": 1,
+    "rag_contradiction": 6,
+    "refusal_boundary": 3
+  },
+  "quality_scores": {
+    "ambiguity_score": 0.08,
+    "answerability_score": 0.9,
+    "trap_coverage_score": 1.0,
+    "format_score": 1.0,
+    "judge_agreement": 0.929
+  },
+  "estimated_manual_prompt_hours": 2.7,
+  "compiler_runtime_mode": "deterministic-local",
+  "dataset_kind": "production_failure_pack",
+  "source": "incident_report",
+  "trace_count": 10,
+  "external_judges": true,
+  "judge_names": [
+    "local:strict",
+    "local:skeptic",
+    "local:format",
+    "openai:gpt-5.4-mini",
+    "anthropic:claude-sonnet-5",
+    "gemini:gemini-2.5-flash",
+    "vllm:breakpoint-local-judge"
+  ],
+  "estimated_live_cost_usd": 0.0855
+}

@@ -9,8 +9,17 @@ from typing import Protocol
 
 from pydantic import BaseModel, Field
 
+from breakpoint_eval.env import load_env
 from breakpoint_eval.models import EvalItem, ModelVote, ValidationReport
 from breakpoint_eval.validators import LocalJudge, ValidationSuite
+
+
+load_env()
+
+DEFAULT_OPENAI_JUDGE_MODEL = "gpt-5.4-mini"
+DEFAULT_ANTHROPIC_JUDGE_MODEL = "claude-sonnet-5"
+DEFAULT_GEMINI_JUDGE_MODEL = "gemini-2.5-flash"
+DEFAULT_VLLM_JUDGE_MODEL = "breakpoint-local-judge"
 
 
 class JudgeAdapter(Protocol):
@@ -37,7 +46,7 @@ class LocalHeuristicJudge:
 
 @dataclass(frozen=True)
 class OpenAIJudge:
-    model: str = "gpt-4.1-mini"
+    model: str = DEFAULT_OPENAI_JUDGE_MODEL
     api_key_env: str = "OPENAI_API_KEY"
 
     @property
@@ -69,7 +78,7 @@ class OpenAIJudge:
 
 @dataclass(frozen=True)
 class AnthropicJudge:
-    model: str = "claude-3-5-sonnet-latest"
+    model: str = DEFAULT_ANTHROPIC_JUDGE_MODEL
     api_key_env: str = "ANTHROPIC_API_KEY"
 
     @property
@@ -84,7 +93,7 @@ class AnthropicJudge:
             return _unavailable_vote(self.name, self.api_key_env)
         payload = {
             "model": self.model,
-            "max_tokens": 400,
+            "max_tokens": 1000,
             "messages": [{"role": "user", "content": _judge_prompt(item)}],
         }
         try:
@@ -104,7 +113,7 @@ class AnthropicJudge:
 
 @dataclass(frozen=True)
 class GeminiJudge:
-    model: str = "gemini-1.5-pro"
+    model: str = DEFAULT_GEMINI_JUDGE_MODEL
     api_key_env: str = "GEMINI_API_KEY"
 
     @property
@@ -121,7 +130,10 @@ class GeminiJudge:
             f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent"
             f"?key={os.environ[self.api_key_env]}"
         )
-        payload = {"contents": [{"parts": [{"text": _judge_prompt(item)}]}]}
+        payload = {
+            "contents": [{"parts": [{"text": _judge_prompt(item)}]}],
+            "generationConfig": {"temperature": 0, "maxOutputTokens": 500, "responseMimeType": "application/json"},
+        }
         try:
             data = _post_json(url, payload, {})
             text = data["candidates"][0]["content"]["parts"][0]["text"]
@@ -133,7 +145,8 @@ class GeminiJudge:
 @dataclass(frozen=True)
 class VLLMJudge:
     endpoint_env: str = "VLLM_JUDGE_ENDPOINT"
-    model: str = "local-judge"
+    model: str = DEFAULT_VLLM_JUDGE_MODEL
+    api_key_env: str = "VLLM_JUDGE_API_KEY"
 
     @property
     def name(self) -> str:
@@ -152,7 +165,8 @@ class VLLMJudge:
             "temperature": 0,
         }
         try:
-            data = _post_json(endpoint.rstrip("/") + "/v1/chat/completions", payload, {})
+            headers = _bearer_header(os.environ.get(self.api_key_env, ""))
+            data = _post_json(endpoint.rstrip("/") + "/v1/chat/completions", payload, headers)
             text = data["choices"][0]["message"]["content"]
             return _vote_from_json_text(self.name, text)
         except Exception as exc:
@@ -177,17 +191,26 @@ class JudgeCalibrationReport(BaseModel):
 
 
 def default_judge_adapters(include_external: bool = True) -> list[JudgeAdapter]:
+    load_env()
     judges: list[JudgeAdapter] = [
         LocalHeuristicJudge("local:strict", 0.95),
         LocalHeuristicJudge("local:skeptic", 0.88),
         LocalHeuristicJudge("local:format", 0.82),
     ]
     if include_external:
-        judges.extend([OpenAIJudge(), AnthropicJudge(), GeminiJudge(), VLLMJudge()])
+        judges.extend(
+            [
+                OpenAIJudge(model=os.environ.get("OPENAI_JUDGE_MODEL", DEFAULT_OPENAI_JUDGE_MODEL)),
+                AnthropicJudge(model=os.environ.get("ANTHROPIC_JUDGE_MODEL", DEFAULT_ANTHROPIC_JUDGE_MODEL)),
+                GeminiJudge(model=os.environ.get("GEMINI_JUDGE_MODEL", DEFAULT_GEMINI_JUDGE_MODEL)),
+                VLLMJudge(model=os.environ.get("VLLM_JUDGE_MODEL", DEFAULT_VLLM_JUDGE_MODEL)),
+            ]
+        )
     return judges
 
 
 def available_validation_suite(include_external: bool = True) -> ValidationSuite:
+    load_env()
     judges = [judge for judge in default_judge_adapters(include_external) if judge.available()]
     return ValidationSuite(judges=judges or [LocalHeuristicJudge()])
 
@@ -246,9 +269,10 @@ def route_uncertain(report: ValidationReport, calibration: list[JudgeCalibration
 
 def _judge_prompt(item: EvalItem) -> str:
     return (
-        "You are grading a generated LLM evaluation item. Return JSON only with keys "
-        "passed, confidence, rationale. Determine whether the item has a clear task, "
-        "answerable evidence, expected answer, hidden trap, and rubric.\n\n"
+        "You are grading a generated LLM evaluation item. Return compact valid JSON only, "
+        "with exactly these keys: passed, confidence, rationale. confidence must be a number "
+        "from 0 to 1. Keep rationale under 35 words. Determine whether the item has a clear "
+        "task, answerable evidence, expected answer, hidden trap, and rubric.\n\n"
         f"Task: {item.task}\n\nContext: {item.context}\n\nExpected: {item.expected_answer.value}\n\n"
         f"Hidden traps: {[trap.model_dump(mode='json') for trap in item.hidden_traps]}\n"
     )
@@ -268,6 +292,10 @@ def _post_json(url: str, payload: dict[str, object], headers: dict[str, str]) ->
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"HTTP {exc.code}: {detail}") from exc
+
+
+def _bearer_header(api_key: str) -> dict[str, str]:
+    return {"Authorization": f"Bearer {api_key}"} if api_key else {}
 
 
 def _extract_openai_text(data: dict[str, object]) -> str:
@@ -293,11 +321,51 @@ def _vote_from_json_text(model_name: str, text: str) -> ModelVote:
         return ModelVote(
             model_name=model_name,
             passed=bool(payload.get("passed")),
-            confidence=float(payload.get("confidence", 0.5)),
+            confidence=_coerce_confidence(payload.get("confidence", 0.5)),
             rationale=str(payload.get("rationale", "")),
         )
     except Exception:
+        loose_vote = _vote_from_loose_text(model_name, text)
+        if loose_vote is not None:
+            return loose_vote
         return ModelVote(model_name=model_name, passed=False, confidence=0.0, rationale=f"non-json judge output: {text[:180]}")
+
+
+def _vote_from_loose_text(model_name: str, text: str) -> ModelVote | None:
+    import re
+
+    passed_match = re.search(r'"?passed"?\s*:\s*(true|false)', text, flags=re.IGNORECASE)
+    if not passed_match:
+        return None
+    confidence_match = re.search(r'"?confidence"?\s*:\s*("?[\w. %]+"?|\d+(?:\.\d+)?)', text, flags=re.IGNORECASE)
+    rationale_match = re.search(r'"?rationale"?\s*:\s*"([^"]*)', text, flags=re.IGNORECASE)
+    confidence: object = 0.5
+    if confidence_match:
+        confidence = confidence_match.group(1).strip('"')
+    rationale = rationale_match.group(1) if rationale_match else f"parsed from loose judge output: {text[:120]}"
+    return ModelVote(
+        model_name=model_name,
+        passed=passed_match.group(1).lower() == "true",
+        confidence=_coerce_confidence(confidence),
+        rationale=rationale,
+    )
+
+
+def _coerce_confidence(value: object) -> float:
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        labels = {"very high": 0.95, "high": 0.85, "medium": 0.6, "moderate": 0.6, "low": 0.35, "very low": 0.15}
+        if normalized in labels:
+            return labels[normalized]
+        if normalized.endswith("%"):
+            try:
+                return max(0.0, min(1.0, float(normalized.rstrip("%")) / 100))
+            except ValueError:
+                return 0.5
+    try:
+        return max(0.0, min(1.0, float(value)))
+    except (TypeError, ValueError):
+        return 0.5
 
 
 def _unavailable_vote(model_name: str, missing: str) -> ModelVote:

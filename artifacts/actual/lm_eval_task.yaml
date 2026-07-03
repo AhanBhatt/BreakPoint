@@ -1,0 +1,14 @@
+task: suite-ef8df5af4ee1
+dataset_path: lm_eval_task.jsonl
+output_type: generate_until
+training_split: test
+test_split: test
+doc_to_text: '{{prompt}}'
+doc_to_target: '{{expected}}'
+metric_list:
+- metric: exact_match
+  aggregation: mean
+  higher_is_better: true
+metadata:
+  version: 1
+  suite_name: Actual Failure Regression Suite

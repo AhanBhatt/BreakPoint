@@ -13,9 +13,6 @@ dist/
 
 # Node / Next.js
 node_modules/
-dashboard/node_modules/
-dashboard/.next/
-dashboard/out/
 *.tsbuildinfo
 
 # Generated datasets and stores
@@ -23,6 +20,11 @@ artifacts/demo/*.duckdb
 artifacts/demo/*.duckdb.wal
 artifacts/demo/*.sqlite
 artifacts/demo/*.log
+artifacts/actual/*.duckdb
+artifacts/actual/*.duckdb.wal
+artifacts/actual/*.sqlite
+artifacts/actual/*.log
+artifacts/logs/
 
 # LaTeX build products and generated PDFs
 docs/latex/build/
@@ -37,3 +39,6 @@ tmp/pdfs/
 .env
 .env.*
 !.env.example
+
+# Local planning notes
+roadmap.md

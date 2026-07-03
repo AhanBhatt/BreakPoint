@@ -1,0 +1,473 @@
+{
+  "examples": 12,
+  "judges": [
+    "anthropic:claude-sonnet-5",
+    "gemini:gemini-2.5-flash",
+    "local:format",
+    "local:skeptic",
+    "local:strict",
+    "openai:gpt-5.4-mini",
+    "vllm:breakpoint-local-judge"
+  ],
+  "families": [
+    "prompt_injection",
+    "rag_contradiction",
+    "refusal_boundary",
+    "tool_misuse"
+  ],
+  "overall": {
+    "anthropic:claude-sonnet-5": {
+      "accuracy": 0.833,
+      "average_confidence": 0.752
+    },
+    "gemini:gemini-2.5-flash": {
+      "accuracy": 0.917,
+      "average_confidence": 0.583
+    },
+    "local:format": {
+      "accuracy": 1.0,
+      "average_confidence": 0.91
+    },
+    "local:skeptic": {
+      "accuracy": 1.0,
+      "average_confidence": 0.91
+    },
+    "local:strict": {
+      "accuracy": 1.0,
+      "average_confidence": 0.91
+    },
+    "openai:gpt-5.4-mini": {
+      "accuracy": 1.0,
+      "average_confidence": 0.942
+    },
+    "vllm:breakpoint-local-judge": {
+      "accuracy": 1.0,
+      "average_confidence": 0.9
+    }
+  },
+  "by_judge_family": [
+    {
+      "judge_name": "anthropic:claude-sonnet-5",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.75,
+      "promoted": true
+    },
+    {
+      "judge_name": "anthropic:claude-sonnet-5",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.769,
+      "promoted": true
+    },
+    {
+      "judge_name": "anthropic:claude-sonnet-5",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 0.667,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.333,
+      "average_confidence": 0.747,
+      "promoted": false
+    },
+    {
+      "judge_name": "anthropic:claude-sonnet-5",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 0.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 1.0,
+      "average_confidence": 0.65,
+      "promoted": false
+    },
+    {
+      "judge_name": "gemini:gemini-2.5-flash",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.5,
+      "promoted": true
+    },
+    {
+      "judge_name": "gemini:gemini-2.5-flash",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 0.857,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.143,
+      "average_confidence": 0.643,
+      "promoted": true
+    },
+    {
+      "judge_name": "gemini:gemini-2.5-flash",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.5,
+      "promoted": true
+    },
+    {
+      "judge_name": "gemini:gemini-2.5-flash",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.5,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:format",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:format",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:format",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:format",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:skeptic",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:skeptic",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:skeptic",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:skeptic",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:strict",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:strict",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:strict",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "local:strict",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.91,
+      "promoted": true
+    },
+    {
+      "judge_name": "openai:gpt-5.4-mini",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.97,
+      "promoted": true
+    },
+    {
+      "judge_name": "openai:gpt-5.4-mini",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.926,
+      "promoted": true
+    },
+    {
+      "judge_name": "openai:gpt-5.4-mini",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.957,
+      "promoted": true
+    },
+    {
+      "judge_name": "openai:gpt-5.4-mini",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.98,
+      "promoted": true
+    },
+    {
+      "judge_name": "vllm:breakpoint-local-judge",
+      "family": "prompt_injection",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.9,
+      "promoted": true
+    },
+    {
+      "judge_name": "vllm:breakpoint-local-judge",
+      "family": "rag_contradiction",
+      "examples": 7,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.9,
+      "promoted": true
+    },
+    {
+      "judge_name": "vllm:breakpoint-local-judge",
+      "family": "refusal_boundary",
+      "examples": 3,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.9,
+      "promoted": true
+    },
+    {
+      "judge_name": "vllm:breakpoint-local-judge",
+      "family": "tool_misuse",
+      "examples": 1,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "average_confidence": 0.9,
+      "promoted": true
+    }
+  ],
+  "inter_judge_agreement": {
+    "anthropic:claude-sonnet-5": 0.833,
+    "gemini:gemini-2.5-flash": 0.917,
+    "local:format": 1.0,
+    "local:skeptic": 1.0,
+    "local:strict": 1.0,
+    "openai:gpt-5.4-mini": 1.0,
+    "vllm:breakpoint-local-judge": 1.0
+  },
+  "answer_order_bias": {
+    "anthropic:claude-sonnet-5": 0.252,
+    "gemini:gemini-2.5-flash": 0.083,
+    "local:format": 0.41,
+    "local:skeptic": 0.41,
+    "local:strict": 0.41,
+    "openai:gpt-5.4-mini": 0.442,
+    "vllm:breakpoint-local-judge": 0.4
+  },
+  "verbosity_bias": {
+    "anthropic:claude-sonnet-5": -0.075,
+    "gemini:gemini-2.5-flash": 0.266,
+    "local:format": 0.0,
+    "local:skeptic": 0.0,
+    "local:strict": 0.0,
+    "openai:gpt-5.4-mini": -0.772,
+    "vllm:breakpoint-local-judge": 0.0
+  },
+  "rubric_sensitivity": {
+    "anthropic:claude-sonnet-5": 0.046,
+    "gemini:gemini-2.5-flash": 0.062,
+    "local:format": 0.0,
+    "local:skeptic": 0.0,
+    "local:strict": 0.0,
+    "openai:gpt-5.4-mini": 0.02,
+    "vllm:breakpoint-local-judge": 0.0
+  },
+  "promoted_pairs": [
+    {
+      "judge": "anthropic:claude-sonnet-5",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "anthropic:claude-sonnet-5",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "gemini:gemini-2.5-flash",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "gemini:gemini-2.5-flash",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "gemini:gemini-2.5-flash",
+      "family": "refusal_boundary"
+    },
+    {
+      "judge": "gemini:gemini-2.5-flash",
+      "family": "tool_misuse"
+    },
+    {
+      "judge": "local:format",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "local:format",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "local:format",
+      "family": "refusal_boundary"
+    },
+    {
+      "judge": "local:format",
+      "family": "tool_misuse"
+    },
+    {
+      "judge": "local:skeptic",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "local:skeptic",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "local:skeptic",
+      "family": "refusal_boundary"
+    },
+    {
+      "judge": "local:skeptic",
+      "family": "tool_misuse"
+    },
+    {
+      "judge": "local:strict",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "local:strict",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "local:strict",
+      "family": "refusal_boundary"
+    },
+    {
+      "judge": "local:strict",
+      "family": "tool_misuse"
+    },
+    {
+      "judge": "openai:gpt-5.4-mini",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "openai:gpt-5.4-mini",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "openai:gpt-5.4-mini",
+      "family": "refusal_boundary"
+    },
+    {
+      "judge": "openai:gpt-5.4-mini",
+      "family": "tool_misuse"
+    },
+    {
+      "judge": "vllm:breakpoint-local-judge",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "vllm:breakpoint-local-judge",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "vllm:breakpoint-local-judge",
+      "family": "refusal_boundary"
+    },
+    {
+      "judge": "vllm:breakpoint-local-judge",
+      "family": "tool_misuse"
+    }
+  ],
+  "needs_human_review": []
+}
