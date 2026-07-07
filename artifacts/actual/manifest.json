@@ -12,12 +12,18 @@
     "local:strict",
     "local:skeptic",
     "local:format",
+    "openai:gpt-5.5",
+    "openai:gpt-5.4",
+    "openai:o3",
     "openai:gpt-5.4-mini",
     "anthropic:claude-sonnet-5",
+    "anthropic:claude-opus-4-8",
+    "anthropic:claude-fable-5",
+    "gemini:gemini-2.5-pro",
     "gemini:gemini-2.5-flash",
     "vllm:breakpoint-local-judge"
   ],
-  "estimated_live_cost_usd": 0.1026,
+  "estimated_live_cost_usd": 0.3218,
   "source_urls": [
     "https://apnews.com/article/new-york-city-chatbot-misinformation-6ebc71db5b770b9969c906a7ee4fae21",
     "https://arstechnica.com/tech-policy/2024/02/air-canada-must-honor-refund-policy-invented-by-airlines-chatbot/",
@@ -156,7 +162,7 @@
       "answerability_score": 0.9,
       "trap_coverage_score": 1.0,
       "format_score": 1.0,
-      "judge_agreement": 0.964
+      "judge_agreement": 0.897
     },
     "estimated_manual_prompt_hours": 3.2,
     "compiler_runtime_mode": "actual-trace-derived-live",
@@ -168,11 +174,17 @@
       "local:strict",
       "local:skeptic",
       "local:format",
+      "openai:gpt-5.5",
+      "openai:gpt-5.4",
+      "openai:o3",
       "openai:gpt-5.4-mini",
       "anthropic:claude-sonnet-5",
+      "anthropic:claude-opus-4-8",
+      "anthropic:claude-fable-5",
+      "gemini:gemini-2.5-pro",
       "gemini:gemini-2.5-flash",
       "vllm:breakpoint-local-judge"
     ],
-    "estimated_live_cost_usd": 0.1026
+    "estimated_live_cost_usd": 0.3218
   }
 }

@@ -81,6 +81,7 @@ def main() -> None:
     report_parser = subparsers.add_parser("judge-report", help="Build live judge evaluation charts from Trace2Eval results")
     report_parser.add_argument("--results", default="artifacts/actual/trace2eval_results.json")
     report_parser.add_argument("--out-dir", default="artifacts/reports")
+    report_parser.add_argument("--labels", default="", help="Optional gold/human labels JSON or JSONL for calibrated judge filtering scores")
 
     ingest_parser = subparsers.add_parser("ingest-traces", help="Normalize production logs into BreakPoint RawFailureTrace JSON")
     ingest_parser.add_argument("--input", required=True)
@@ -216,13 +217,14 @@ def main() -> None:
         )
         print(result.model_dump_json(indent=2))
     elif args.command == "judge-report":
-        report = write_live_judge_report(args.results, args.out_dir)
+        report = write_live_judge_report(args.results, args.out_dir, labels_path=args.labels or None)
         print(
             json.dumps(
                 {
                     "out_dir": args.out_dir,
                     "trace_count": report["trace_count"],
                     "judge_count": report["judge_count"],
+                    "scoring_mode": report["scoring_mode"],
                     "top_judge": report["judge_summaries"][0]["judge"] if report["judge_summaries"] else None,
                     "indices": report["breakpoint_indices"],
                 },

@@ -25,6 +25,7 @@ artifacts/actual/*.duckdb.wal
 artifacts/actual/*.sqlite
 artifacts/actual/*.log
 artifacts/logs/
+artifacts/runlogs/
 
 # LaTeX build products and generated PDFs
 docs/latex/build/
@@ -42,3 +43,7 @@ tmp/pdfs/
 
 # Local planning notes
 roadmap.md
+
+# Local human labeling UI and reviewer outputs
+human_label_ui/
+human_labels/

@@ -104,21 +104,23 @@ The latest live run produced:
 | Accepted base items | 12 |
 | Adversarial variants | 36 |
 | Total eval cases | 48 |
-| Live judge set | OpenAI, Anthropic, Gemini, local vLLM |
-| Estimated live judge cost | $0.1026 |
+| Live judge set | 10 live judges: OpenAI GPT-5.5, GPT-5.4, o3, GPT-5.4 mini; Anthropic Claude Sonnet 5, Claude Opus 4.8, Claude Fable 5; Gemini 2.5 Pro, Gemini 2.5 Flash; local vLLM |
+| Estimated live judge cost | $0.3218 |
 | Base validation passed | 12/12 |
+| Human compiler-accepted labels | 8/12 |
+| Human compiler-rejected labels | 4/12 |
 
 ## Live Judge Results
 
-These charts are generated from `artifacts/actual/trace2eval_results.json`, not from the synthetic category-quota demo. The data includes per-case judge pass/fail decisions, confidence values, provider disagreement, estimated cost per judgment, source reliability spread, severity, and failure-family labels.
+These charts are generated from `artifacts/actual/trace2eval_results.json`, not from the synthetic category-quota demo. The score chart uses human labels as compiler-acceptance labels and penalizes false positives: judges lose credit when they accept eval cases that humans marked invalid, mislabeled, or needing repair. It is not a model leaderboard.
 
-![Live judge reliability](artifacts/reports/judge_scoreboard.png)
+![Human-calibrated judge filtering](artifacts/reports/judge_scoreboard.png)
 
 ![Judge confidence matrix](artifacts/reports/judge_confidence_matrix.png)
 
 ![Failure index by trace](artifacts/reports/failure_index_by_trace.png)
 
-![Cost reliability Pareto](artifacts/reports/cost_reliability_pareto.png)
+![Cost filtering Pareto](artifacts/reports/cost_reliability_pareto.png)
 
 BreakPoint uses its own failure-oriented indices rather than broad competitor benchmark indexes:
 
@@ -133,25 +135,25 @@ Latest index values:
 
 | BreakPoint index | Score |
 | --- | ---: |
-| Failure Neighborhood Index | 82.9 |
-| Evidence Conflict Index | 85.4 |
-| Boundary Precision Index | 78.5 |
-| Instruction Attack Index | 89.1 |
-| Judge Consensus Index | 93.8 |
+| Failure Neighborhood Index | 79.4 |
+| Evidence Conflict Index | 84.6 |
+| Boundary Precision Index | 73.2 |
+| Instruction Attack Index | 80.5 |
+| Judge Consensus Index | 86.7 |
 | Source Tension Index | 66.3 |
 
 ## Calibration and Model Runs
 
-`calibrate-judges` produced `artifacts/calibration/judge_calibration_report.json`, `gold_labels.json`, and `calibrated_gate_policy.json` from the 12 live-judged actual traces. Current promoted judge/family pairs: 26. OpenAI, the local vLLM judge, and all local deterministic judges were promoted across all observed families; Anthropic was promoted for prompt-injection and RAG contradiction; Gemini was promoted across the observed families.
+`calibrate-judges` produced `artifacts/calibration/judge_calibration_report.json`, `gold_labels.json`, and `calibrated_gate_policy.json` from the 12 human-labeled actual traces. The final calibration treats wrong failure-family labels as compiler rejections, so the human calibration set is 8 accepted and 4 rejected items. It compares 10 live judges plus three deterministic local controls and promotes 28 judge/failure-family pairs. The filtering chart now ranks OpenAI GPT-5.5 first because it catches 3 of the 4 rejected compiler cases, while pass-everything judges such as Gemini 2.5 Flash and local vLLM are penalized for catching 0 of 4 rejected cases.
 
-`model-runs` compares model-under-test profiles against the compiled cases. The current 48-case run produced:
+`model-runs` compares deterministic simulated baseline profiles against the compiled cases. These are not live model API outputs; they are controlled stress profiles used to verify that the suite exposes stale-RAG, over-refusal, and injection-prone behavior. The current 48-case run produced:
 
 | Profile | Pass rate | Avg score | Cost per reliable pass |
 | --- | ---: | ---: | ---: |
-| breakpoint-reference | 100.0% | 1.000 | $0.000100 |
-| stale-rag-baseline | 41.7% | 0.504 | $0.000192 |
-| over-refusal-baseline | 0.0% | 0.350 | $0.002400 |
-| injection-prone-agent | 91.7% | 0.933 | $0.000131 |
+| breakpoint-reference | 100.0% | 0.943 | $0.000100 |
+| stale-rag-baseline | 10.4% | 0.442 | $0.000768 |
+| over-refusal-baseline | 0.0% | 0.441 | $0.002400 |
+| injection-prone-agent | 20.8% | 0.686 | $0.000576 |
 
 ![Model pass rates](artifacts/model_runs/model_pass_rates.png)
 

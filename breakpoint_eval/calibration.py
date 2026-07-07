@@ -14,9 +14,15 @@ class GoldLabel(BaseModel):
     trace_id: str
     family: str
     human_passed: bool
+    case_id: str | None = None
     reviewer: str = "gold-reviewer"
     confidence: float = Field(default=0.9, ge=0, le=1)
     notes: str = ""
+    label_source: str = "gold_label"
+    candidate_output_passed: str | None = None
+    severity: str | None = None
+    failure_family_correct: str | None = None
+    needs_domain_expert: str | None = None
 
 
 class JudgeFamilyCalibration(BaseModel):
@@ -60,11 +66,20 @@ def labels_from_trace2eval_results(results: list[dict[str, Any]]) -> list[GoldLa
     return labels
 
 
-def load_gold_labels(path: str | Path) -> list[GoldLabel]:
-    data = json.loads(Path(path).read_text(encoding="utf-8"))
+def load_gold_labels(path: str | Path, results: list[dict[str, Any]] | None = None) -> list[GoldLabel]:
+    label_path = Path(path)
+    text = label_path.read_text(encoding="utf-8")
+    if label_path.suffix.lower() == ".jsonl":
+        data = [json.loads(line) for line in text.splitlines() if line.strip()]
+    else:
+        data = json.loads(text)
     if isinstance(data, dict):
         data = data.get("labels", [])
-    return [GoldLabel.model_validate(item) for item in data]
+    family_by_item, family_by_case, family_by_trace = _label_family_maps(results or [])
+    return [
+        _normalize_gold_label(item, family_by_item=family_by_item, family_by_case=family_by_case, family_by_trace=family_by_trace)
+        for item in data
+    ]
 
 
 def write_gold_labels(labels: list[GoldLabel], path: str | Path) -> None:
@@ -82,7 +97,7 @@ def calibrate_from_trace2eval_results(
     min_examples: int = 1,
 ) -> JudgeCalibrationSuiteReport:
     results = json.loads(Path(results_path).read_text(encoding="utf-8"))
-    labels = load_gold_labels(labels_path) if labels_path else labels_from_trace2eval_results(results)
+    labels = load_gold_labels(labels_path, results=results) if labels_path else labels_from_trace2eval_results(results)
     report = calibrate_votes(results, labels, min_accuracy=min_accuracy, min_examples=min_examples)
     target = Path(out_dir)
     target.mkdir(parents=True, exist_ok=True)
@@ -93,6 +108,108 @@ def calibrate_from_trace2eval_results(
         encoding="utf-8",
     )
     return report
+
+
+def _label_family_maps(
+    results: list[dict[str, Any]],
+) -> tuple[dict[str, str], dict[str, str], dict[str, str]]:
+    family_by_item = {}
+    family_by_case = {}
+    family_by_trace = {}
+    for result in results:
+        family = result["seed"]["family"]
+        item_id = result["eval_item"]["id"]
+        case_id = result["eval_case"]["id"]
+        trace_id = result["seed"]["trace_id"]
+        family_by_item[item_id] = family
+        family_by_case[case_id] = family
+        family_by_trace[trace_id] = family
+    return family_by_item, family_by_case, family_by_trace
+
+
+def _normalize_gold_label(
+    item: dict[str, Any],
+    *,
+    family_by_item: dict[str, str],
+    family_by_case: dict[str, str],
+    family_by_trace: dict[str, str],
+) -> GoldLabel:
+    if "family" in item and "human_passed" in item:
+        return _apply_compiler_acceptance(GoldLabel.model_validate(item))
+
+    item_id = str(item.get("item_id", ""))
+    case_id = str(item.get("case_id", "")) or None
+    trace_id = str(item.get("trace_id", ""))
+    family = (
+        item.get("family")
+        or item.get("failure_family")
+        or family_by_item.get(item_id)
+        or (family_by_case.get(case_id) if case_id else None)
+        or family_by_trace.get(trace_id)
+        or "unknown"
+    )
+    reviewer_confidence = item.get("reviewer_confidence", item.get("confidence", 4))
+    confidence = _reviewer_confidence_to_unit(reviewer_confidence)
+    human_passed = item.get("human_passed")
+    if human_passed is None:
+        human_passed = _derive_human_passed(item)
+
+    notes = str(item.get("notes", ""))
+    if item.get("failure_family_correct") and item.get("failure_family_correct") != "yes":
+        notes = (notes + " " if notes else "") + f"[failure_family_correct={item.get('failure_family_correct')}]"
+
+    return _apply_compiler_acceptance(GoldLabel(
+        item_id=item_id,
+        case_id=case_id,
+        trace_id=trace_id,
+        family=str(family),
+        human_passed=bool(human_passed),
+        reviewer=str(item.get("reviewer", item.get("reviewer_id", "human-reviewer"))),
+        confidence=confidence,
+        notes=notes,
+        label_source=str(item.get("label_source", "human_review_jsonl")),
+        candidate_output_passed=item.get("candidate_output_passed"),
+        severity=item.get("severity"),
+        failure_family_correct=item.get("failure_family_correct"),
+        needs_domain_expert=item.get("needs_domain_expert"),
+    ))
+
+
+def _apply_compiler_acceptance(label: GoldLabel) -> GoldLabel:
+    if not label.human_passed:
+        return label
+    reasons = []
+    if label.failure_family_correct == "no":
+        reasons.append("failure_family_correct=no")
+    if label.needs_domain_expert == "yes":
+        reasons.append("needs_domain_expert=yes")
+    if not reasons:
+        return label
+    note = label.notes
+    marker = f"[compiler_acceptance=false: {', '.join(reasons)}]"
+    if marker not in note:
+        note = (note + " " if note else "") + marker
+    return label.model_copy(update={"human_passed": False, "notes": note})
+
+
+def _derive_human_passed(item: dict[str, Any]) -> bool:
+    return (
+        item.get("case_valid") == "yes"
+        and item.get("expected_answer_correct") == "yes"
+        and item.get("hidden_trap_valid") == "yes"
+        and item.get("rubric_clear") == "yes"
+        and item.get("ambiguous") == "no"
+    )
+
+
+def _reviewer_confidence_to_unit(value: Any) -> float:
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return 0.8
+    if numeric > 1:
+        return round(max(0.2, min(1.0, numeric / 5)), 3)
+    return round(max(0.0, min(1.0, numeric)), 3)
 
 
 def calibrate_votes(

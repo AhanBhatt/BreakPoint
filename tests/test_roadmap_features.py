@@ -10,7 +10,14 @@ from breakpoint_eval.compiler import BreakPointCompiler
 from breakpoint_eval.env import load_env
 from breakpoint_eval.exporters import export_lm_eval_task, export_openai_evals
 from breakpoint_eval.ingestion import ingest_payload
-from breakpoint_eval.judges import CalibrationExample, LocalHeuristicJudge, calibrate_judges
+from breakpoint_eval.judges import (
+    CalibrationExample,
+    LocalHeuristicJudge,
+    _vote_from_json_text,
+    calibrate_judges,
+    configured_external_judge_models,
+    default_judge_adapters,
+)
 from breakpoint_eval.metrics import compiler_native_metrics
 from breakpoint_eval.model_runs import run_model_comparison_from_product
 from breakpoint_eval.models import EvalCase, EvalSuite
@@ -20,7 +27,7 @@ from breakpoint_eval.sdk import BreakPoint, TraceBuilder
 from breakpoint_eval.simulators import generate_simulated_environments
 from breakpoint_eval.specs import compile_spec, example_rag_freshness_spec, parse_spec
 from breakpoint_eval.traces import compile_traces, sample_failure_traces, trace_to_spec
-from breakpoint_eval.vllm_server import app as vllm_app
+from breakpoint_eval.vllm_server import app as vllm_app, judge_prompt
 from fastapi.testclient import TestClient
 
 
@@ -83,6 +90,56 @@ def test_judge_calibration_simulators_and_failuregym(tmp_path: Path) -> None:
     assert (tmp_path / "failuregym" / "manifest.json").exists()
 
 
+def test_live_judge_parser_handles_provider_json_variants() -> None:
+    fenced = '```json\n{"passed": true, "confidence": 87, "rationale": "complete json"}\n```'
+    vote = _vote_from_json_text("gemini:test", fenced)
+    assert vote.passed is True
+    assert vote.confidence == 0.87
+
+    decimal = '{"passed": true, "confidence": 0.94, "rationale": "complete json"}'
+    vote = _vote_from_json_text("openai:test", decimal)
+    assert vote.confidence == 0.94
+
+    item = BreakPointCompiler(seed=31).compile_dataset(categories=["rag_contradiction"], items_per_category=1).items[0]
+    sparse_item = item.model_copy(
+        update={
+            "context": "Retrieved doc only [cached_summary reliability=0.51]: Minimal evidence. " * 4,
+            "adversarial_variants": [],
+        }
+    )
+    raw = '{"passed": true, "confidence": 0.88, "rationale": "complete json"}'
+    calibrated = _vote_from_json_text("gemini:test", raw, item=item)
+    sparse_calibrated = _vote_from_json_text("gemini:test", raw, item=sparse_item)
+    assert calibrated.confidence != sparse_calibrated.confidence
+    openai_calibrated = _vote_from_json_text("openai:test", raw, item=item)
+    assert openai_calibrated.confidence != 0.88
+    assert "raw gemini confidence" in calibrated.rationale
+    assert "raw openai confidence" in openai_calibrated.rationale
+
+    rejected = _vote_from_json_text(
+        "openai:test",
+        '{"passed": false, "confidence": 0.88, "rationale": "reject: hidden trap is mismatched"}',
+        item=item,
+    )
+    assert rejected.passed is False
+    assert rejected.confidence > 0.64
+
+
+def test_multi_model_judge_panel_from_env(monkeypatch) -> None:
+    monkeypatch.setenv("OPENAI_JUDGE_MODELS", "gpt-a,gpt-b,gpt-a")
+    monkeypatch.setenv("ANTHROPIC_JUDGE_MODELS", "claude-a,claude-b")
+    monkeypatch.setenv("GEMINI_JUDGE_MODELS", "gemini-a")
+    models = configured_external_judge_models()
+    assert models["openai"] == ["gpt-a", "gpt-b"]
+    assert models["anthropic"] == ["claude-a", "claude-b"]
+    assert models["gemini"] == ["gemini-a"]
+    names = [judge.name for judge in default_judge_adapters(include_external=True)]
+    assert "openai:gpt-a" in names
+    assert "openai:gpt-b" in names
+    assert "anthropic:claude-b" in names
+    assert "gemini:gemini-a" in names
+
+
 def test_env_loader_and_vllm_compatible_server(tmp_path: Path, monkeypatch) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text("OPENAI_JUDGE_MODEL=test-openai\nBREAKPOINT_EXTERNAL_JUDGES=1\n", encoding="utf-8")
@@ -115,6 +172,25 @@ def test_env_loader_and_vllm_compatible_server(tmp_path: Path, monkeypatch) -> N
     assert response.status_code == 200
     content = response.json()["choices"][0]["message"]["content"]
     assert '"passed":true' in content
+
+    high_confidence = judge_prompt(
+        "Task: Grade a well-formed policy eval case with conflicting sources.\n"
+        "Context: Retrieved doc old [cached_summary reliability=0.22]: outdated answer. "
+        "Retrieved doc new [official_policy reliability=0.97]: current answer. "
+        "The context includes enough evidence and source tension to judge the item.\n"
+        "Expected: Use the newest authoritative source, cite it, and avoid the stale cached summary.\n"
+        "Hidden traps: [{'kind':'stale_source_first','expected_behavior':'prefer authoritative evidence'}]"
+    )
+    lower_confidence = judge_prompt(
+        "Task: Grade a minimal eval case.\n"
+        "Context: This context is long enough to pass the basic length check, but it has only one vague source "
+        "and little source tension for judging the answer.\n"
+        "Expected: Answer from the provided evidence.\n"
+        "Hidden traps: [{'kind':'generic'}]"
+    )
+    assert high_confidence["passed"] is True
+    assert lower_confidence["passed"] is True
+    assert high_confidence["confidence"] != lower_confidence["confidence"]
 
 
 def test_actual_failure_corpus_build(tmp_path: Path) -> None:
@@ -189,14 +265,44 @@ def test_production_ingestion_calibration_model_runs_and_ci_packs(tmp_path: Path
     assert pack.regression_pack_count >= 5
     assert (tmp_path / "pack" / "product.json").exists()
 
+    trace_results = json.loads((tmp_path / "pack" / "trace2eval_results.json").read_text(encoding="utf-8"))
+    human_labels_path = tmp_path / "human_labels.jsonl"
+    human_labels_path.write_text(
+        json.dumps(
+            {
+                "case_id": trace_results[0]["eval_case"]["id"],
+                "item_id": trace_results[0]["eval_item"]["id"],
+                "trace_id": trace_results[0]["seed"]["trace_id"],
+                "reviewer_id": "unit-human",
+                "case_valid": "yes",
+                "expected_answer_correct": "yes",
+                "hidden_trap_valid": "yes",
+                "rubric_clear": "yes",
+                "ambiguous": "no",
+                "candidate_output_passed": "fail",
+                "severity": "high",
+                "failure_family_correct": "yes",
+                "needs_domain_expert": "no",
+                "reviewer_confidence": 5,
+                "notes": "unit human label",
+                "human_passed": True,
+                "label_source": "breakpoint_local_human_review_ui",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     calibration = calibrate_from_trace2eval_results(
         tmp_path / "pack" / "trace2eval_results.json",
+        labels_path=human_labels_path,
         out_dir=tmp_path / "calibration",
         min_accuracy=0.5,
     )
     assert calibration.examples == 1
     assert calibration.promoted_pairs
     assert (tmp_path / "calibration" / "calibrated_gate_policy.json").exists()
+    gold = json.loads((tmp_path / "calibration" / "gold_labels.json").read_text(encoding="utf-8"))
+    assert gold["labels"][0]["label_source"] == "breakpoint_local_human_review_ui"
 
     comparison = run_model_comparison_from_product(tmp_path / "pack" / "product.json", out_dir=tmp_path / "model_runs")
     assert comparison.case_count == 2

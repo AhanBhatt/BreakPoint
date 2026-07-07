@@ -11,7 +11,7 @@ from breakpoint_eval.ci import build_ci_report, default_regression_gate, write_c
 from breakpoint_eval.compiler import summarize_dataset
 from breakpoint_eval.env import env_flag, load_env
 from breakpoint_eval.exporters import export_cases_jsonl, export_lm_eval_task, export_openai_evals
-from breakpoint_eval.judges import available_validation_suite
+from breakpoint_eval.judges import available_validation_suite, configured_external_judge_models
 from breakpoint_eval.metrics import compiler_native_metrics
 from breakpoint_eval.models import DatasetBundle, Project, ValidationReport
 from breakpoint_eval.platform import (
@@ -243,9 +243,10 @@ def estimate_live_judge_cost(
     if not include_external or trace_count <= 0:
         return 0.0
     total = 0.0
-    for rates in MODEL_RATE_USD_PER_MTOK.values():
-        total += trace_count * ((avg_input_tokens / 1_000_000) * rates["input"])
-        total += trace_count * ((avg_output_tokens / 1_000_000) * rates["output"])
+    for provider, models in configured_external_judge_models().items():
+        rates = MODEL_RATE_USD_PER_MTOK[provider]
+        total += len(models) * trace_count * ((avg_input_tokens / 1_000_000) * rates["input"])
+        total += len(models) * trace_count * ((avg_output_tokens / 1_000_000) * rates["output"])
     return round(total, 4)
 
 

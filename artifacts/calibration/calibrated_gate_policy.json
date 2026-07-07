@@ -1,12 +1,32 @@
 {
   "promoted_pairs": [
     {
+      "judge": "anthropic:claude-fable-5",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "anthropic:claude-fable-5",
+      "family": "tool_misuse"
+    },
+    {
+      "judge": "anthropic:claude-opus-4-8",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "anthropic:claude-opus-4-8",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "anthropic:claude-opus-4-8",
+      "family": "tool_misuse"
+    },
+    {
       "judge": "anthropic:claude-sonnet-5",
-      "family": "prompt_injection"
+      "family": "rag_contradiction"
     },
     {
       "judge": "anthropic:claude-sonnet-5",
-      "family": "rag_contradiction"
+      "family": "tool_misuse"
     },
     {
       "judge": "gemini:gemini-2.5-flash",
@@ -17,11 +37,15 @@
       "family": "rag_contradiction"
     },
     {
-      "judge": "gemini:gemini-2.5-flash",
-      "family": "refusal_boundary"
+      "judge": "gemini:gemini-2.5-pro",
+      "family": "prompt_injection"
     },
     {
-      "judge": "gemini:gemini-2.5-flash",
+      "judge": "gemini:gemini-2.5-pro",
+      "family": "rag_contradiction"
+    },
+    {
+      "judge": "gemini:gemini-2.5-pro",
       "family": "tool_misuse"
     },
     {
@@ -33,28 +57,12 @@
       "family": "rag_contradiction"
     },
     {
-      "judge": "local:format",
-      "family": "refusal_boundary"
-    },
-    {
-      "judge": "local:format",
-      "family": "tool_misuse"
-    },
-    {
       "judge": "local:skeptic",
       "family": "prompt_injection"
     },
     {
       "judge": "local:skeptic",
       "family": "rag_contradiction"
-    },
-    {
-      "judge": "local:skeptic",
-      "family": "refusal_boundary"
-    },
-    {
-      "judge": "local:skeptic",
-      "family": "tool_misuse"
     },
     {
       "judge": "local:strict",
@@ -65,28 +73,36 @@
       "family": "rag_contradiction"
     },
     {
-      "judge": "local:strict",
-      "family": "refusal_boundary"
+      "judge": "openai:gpt-5.4",
+      "family": "prompt_injection"
     },
     {
-      "judge": "local:strict",
-      "family": "tool_misuse"
+      "judge": "openai:gpt-5.4",
+      "family": "rag_contradiction"
     },
     {
       "judge": "openai:gpt-5.4-mini",
       "family": "prompt_injection"
     },
     {
-      "judge": "openai:gpt-5.4-mini",
+      "judge": "openai:gpt-5.5",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "openai:gpt-5.5",
       "family": "rag_contradiction"
     },
     {
-      "judge": "openai:gpt-5.4-mini",
-      "family": "refusal_boundary"
+      "judge": "openai:gpt-5.5",
+      "family": "tool_misuse"
     },
     {
-      "judge": "openai:gpt-5.4-mini",
-      "family": "tool_misuse"
+      "judge": "openai:o3",
+      "family": "prompt_injection"
+    },
+    {
+      "judge": "openai:o3",
+      "family": "rag_contradiction"
     },
     {
       "judge": "vllm:breakpoint-local-judge",
@@ -95,14 +111,6 @@
     {
       "judge": "vllm:breakpoint-local-judge",
       "family": "rag_contradiction"
-    },
-    {
-      "judge": "vllm:breakpoint-local-judge",
-      "family": "refusal_boundary"
-    },
-    {
-      "judge": "vllm:breakpoint-local-judge",
-      "family": "tool_misuse"
     }
   ]
 }

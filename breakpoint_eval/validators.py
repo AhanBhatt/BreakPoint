@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 
 from breakpoint_eval.models import EvalItem, ModelVote, ValidationReport
@@ -58,7 +60,7 @@ class ValidationSuite:
         ]
 
     def validate(self, item: EvalItem) -> ValidationReport:
-        votes = [judge.vote(item) for judge in self.judges]
+        votes = self._vote_all(item)
         ambiguity_score = self._ambiguity_score(item)
         answerability_score = self._answerability_score(item)
         trap_coverage_score = self._trap_coverage(item)
@@ -93,6 +95,13 @@ class ValidationSuite:
             passed=passed,
             reasons=sorted(set(reasons)),
         )
+
+    def _vote_all(self, item: EvalItem) -> list[ModelVote]:
+        if len(self.judges) <= 1:
+            return [self.judges[0].vote(item)]
+        max_workers = max(1, min(len(self.judges), int(os.environ.get("BREAKPOINT_JUDGE_PARALLELISM", "10"))))
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            return list(executor.map(lambda judge: judge.vote(item), self.judges))
 
     @staticmethod
     def _ambiguity_score(item: EvalItem) -> float:
